@@ -1,0 +1,115 @@
+PODS:
+  - Alamofire (4.7.3)
+  - AlamofireSwiftyJSON (1.0.1):
+    - Alamofire (~> 4.0)
+    - SwiftyJSON (~> 4.0)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
+  - CTMediator (25)
+  - CTPersistance (189):
+    - CTMediator
+    - SQLCipher
+  - FacebookSDK (4.38.0):
+    - Bolts (~> 1.9)
+    - FacebookSDK/CoreKit (= 4.38.0)
+    - FacebookSDK/MarketingKit (= 4.38.0)
+  - FacebookSDK/CoreKit (4.38.0):
+    - Bolts (~> 1.9)
+    - FBSDKCoreKit
+  - FacebookSDK/MarketingKit (4.38.0):
+    - Bolts (~> 1.9)
+    - FacebookSDK/CoreKit
+    - FBSDKMarketingKit
+  - FBSDKCoreKit (4.38.1):
+    - Bolts (~> 1.9)
+  - FBSDKMarketingKit (4.38.0):
+    - FBSDKCoreKit
+  - Gloss (2.0.1)
+  - GoogleSignIn (4.3.0):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
+    - GoogleToolboxForMac/DebugUtils (= 2.1.4)
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
+  - GTMOAuth2 (1.1.6):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.2.0):
+    - GTMSessionFetcher/Full (= 1.2.0)
+  - GTMSessionFetcher/Core (1.2.0)
+  - GTMSessionFetcher/Full (1.2.0):
+    - GTMSessionFetcher/Core (= 1.2.0)
+  - HandyFrame (1.2.0)
+  - IQKeyboardManagerSwift (6.2.0)
+  - SideMenu (5.0.3)
+  - SQLCipher (3.4.2):
+    - SQLCipher/standard (= 3.4.2)
+  - SQLCipher/common (3.4.2)
+  - SQLCipher/standard (3.4.2):
+    - SQLCipher/common
+  - SwiftyJSON (4.2.0)
+
+DEPENDENCIES:
+  - AlamofireSwiftyJSON
+  - CTPersistance
+  - FacebookSDK
+  - Gloss (~> 2.0)
+  - GoogleSignIn
+  - HandyFrame
+  - IQKeyboardManagerSwift
+  - SideMenu
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireSwiftyJSON
+    - Bolts
+    - CTMediator
+    - CTPersistance
+    - FacebookSDK
+    - FBSDKCoreKit
+    - FBSDKMarketingKit
+    - Gloss
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GTMOAuth2
+    - GTMSessionFetcher
+    - HandyFrame
+    - IQKeyboardManagerSwift
+    - SideMenu
+    - SQLCipher
+    - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireSwiftyJSON: ad896b68b586aea5de8ddba641ad3b402b8d5511
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  CTMediator: 830c1fc204b3a6abf2a059510c7380f56343da0f
+  CTPersistance: c9d4f20d65455df59ab74e2c195e740aac585f72
+  FacebookSDK: 73f54b8b94e09b05647cdef0af147f470cd3edc6
+  FBSDKCoreKit: 8d47857400e2f5bdea697a80daff882e91c84ef6
+  FBSDKMarketingKit: e609f39d74ab273cf52e2f8b7e8829ed412b2827
+  Gloss: 1e8743f8de1fbe14a97f220ff901cba91ae5f8f8
+  GoogleSignIn: 11183592dc63e105475c7305a325045ff95e02b7
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
+  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
+  HandyFrame: 437df83ba7563c56cd55b9bd0128561995463110
+  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
+  SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
+  SQLCipher: f9fcf29b2e59ced7defc2a2bdd0ebe79b40d4990
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+
+PODFILE CHECKSUM: 6c06b5dffc5f3c647a9d23cbb11cb65553cbf7ee
+
+COCOAPODS: 1.5.3

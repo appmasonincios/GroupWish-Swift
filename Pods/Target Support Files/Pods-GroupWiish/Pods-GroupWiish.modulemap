@@ -1,0 +1,6 @@
+framework module Pods_GroupWiish {
+  umbrella header "Pods-GroupWiish-umbrella.h"
+
+  export *
+  module * { export * }
+}
