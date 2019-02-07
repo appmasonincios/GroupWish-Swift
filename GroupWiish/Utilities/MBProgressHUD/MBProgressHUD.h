@@ -4,7 +4,7 @@
 //  Created by Matej Bukovinski on 2.4.09.
 //
 
-// This code is distributed under the terms and conditions of the MIT license. 
+// This code is distributed under the terms and conditions of the MIT license.
 
 // Copyright © 2009-2016 Matej Bukovinski
 //
@@ -75,7 +75,7 @@ typedef void (^MBProgressHUDCompletionBlock)(void);
 NS_ASSUME_NONNULL_BEGIN
 
 
-/** 
+/**
  * Displays a simple HUD window containing a progress indicator and two optional labels for short messages.
  *
  * This is a simple drop-in class for displaying a progress HUD view similar to Apple's private UIProgressHUD class.
@@ -136,8 +136,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (instancetype)initWithView:(UIView *)view;
 
-/** 
- * Displays the HUD. 
+/**
+ * Displays the HUD.
  *
  * @note You need to make sure that the main thread completes its run loop soon after this method call so that
  * the user interface can be updated. Call this method when your task is already set up to be executed in a new thread
@@ -150,7 +150,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)showAnimated:(BOOL)animated;
 
-/** 
+/**
  * Hides the HUD. This still calls the hudWasHidden: delegate. This is the counterpart of the show: method. Use it to
  * hide the HUD when your task completes.
  *
@@ -161,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)hideAnimated:(BOOL)animated;
 
-/** 
+/**
  * Hides the HUD after a delay. This still calls the hudWasHidden: delegate. This is the counterpart of the show: method. Use it to
  * hide the HUD when your task completes.
  *
@@ -209,7 +209,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// @name Appearance
 
-/** 
+/**
  * MBProgressHUD operation mode. The default is MBProgressHUDModeIndeterminate.
  */
 @property (assign, nonatomic) MBProgressHUDMode mode;
@@ -261,7 +261,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * The progress of the progress indicator, from 0.0 to 1.0. Defaults to 0.0.
  */
-@property (assign, nonatomic) float progress;
+@property (assign, nonatomic) int progress;
 
 /// @name ProgressObject
 
@@ -300,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic, readonly) UILabel *detailsLabel;
 
 /**
- * A button that is placed below the labels. Visible only if a target / action is added. 
+ * A button that is placed below the labels. Visible only if a target / action is added.
  */
 @property (strong, nonatomic, readonly) UIButton *button;
 
@@ -311,8 +311,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-/** 
- * Called after the HUD was fully hidden from the screen. 
+/**
+ * Called after the HUD was fully hidden from the screen.
  */
 - (void)hudWasHidden:(MBProgressHUD *)hud;
 
@@ -322,7 +322,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * A progress view for showing definite progress by filling up a circle (pie chart).
  */
-@interface MBRoundProgressView : UIView 
+@interface MBRoundProgressView : UIView
 
 /**
  * Progress (0.0 to 1.0)
@@ -336,7 +336,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *progressTintColor;
 
 /**
- * Indicator background (non-progress) color. 
+ * Indicator background (non-progress) color.
  * Only applicable on iOS versions older than iOS 7.
  * Defaults to translucent white (alpha 0.1).
  */
@@ -351,7 +351,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * A flat bar progress view. 
+ * A flat bar progress view.
  */
 @interface MBBarProgressView : UIView
 
@@ -384,22 +384,27 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MBBackgroundView : UIView
 
 /**
- * The background style. 
- * Defaults to MBProgressHUDBackgroundStyleBlur.
+ * The background style.
+ * Defaults to MBProgressHUDBackgroundStyleBlur on iOS 7 or later and MBProgressHUDBackgroundStyleSolidColor otherwise.
+ * @note Due to iOS 7 not supporting UIVisualEffectView, the blur effect differs slightly between iOS 7 and later versions.
  */
 @property (nonatomic) MBProgressHUDBackgroundStyle style;
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000 || TARGET_OS_TV
 /**
  * The blur effect style, when using MBProgressHUDBackgroundStyleBlur.
  * Defaults to UIBlurEffectStyleLight.
  */
 @property (nonatomic) UIBlurEffectStyle blurEffectStyle;
+#endif
 
 /**
  * The background color or the blur tint color.
+ * @note Due to iOS 7 not supporting UIVisualEffectView, the blur effect differs slightly between iOS 7 and later versions.
  */
 @property (nonatomic, strong) UIColor *color;
 
 @end
 
 NS_ASSUME_NONNULL_END
+

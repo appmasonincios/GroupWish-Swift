@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18A35672220BEDDF006EAA61 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A35671220BEDDF006EAA61 /* Constants.swift */; };
+		18A35676220BEDF8006EAA61 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A35674220BEDF8006EAA61 /* Networking.swift */; };
+		18A35677220BEDF8006EAA61 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A35675220BEDF8006EAA61 /* ToastView.swift */; };
+		18A3567C220C0926006EAA61 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3567A220C0926006EAA61 /* GridLayout.swift */; };
+		18A3567D220C0926006EAA61 /* ListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3567B220C0926006EAA61 /* ListLayout.swift */; };
+		18A3567F220C16B0006EAA61 /* TransitionButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A3567E220C16B0006EAA61 /* TransitionButton.framework */; };
+		18A35681220C16B0006EAA61 /* ViewAnimator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35680220C16B0006EAA61 /* ViewAnimator.framework */; };
+		18A35683220C19DC006EAA61 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35682220C19DC006EAA61 /* MessageUI.framework */; };
+		18A35685220C19E7006EAA61 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35684220C19E7006EAA61 /* AVKit.framework */; };
+		18A35687220C19F1006EAA61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35686220C19F1006EAA61 /* AVFoundation.framework */; };
+		18A35689220C1A05006EAA61 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35688220C1A05006EAA61 /* Twitter.framework */; };
+		18A3568D220C2C43006EAA61 /* Rechability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3568C220C2C43006EAA61 /* Rechability.swift */; };
+		18A35690220C3AC8006EAA61 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3568F220C3AC8006EAA61 /* TabBarVC.swift */; };
+		18A35692220C5571006EAA61 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35691220C5571006EAA61 /* FBSDKCoreKit.framework */; };
+		18A35694220C5571006EAA61 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35693220C5571006EAA61 /* FBSDKLoginKit.framework */; };
+		18A35696220C5571006EAA61 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A35695220C5571006EAA61 /* FBSDKShareKit.framework */; };
 		18AAF2DC220954D000C4EED9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF2DB220954D000C4EED9 /* AppDelegate.swift */; };
 		18AAF2DE220954D000C4EED9 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF2DD220954D000C4EED9 /* TutorialViewController.swift */; };
 		18AAF2E1220954D000C4EED9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18AAF2DF220954D000C4EED9 /* Main.storyboard */; };
@@ -15,7 +31,7 @@
 		18AAF2E9220954D100C4EED9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18AAF2E7220954D100C4EED9 /* LaunchScreen.storyboard */; };
 		18AAF2F42209594200C4EED9 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF2F32209594200C4EED9 /* SplashScreenViewController.swift */; };
 		18AAF2F822095DCE00C4EED9 /* GBVersionTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF2F622095DCD00C4EED9 /* GBVersionTracking.m */; };
-		18AAF2FB22095F2500C4EED9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF2FA22095F2500C4EED9 /* LoginViewController.swift */; };
+		18AAF2FB22095F2500C4EED9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF2FA22095F2500C4EED9 /* LoginVC.swift */; };
 		18AAF2FF22096F1700C4EED9 /* DefaultSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF2FE22096F1700C4EED9 /* DefaultSharedData.swift */; };
 		18AAF30322096F2900C4EED9 /* Extension+ViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF30122096F2800C4EED9 /* Extension+ViewControllers.swift */; };
 		18AAF30422096F2900C4EED9 /* Extension+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF30222096F2800C4EED9 /* Extension+Strings.swift */; };
@@ -25,7 +41,6 @@
 		18AAF30E2209707700C4EED9 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF30D2209707700C4EED9 /* Bolts.framework */; };
 		18AAF3102209707700C4EED9 /* CTMediator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF30F2209707700C4EED9 /* CTMediator.framework */; };
 		18AAF3122209707700C4EED9 /* CTPersistance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF3112209707700C4EED9 /* CTPersistance.framework */; };
-		18AAF3142209707700C4EED9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF3132209707700C4EED9 /* FBSDKCoreKit.framework */; };
 		18AAF3162209707700C4EED9 /* Gloss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF3152209707700C4EED9 /* Gloss.framework */; };
 		18AAF3182209707700C4EED9 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF3172209707700C4EED9 /* GoogleToolboxForMac.framework */; };
 		18AAF31A2209707700C4EED9 /* GTMOAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF3192209707700C4EED9 /* GTMOAuth2.framework */; };
@@ -34,7 +49,7 @@
 		18AAF3202209707700C4EED9 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF31F2209707700C4EED9 /* IQKeyboardManagerSwift.framework */; };
 		18AAF3222209707700C4EED9 /* SQLCipher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF3212209707700C4EED9 /* SQLCipher.framework */; };
 		18AAF3242209707700C4EED9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF3232209707700C4EED9 /* SwiftyJSON.framework */; };
-		18AAF3262209749C00C4EED9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF3252209749C00C4EED9 /* SignUpViewController.swift */; };
+		18AAF3262209749C00C4EED9 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF3252209749C00C4EED9 /* SignUpVC.swift */; };
 		18AAF32C2209B4EC00C4EED9 /* SideMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18AAF32B2209B4EC00C4EED9 /* SideMenu.framework */; };
 		18AAF3302209B8E200C4EED9 /* MyGreetingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF32F2209B8E200C4EED9 /* MyGreetingsViewController.swift */; };
 		18AAF332220A994700C4EED9 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF331220A994700C4EED9 /* SideMenuViewController.swift */; };
@@ -79,6 +94,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18A35671220BEDDF006EAA61 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		18A35674220BEDF8006EAA61 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		18A35675220BEDF8006EAA61 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		18A35678220BFC6A006EAA61 /* GroupWiish.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupWiish.pch; sourceTree = "<group>"; };
+		18A3567A220C0926006EAA61 /* GridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
+		18A3567B220C0926006EAA61 /* ListLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListLayout.swift; sourceTree = "<group>"; };
+		18A3567E220C16B0006EAA61 /* TransitionButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TransitionButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18A35680220C16B0006EAA61 /* ViewAnimator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewAnimator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18A35682220C19DC006EAA61 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		18A35684220C19E7006EAA61 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		18A35686220C19F1006EAA61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		18A35688220C1A05006EAA61 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		18A3568C220C2C43006EAA61 /* Rechability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rechability.swift; sourceTree = "<group>"; };
+		18A3568F220C3AC8006EAA61 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
+		18A35691220C5571006EAA61 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18A35693220C5571006EAA61 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18A35695220C5571006EAA61 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18AAF2D8220954D000C4EED9 /* GroupWiish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupWiish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18AAF2DB220954D000C4EED9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18AAF2DD220954D000C4EED9 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +123,7 @@
 		18AAF2F522095DCD00C4EED9 /* GroupWiish-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GroupWiish-Bridging-Header.h"; sourceTree = "<group>"; };
 		18AAF2F622095DCD00C4EED9 /* GBVersionTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBVersionTracking.m; sourceTree = "<group>"; };
 		18AAF2F722095DCD00C4EED9 /* GBVersionTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBVersionTracking.h; sourceTree = "<group>"; };
-		18AAF2FA22095F2500C4EED9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		18AAF2FA22095F2500C4EED9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		18AAF2FE22096F1700C4EED9 /* DefaultSharedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSharedData.swift; sourceTree = "<group>"; };
 		18AAF30122096F2800C4EED9 /* Extension+ViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+ViewControllers.swift"; sourceTree = "<group>"; };
 		18AAF30222096F2800C4EED9 /* Extension+Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Strings.swift"; sourceTree = "<group>"; };
@@ -111,7 +143,7 @@
 		18AAF31F2209707700C4EED9 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IQKeyboardManagerSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18AAF3212209707700C4EED9 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18AAF3232209707700C4EED9 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		18AAF3252209749C00C4EED9 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		18AAF3252209749C00C4EED9 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		18AAF32B2209B4EC00C4EED9 /* SideMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SideMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18AAF32F2209B8E200C4EED9 /* MyGreetingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGreetingsViewController.swift; sourceTree = "<group>"; };
 		18AAF331220A994700C4EED9 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
@@ -162,13 +194,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18A35689220C1A05006EAA61 /* Twitter.framework in Frameworks */,
+				18A35692220C5571006EAA61 /* FBSDKCoreKit.framework in Frameworks */,
+				18A35694220C5571006EAA61 /* FBSDKLoginKit.framework in Frameworks */,
+				18A35696220C5571006EAA61 /* FBSDKShareKit.framework in Frameworks */,
+				18A35687220C19F1006EAA61 /* AVFoundation.framework in Frameworks */,
+				18A35685220C19E7006EAA61 /* AVKit.framework in Frameworks */,
+				18A35683220C19DC006EAA61 /* MessageUI.framework in Frameworks */,
+				18A3567F220C16B0006EAA61 /* TransitionButton.framework in Frameworks */,
+				18A35681220C16B0006EAA61 /* ViewAnimator.framework in Frameworks */,
 				18AAF32C2209B4EC00C4EED9 /* SideMenu.framework in Frameworks */,
 				18AAF30A2209707700C4EED9 /* Alamofire.framework in Frameworks */,
 				18AAF30C2209707700C4EED9 /* AlamofireSwiftyJSON.framework in Frameworks */,
 				18AAF30E2209707700C4EED9 /* Bolts.framework in Frameworks */,
 				18AAF3102209707700C4EED9 /* CTMediator.framework in Frameworks */,
 				18AAF3122209707700C4EED9 /* CTPersistance.framework in Frameworks */,
-				18AAF3142209707700C4EED9 /* FBSDKCoreKit.framework in Frameworks */,
 				18AAF3162209707700C4EED9 /* Gloss.framework in Frameworks */,
 				18AAF3182209707700C4EED9 /* GoogleToolboxForMac.framework in Frameworks */,
 				18AAF31A2209707700C4EED9 /* GTMOAuth2.framework in Frameworks */,
@@ -193,6 +233,48 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		18A35670220BEDDF006EAA61 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				18A35671220BEDDF006EAA61 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		18A35673220BEDF8006EAA61 /* NetworkHealper */ = {
+			isa = PBXGroup;
+			children = (
+				18A35674220BEDF8006EAA61 /* Networking.swift */,
+				18A35675220BEDF8006EAA61 /* ToastView.swift */,
+			);
+			path = NetworkHealper;
+			sourceTree = "<group>";
+		};
+		18A35679220C0926006EAA61 /* Grid layout */ = {
+			isa = PBXGroup;
+			children = (
+				18A3567A220C0926006EAA61 /* GridLayout.swift */,
+				18A3567B220C0926006EAA61 /* ListLayout.swift */,
+			);
+			path = "Grid layout";
+			sourceTree = "<group>";
+		};
+		18A3568B220C2C43006EAA61 /* Rechability */ = {
+			isa = PBXGroup;
+			children = (
+				18A3568C220C2C43006EAA61 /* Rechability.swift */,
+			);
+			path = Rechability;
+			sourceTree = "<group>";
+		};
+		18A3568E220C3A97006EAA61 /* TabBarVC */ = {
+			isa = PBXGroup;
+			children = (
+				18A3568F220C3AC8006EAA61 /* TabBarVC.swift */,
+			);
+			path = TabBarVC;
+			sourceTree = "<group>";
+		};
 		18AAF2CF220954D000C4EED9 = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +296,10 @@
 		18AAF2DA220954D000C4EED9 /* GroupWiish */ = {
 			isa = PBXGroup;
 			children = (
+				18A35678220BFC6A006EAA61 /* GroupWiish.pch */,
+				18A3568B220C2C43006EAA61 /* Rechability */,
+				18A35673220BEDF8006EAA61 /* NetworkHealper */,
+				18A35670220BEDDF006EAA61 /* Constants */,
 				18AAF387220ADA0100C4EED9 /* IBInspectable */,
 				18AAF30022096F2800C4EED9 /* Extensions */,
 				18AAF2FD22096F1700C4EED9 /* AppStorageHelper */,
@@ -279,6 +365,8 @@
 		18AAF2FC22096EF500C4EED9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				18A3568E220C3A97006EAA61 /* TabBarVC */,
+				18A35679220C0926006EAA61 /* Grid layout */,
 				18AAF384220ABAF100C4EED9 /* GradientView */,
 				18AAF30522096FBD00C4EED9 /* MBProgressHUD */,
 				18AAF2F922095DE000C4EED9 /* GBVersionTracking */,
@@ -370,8 +458,8 @@
 			isa = PBXGroup;
 			children = (
 				18AAF33C220AAD9400C4EED9 /* OTPViewController.swift */,
-				18AAF3252209749C00C4EED9 /* SignUpViewController.swift */,
-				18AAF2FA22095F2500C4EED9 /* LoginViewController.swift */,
+				18AAF3252209749C00C4EED9 /* SignUpVC.swift */,
+				18AAF2FA22095F2500C4EED9 /* LoginVC.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -470,6 +558,15 @@
 		962069BA2831140473657833 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18A35691220C5571006EAA61 /* FBSDKCoreKit.framework */,
+				18A35693220C5571006EAA61 /* FBSDKLoginKit.framework */,
+				18A35695220C5571006EAA61 /* FBSDKShareKit.framework */,
+				18A35688220C1A05006EAA61 /* Twitter.framework */,
+				18A35686220C19F1006EAA61 /* AVFoundation.framework */,
+				18A35684220C19E7006EAA61 /* AVKit.framework */,
+				18A35682220C19DC006EAA61 /* MessageUI.framework */,
+				18A3567E220C16B0006EAA61 /* TransitionButton.framework */,
+				18A35680220C16B0006EAA61 /* ViewAnimator.framework */,
 				18AAF32B2209B4EC00C4EED9 /* SideMenu.framework */,
 				18AAF3092209707700C4EED9 /* Alamofire.framework */,
 				18AAF30B2209707700C4EED9 /* AlamofireSwiftyJSON.framework */,
@@ -592,6 +689,8 @@
 				"${BUILT_PRODUCTS_DIR}/CTMediator/CTMediator.framework",
 				"${BUILT_PRODUCTS_DIR}/CTPersistance/CTPersistance.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/Gloss/Gloss.framework",
@@ -601,6 +700,10 @@
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TransitionButton/TransitionButton.framework",
+				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
+				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -610,6 +713,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CTMediator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CTPersistance.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gloss.framework",
@@ -619,6 +724,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewAnimator.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -633,10 +742,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GroupWiish/Pods-GroupWiish-resources.sh",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterKitResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -650,13 +761,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18AAF3262209749C00C4EED9 /* SignUpViewController.swift in Sources */,
-				18AAF2FB22095F2500C4EED9 /* LoginViewController.swift in Sources */,
+				18AAF3262209749C00C4EED9 /* SignUpVC.swift in Sources */,
+				18AAF2FB22095F2500C4EED9 /* LoginVC.swift in Sources */,
 				18AAF369220AB14800C4EED9 /* AddPhotoViewController.swift in Sources */,
+				18A35676220BEDF8006EAA61 /* Networking.swift in Sources */,
 				18AAF374220AB1CB00C4EED9 /* WishesSentViewController.swift in Sources */,
 				18AAF358220AB03600C4EED9 /* RequestViewController.swift in Sources */,
 				18AAF36B220AB15800C4EED9 /* AddVideoViewController.swift in Sources */,
 				18AAF393220ADA0200C4EED9 /* LabelDesign.swift in Sources */,
+				18A3567D220C0926006EAA61 /* ListLayout.swift in Sources */,
 				18AAF344220AAE0B00C4EED9 /* PreviewViewController.swift in Sources */,
 				18AAF2FF22096F1700C4EED9 /* DefaultSharedData.swift in Sources */,
 				18AAF348220AAF3200C4EED9 /* GreetingDetailViewController.swift in Sources */,
@@ -664,6 +777,7 @@
 				18AAF370220AB1A100C4EED9 /* SendThankYouCardsViewController.swift in Sources */,
 				18AAF34A220AAF4300C4EED9 /* ProfileViewController.swift in Sources */,
 				18AAF337220A9A6600C4EED9 /* MenuHeaderTableViewCell.swift in Sources */,
+				18A3567C220C0926006EAA61 /* GridLayout.swift in Sources */,
 				18AAF2DE220954D000C4EED9 /* TutorialViewController.swift in Sources */,
 				18AAF2F822095DCE00C4EED9 /* GBVersionTracking.m in Sources */,
 				18AAF34C220AAF6E00C4EED9 /* WebViewViewController.swift in Sources */,
@@ -675,6 +789,7 @@
 				18AAF361220AB0FD00C4EED9 /* CreateGreetingsViewController.swift in Sources */,
 				18AAF365220AB12700C4EED9 /* DatePickerViewController.swift in Sources */,
 				18AAF30422096F2900C4EED9 /* Extension+Strings.swift in Sources */,
+				18A35690220C3AC8006EAA61 /* TabBarVC.swift in Sources */,
 				18AAF3302209B8E200C4EED9 /* MyGreetingsViewController.swift in Sources */,
 				18AAF35A220AB09500C4EED9 /* AddContactsViewController.swift in Sources */,
 				18AAF37D220AB37300C4EED9 /* ChoosePopupViewController.swift in Sources */,
@@ -683,8 +798,10 @@
 				18AAF353220AAFF100C4EED9 /* ReceivedCardsViewController.swift in Sources */,
 				18AAF382220AB3E600C4EED9 /* PremiumAppViewController.swift in Sources */,
 				18AAF367220AB13900C4EED9 /* SelectMaxFriendsViewController.swift in Sources */,
+				18A3568D220C2C43006EAA61 /* Rechability.swift in Sources */,
 				18AAF390220ADA0200C4EED9 /* ViewDesign.swift in Sources */,
 				18AAF33D220AAD9400C4EED9 /* OTPViewController.swift in Sources */,
+				18A35672220BEDDF006EAA61 /* Constants.swift in Sources */,
 				18AAF33B220AAD7700C4EED9 /* AboutUsViewController.swift in Sources */,
 				18AAF30822096FC800C4EED9 /* MBProgressHUD.m in Sources */,
 				18AAF346220AAF2300C4EED9 /* SelectContactsViewController.swift in Sources */,
@@ -699,6 +816,7 @@
 				18AAF34F220AAFCF00C4EED9 /* NotificationViewController.swift in Sources */,
 				18AAF2F42209594200C4EED9 /* SplashScreenViewController.swift in Sources */,
 				18AAF2DC220954D000C4EED9 /* AppDelegate.swift in Sources */,
+				18A35677220BEDF8006EAA61 /* ToastView.swift in Sources */,
 				18AAF340220AADB600C4EED9 /* ReceivedVideosViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -849,6 +967,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52LNXJTC7F;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = GroupWiish/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -859,7 +979,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "GroupWiish/GroupWiish-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -871,6 +991,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52LNXJTC7F;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = GroupWiish/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -880,7 +1002,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "GroupWiish/GroupWiish-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

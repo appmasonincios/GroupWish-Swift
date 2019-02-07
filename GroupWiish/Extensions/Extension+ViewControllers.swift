@@ -53,14 +53,10 @@ extension UIViewController
         return screenshotImage
     }
     
-    func isValidEmail(testStr:String) -> Bool
-    {
-        // print("validate calendar: \(testStr)")
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
-    }
+  
+    
+    
+   
   
     func checkstate(checkstate:String) -> String
     {
@@ -301,7 +297,17 @@ extension String {
         let seconds = Int(components[2]) ?? 0
         return (hours * 3600) + (minutes * 60) + seconds
     }
+   
+        func isValidEmail() -> Bool {
+            // here, `try!` will always succeed because the pattern is valid
+            let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
+            return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
+        }
+    
+  
 }
+
+
 
 extension UIView {
     

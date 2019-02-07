@@ -1,0 +1,288 @@
+//
+//  GroupWiish.pch
+//  GroupWiish
+//
+//  Created by apple on 24/06/18.
+//  Copyright © 2018 APPMASON STUDIOS. All rights reserved.
+//
+
+#ifndef GroupWiish_pch
+#define GroupWiish_pch
+
+/******************************************************
+ Import Rgb colour helper macros
+ ******************************************************/
+
+#define RGB(r, g, b) [UIColor colorWithRed:(float)r / 255.0 green:(float)g / 255.0 blue:(float)b / 255.0 alpha:1.0]
+#define RGBA(r, g, b, a) [UIColor colorWithRed:(float)r / 255.0 green:(float)g / 255.0 blue:(float)b / 255.0 alpha:a]
+
+/******************************************************
+ Import All device type info by macros
+ ******************************************************/
+
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_RETINA ([[UIScreen mainScreen] scale] >= 2.0)
+
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define IS_IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+#define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
+#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
+#define IS_IPHONE_X (IS_IPHONE && SCREEN_MAX_LENGTH == 812.0)
+
+
+/******************************************************
+ For Keychain access info by macros
+ ******************************************************/
+
+// Used for saving to NSUserDefaults that a PIN has been set and as the unique identifier for the Keychain
+#define PIN_SAVED @"hasSavedPIN"
+
+// Used for saving the users name to NSUserDefaults
+#define USERNAME @"username"
+
+// Used to specify the Application used in Keychain accessing
+#define APP_NAME [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
+
+// Used to help secure the PIN
+// Ideally, this is randomly generated, but to avoid unneccessary complexity and overhead of storing the Salt seperately we will standardize on this key.
+// !!KEEP IT A SECRET!!
+#define SALT_HASH @"FvTivqTqZXsgLLx1v3P8TGRyVHaSOB1pvfm02wvGadj7RLHV8GrfxaZ84oGA8RsKdNRpxdAojXYg9iAj"
+
+// Typedefs just to make it a little easier to read in code
+typedef enum {
+    kAlertTypePIN = 0,
+    kAlertTypeSetup
+} AlertTypes;
+
+typedef enum {
+    kTextFieldPIN = 1,
+    kTextFieldName,
+    kTextFieldPassword
+} TextFieldTypes;
+
+#define PREMIUM_APP_STORE_LINK  @"https://itunes.apple.com/SG/app/id1211730146?mt=8"
+
+#define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+/******************************************************
+ Server info by macros
+ ******************************************************/
+
+#define SPLASH_SCREEN_TIME      3.0
+
+#define SUCCESS_CODE            200
+#define FAILURE_CODE            400
+
+#define GOOGLE_URL_SCHEME       @"com.googleusercontent.apps.451408287284-ajadruvp2om1mjg74vdlb9asuqpdu3sm"
+#define GOOGLE_CLIENT_ID        @"451408287284-ajadruvp2om1mjg74vdlb9asuqpdu3sm.apps.googleusercontent.com"
+#define WS_GoogleSignIn         @"https://www.googleapis.com/plus/v1/people/me?access_token="
+#define FACEBOOK_URL_SCHEME     @"fb2213655088675019"
+#define Instagram_Url           @"https://api.instagram.com/oauth/access_token"
+#define INSTAGRAM_AUTHURL       @"https://api.instagram.com/oauth/authorize/"
+#define INSTAGRAM_APIURl        @"https://api.instagram.com/v1/users/"
+#define INSTAGRAM_CLIENT_ID     @"5fcf10686e284a9b977039df4747731d"
+#define INSTAGRAM_CLIENTSERCRET @"6249634296f14d0aa22ca4a58ec3c238"
+#define INSTAGRAM_REDIRECT_URI  @"http://ec2-54-173-211-167.compute-1.amazonaws.com"
+#define INSTAGRAM_ACCESS_TOKEN  @"access_token"
+#define INSTAGRAM_SCOPE         @"likes+comments+relationships+follower_list+public_content"
+#define TWITTER_CONSUMER_KEY    @"CSHOeFBPqqeLrYE5T3jn5f00s"
+#define TWITTER_CONSUMER_SECRET @"ffl5VVH0Ea5BFozu209WLr6XnAyyRrtnnJw0uD9mP1gXzni87d"
+#define TWITTER_URL_SCHEME      @"twitterkit-CSHOeFBPqqeLrYE5T3jn5f00s"
+
+#define WS_BaseUrl              @"http://ec2-18-217-201-202.us-east-2.compute.amazonaws.com/Group"
+#define WS_ImageUrl             @"https://groupwish.s3.amazonaws.com/images"
+#define WS_VideoUrl             @"https://groupwish.s3.amazonaws.com/videos"
+
+#define WS_Registration         @"Register/insert_user"
+#define WS_Login                @"Login_check"
+#define WS_SocialLogin          @"Login_check/social_login"
+#define WS_UserProfile          @"User/user_details"
+#define WS_Forgot_pass          @"User/forgot_pass"
+#define WS_Get_Notifications    @"Greetings/friends_greetings_list"
+#define WS_Get_receivedCards    @"Thanku_card/get_friend_cards"
+#define WS_SendVideo_Touser     @"Videos/send_video_user"
+#define WS_Get_Contacts         @"Contacts/user_contacts"
+#define WS_Get_Profile          @"User/user_details"
+#define WS_Update_Profile       @"Register/update_user"
+#define WS_Get_RequestList      @"Contacts/get_friend_requests"
+#define WS_Approve_Reject_Req   @"Contacts/request_response"
+#define WS_Get_Greetings        @"Greetings/greeting_list"
+#define WS_Get_GreetingDetails  @"Greetings/get_greeting_details"
+#define WS_Get_contact_search   @"Contacts/search_contacts"
+#define WS_Send_Friend_Rqst     @"Contacts/send_friend_request"
+#define WS_Get_Videos_by_greet  @"Videos/greeting_videos"
+#define WS_Send_videos_Merging  @"Videos/merge_videos"
+#define WS_Send_to_Recipent     @"Videos/send_final_video"
+#define WS_Send_to_host         @"Videos/send_video_host"
+#define WS_Videos_history       @"Videos/videos_history"
+#define WS_Fetch_final_vidoes   @"Videos/get_final_videos"
+#define WS_Get_ThankYouCards    @"Thanku_card/show_all_cards"
+#define WS_Get_Host_Cards       @"Thanku_card/get_host_card"
+#define WS_Insert_cardData      @"Thanku_card/insert_cards_data"
+#define WS_Create_Greeting      @"Greetings/insert_greeting"
+#define WS_Delete_Contact       @"Contacts/delete_contact"
+#define WS_Delete_Thankyoucards @"Thanku_card/delete_card"
+#define WS_OTP_Check            @"Register/OTP_checker"
+#define WS_OTP_Resend           @"Register/resend_OTP"
+
+#define Tag_Registration         1
+#define Tag_Login                2
+#define Tag_SocialLogin          3
+#define Tag_UserProfile          4
+#define Tag_Instagram            5
+#define Tag_GoogleCheck          6
+#define Tag_Forgotpass           7
+#define Tag_Notifications        8
+#define Tag_ReceivedCards        9
+#define Tag_Contacts             10
+#define Tag_Profile              11
+#define Tag_updateProfile        12
+#define Tag_requestProfiles      13
+#define Tag_requestApprove       14
+#define Tag_getgreetings         15
+#define Tag_getgreetingDetails   16
+#define Tag_contactsSearch       17
+#define Tag_friend_request       18
+#define Tag_videosbyGreeting     19
+#define Tag_videosforMerge       20
+#define Tag_videoToRecipent      21
+#define Tag_videoToHost          22
+#define Tag_videoHistory         23
+#define Tag_finalVideos          24
+#define Tag_allThankCards        25
+#define Tag_hostCards            26
+#define Tag_insertCardData       27
+#define Tag_createGreeting       28
+#define Tag_deleteContact        29
+#define Tag_deleteThankCard      30
+#define Tag_otpChecker           31
+#define Tag_resend_otp           32
+
+/******************************************************
+ Imports
+ ******************************************************/
+
+//Pods & ThirdParty
+//#import <GoogleSignIn/GoogleSignIn.h>
+//#import <TwitterKit/TWTRKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <KanvasCameraSDK/KanvasCameraSDK.h>
+//#import <MessageUI/MessageUI.h>
+//#import <MessageUI/MFMailComposeViewController.h>
+//#import <CoreLocation/CoreLocation.h>
+//#import "Reachability.h"
+//#import "SCLAlertView.h"
+//#import "RESideMenu.h"
+//#import "UIGifImage.h"
+//#import "RPFloatingPlaceholderTextField.h"
+//#import "LUNSegmentedControl.h"
+//#import "GDIIndexBar.h"
+//#import "MPCoachMarks.h"
+//#import "IQKeyboardManager.h"
+//#import "ZJWavesView.h"
+//#import "AFNetworking.h"
+//#import "UIView+WebCache.h"
+//#import "UIImageView+WebCache.h"
+//#import "UITextField+PaddingText.h"
+//#import "KeychainWrapper.h"
+//#import "MDDatePickerDialog.h"
+//#import "MBProgressHUD.h"
+//#import "TKParallaxScrollView.h"
+//#import "UIView+Toast.h"
+//#import "TOCropViewController.h"
+//#import "GBVersionTracking.h"
+//#import "BBBadgeBarButtonItem.h"
+//#import "UIScrollView+FloatingButton.h"
+
+////NSobject Classes
+//#import "Shared.h"
+//#import "Services.h"
+//#import "Notifications.h"
+//#import "ReceivedCards.h"
+//#import "Contacts.h"
+//#import "Requests.h"
+//#import "Greetings.h"
+//#import "ReceivedVideos.h"
+
+////Core Files
+//#import <CoreData/CoreData.h>
+//#import "AppDelegate.h"
+//#import <AVKit/AVKit.h>
+//#import <AVFoundation/AVFoundation.h>
+//#import <Photos/Photos.h>
+//
+//// Animations for Table view
+//#import "zhTableViewAnimations.h"
+//#import "zhTableViewAnimationsType.h"
+//#import "UIView+AddConstraints.h"
+//#import "UITableView+zhAddAnimations.h"
+//#import "UITableViewCell+zhAddAnimations.h"
+//#import "UITableView+zhAddAnimations.h"
+//
+//// Table View Cells
+//#import "SideMenuTableViewCell.h"
+//#import "MyGreetingsTableViewCell.h"
+//#import "MyVideosTableViewCell.h"
+//#import "MycontactsTableViewCell.h"
+//#import "NotificationsTableViewCell.h"
+//#import "ReceivedCardsTableViewCell.h"
+//#import "RequestsTableViewCell.h"
+//#import "GreetingsDetailTableViewCell.h"
+//#import "AddContactsCell.h"
+//#import "ReceivedVideosTableViewCell.h"
+//#import "SelectMaxContactsTableViewCell.h"
+//
+////Collection View Cells
+//#import "ArrangeVideosCollectionViewCell.h"
+//#import "SendThankCardCollectionViewCell.h"
+//#import "ContactsCollectionViewCell.h"
+//
+////ViewControllers
+//#import "TutorialViewController.h"
+//#import "SideMenuViewController.h"
+//#import "ProfileViewController.h"
+//#import "LoginViewController.h"
+//#import "SignUpViewController.h"
+//#import "RequestViewController.h"
+//#import "NotificationViewController.h"
+//#import "MyGreetingsViewController.h"
+//#import "SplashScreenViewController.h"
+//#import "WebViewViewController.h"
+//#import "PreviewVideoViewController.h"
+//#import "ReceivedCardsViewController.h"
+//#import "RequestViewController.h"
+//#import "MyContactsViewController.h"
+//#import "GreetingDetailViewController.h"
+//#import "AddContactsViewController.h"
+//#import "ReceivedVideosViewController.h"
+//#import "ArrangeVideosViewController.h"
+//#import "PreviewViewController.h"
+//#import "SelectContactsViewController.h"
+//#import "PremiumAppViewController.h"
+//#import "AboutUsViewController.h"
+//#import "SendThankYouCardsViewController.h"
+//#import "ShowThankYouCardViewController.h"
+//#import "CreateSingleWishViewController.h"
+//#import "DatePickerViewController.h"
+//#import "SelectMaxFriendsViewController.h"
+//#import "WishesSentViewController.h"
+//#import "OTPViewController.h"
+//#import "UITagTapGestureRecognizer.h"
+//#import "AddPhotoViewController.h"
+//#import "AddVideoViewController.h"
+//#import "DeleteContactViewController.h"
+//#import "PopupViewController.h"
+//#import "choosePopupViewController.h"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
+/* GroupWiish_pch */

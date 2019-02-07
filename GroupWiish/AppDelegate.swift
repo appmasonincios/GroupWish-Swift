@@ -8,9 +8,10 @@
 
 import UIKit
 import CoreData
-
+import IQKeyboardManagerSwift
+import UserNotifications
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             statusBar.backgroundColor = UIColor.init(red:60.0/255.0, green:16.0/255.0, blue:80.0/255.0, alpha:1.0)
         }
         
+       IQKeyboardManager.shared.enable = true
         UIApplication.shared.statusBarStyle = .lightContent
         // Override point for customization after application launch.
         return true
@@ -98,3 +100,102 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate {
+    
+    //Ios 10 delegates for Push Notifications
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,  willPresent notification: UNNotification, withCompletionHandler   completionHandler: @escaping (_ options:   UNNotificationPresentationOptions) -> Void) {
+        print("Handle push from foreground")
+        
+        if let pushDict = notification.request.content.userInfo["aps"] as? [String : AnyObject] {
+            print(pushDict)
+        }
+        
+        completionHandler([.sound, .alert, .badge])
+    }
+    
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Handle push from background or closed")
+        
+        if (response.notification.request.content.userInfo["aps"] as? [String : Any]) != nil
+        {
+         
+            guard
+                let aps = response.notification.request.content.userInfo[AnyHashable("aps")] as? NSDictionary
+                else {
+                    // handle any error here
+                    return
+            }
+            
+            print(aps)
+          
+            
+            
+        }
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        let center = UNUserNotificationCenter.current()
+        center.removeAllDeliveredNotifications()
+        
+        completionHandler()
+        
+    }
+    
+    
+    // Called when APNs failed to register the device for push notifications
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        
+        print("APNs registration failed: \(error)")
+        
+        savesharedprefrence(key:"device_token", value:"123456789")
+        
+    }
+    
+    
+    func registerForPushNotifications(application: UIApplication) {
+        let center  = UNUserNotificationCenter.current()
+        center.delegate = self
+        // set the type as sound or badge
+        center.requestAuthorization(options: [.sound,.alert,.badge]) { (granted, error) in
+            // Enable or disable features based on authorization
+        }
+        application.registerForRemoteNotifications()
+        
+    }
+    
+    func application(_ application: UIApplication,didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        var token = ""
+        for i in 0..<deviceToken.count {
+            token = token + String(format: "%02.2hhx", arguments: [deviceToken[i]])
+        }
+        print(token)
+        savesharedprefrence(key:"device_token", value:token)
+    }
+    
+}
+extension AppDelegate {
+    
+    func changeRootViewController(selectedIndexOfTabBar: Int = 0)
+    {
+        if getSharedPrefrance(key:"loginsession") == "true"
+        {
+            
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let centerViewController = storyboard.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
+            centerViewController.selectedIndex = selectedIndexOfTabBar
+            self.window?.rootViewController = centerViewController
+            
+            
+        }
+        else
+        {
+            
+            
+            
+        }
+        
+        
+    }
+    
+}
