@@ -1,0 +1,136 @@
+
+{
+  "baseurl": "https://d1d7t1ygvx8siu.cloudfront.net/SDK-Assets/styles",
+  "items" : [
+    {
+      "style_name" : "colpen",
+      "readable_name" : "colored pencil",
+      "thumbnail" : "colpen"
+    },
+    {
+      "style_name" : "buildings",
+      "readable_name" : "oil paint",
+      "thumbnail" : "buildings"
+    },
+    {
+      "style_name" : "starry",
+      "readable_name" : "van gogh",
+      "thumbnail" : "starry"
+    },
+    {
+      "style_name" : "gandi",
+      "readable_name" : "pencil",
+      "thumbnail" : "gandi"
+    },
+    {
+      "style_name" : "colorspots",
+      "readable_name" : "cloudy",
+      "thumbnail" : "colorspots"
+    },
+    {
+      "style_name" : "ballpoint",
+      "readable_name" : "ballpoint",
+      "thumbnail" : "ballpoint"
+    },
+    {
+      "style_name" : "crayon",
+      "readable_name" : "crayon",
+      "thumbnail" : "crayon"
+    },
+    {
+      "style_name" : "blockface",
+      "readable_name" : "blocks",
+      "thumbnail" : "blockface"
+    },
+    {
+      "style_name" : "fancy",
+      "readable_name" : "techno",
+      "thumbnail" : "fancy"
+    },
+    {
+      "style_name" : "fairy",
+      "readable_name" : "tango",
+      "thumbnail" : "fairy"
+    },
+    {
+      "style_name" : "dancer",
+      "readable_name" : "mardi gras",
+      "thumbnail" : "dancer"
+    },
+    {
+      "style_name" : "whale",
+      "readable_name" : "storm",
+      "thumbnail" : "whale"
+    },
+    {
+      "style_name" : "crossstitch",
+      "readable_name" : "cross stitch",
+      "thumbnail" : "crossstitch"
+    },
+    {
+      "style_name" : "buda",
+      "readable_name" : "tribal",
+      "thumbnail" : "buda"
+    },
+    {
+      "style_name" : "boygirl",
+      "readable_name" : "calypso",
+      "thumbnail" : "boygirl"
+    },
+   {
+      "style_name" : "barbarella",
+      "readable_name" : "clay",
+      "thumbnail" : "barbarella"
+    },
+    {
+      "style_name" : "bermuda",
+      "readable_name" : "bermuda",
+      "thumbnail" : "bermuda"
+    },
+    {
+      "style_name" : "feather",
+      "readable_name" : "feather",
+      "thumbnail" : "feather"
+    },
+    {
+      "style_name" : "blueball",
+      "readable_name" : "rain",
+      "thumbnail" : "blueball"
+    },
+    {
+      "style_name" : "boat",
+      "readable_name" : "sand",
+      "thumbnail" : "boat"
+    },
+    {
+      "style_name" : "mags",
+      "readable_name" : "midnight",
+      "thumbnail" : "mags"
+    },
+    {
+      "style_name" : "manyflow",
+      "readable_name" : "freckle",
+      "thumbnail" : "manyflow"
+    },
+    {
+      "style_name" : "orbits",
+      "readable_name" : "matrix",
+      "thumbnail" : "orbits"
+    },
+    {
+      "style_name" : "purple",
+      "readable_name" : "sunset",
+      "thumbnail" : "purple"
+    },
+    {
+      "style_name" : "two",
+      "readable_name" : "stucco",
+      "thumbnail" : "two"
+    },
+    {
+      "style_name" : "girlhair",
+      "readable_name" : "dragon",
+      "thumbnail" : "girlhair"
+    }
+  ]
+}

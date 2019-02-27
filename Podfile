@@ -18,6 +18,22 @@ target 'GroupWiish' do
  pod "SideMenu"
  pod 'TransitionButton'
  pod 'TwitterKit'
+pod 'SkyFloatingLabelTextField' 
+pod 'Kingfisher'
+pod 'EMPageViewController'
+pod 'PopItUp'
+pod 'ImagePicker'
+pod 'Lightbox'
+pod 'Hue'
+pod 'SearchTextField'
+pod 'GPUImage'
+pod 'SDWebImage'
+pod 'AFNetworking'
+pod 'FLAnimatedImage'
+pod 'SSZipArchive'
+pod 'PureLayout'
+pod 'YKPhotoCircleCrop'
+pod 'DYBadgeButton'
   # Pods for GroupWiish
 
 end

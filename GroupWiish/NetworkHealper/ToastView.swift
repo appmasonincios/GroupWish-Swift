@@ -280,6 +280,7 @@ public extension UIView {
      */
     public func makeToastActivity(_ position: ToastPosition) {
         // sanity
+        
         if let _ = objc_getAssociatedObject(self, &ToastKeys.ActivityView) as? UIView {
             return
         }
@@ -341,10 +342,20 @@ public extension UIView {
     }
     
     private func createToastActivityView() -> UIView {
-        let style = ToastManager.shared.style
-        //hexStringToUIColor(hex: "#1B1919")
-        let activityView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: style.activitySize.width, height: style.activitySize.height))
-        activityView.backgroundColor = UIColor.blue
+        var style = ToastManager.shared.style
+        
+    
+        
+       let activityView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.frame.width, height: self.frame.height))
+       // let activityView = UIView(frame: CGRect(x: 0.0, y: 0.0, width:50, height:50))
+        activityView.backgroundColor = style.backgroundColor
+        style.maxHeightPercentage = 1.0
+        style.cornerRadius = 0.0
+        style.horizontalPadding = 0.0
+        style.verticalPadding = 0.0
+        style.shadowRadius = 0.0
+        style.displayShadow  = false
+        
         activityView.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
         activityView.layer.cornerRadius = style.cornerRadius
         
@@ -353,12 +364,18 @@ public extension UIView {
             activityView.layer.shadowOpacity = style.shadowOpacity
             activityView.layer.shadowRadius = style.shadowRadius
             activityView.layer.shadowOffset = style.shadowOffset
+            
         }
         
-        let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
-        activityIndicatorView.center = CGPoint(x: activityView.bounds.size.width / 2.0, y: activityView.bounds.size.height / 2.0)
-        activityView.addSubview(activityIndicatorView)
-        activityIndicatorView.startAnimating()
+        //greetings_animation.gif
+        let image: UIImage = UIImage.gif(name: "greetings_animation")!
+        
+        let imageView = UIImageView(image: image)
+        imageView.frame = CGRect(x:activityView.center.x, y:activityView.center.y, width:200, height:200)
+       // imageView.contentMode = .scaleToFill
+        imageView.animationDuration = (image.duration) / 2
+        imageView.center = CGPoint(x: activityView.bounds.size.width / 2.0, y: activityView.bounds.size.height / 2.0)
+        activityView.addSubview(imageView)
         
         return activityView
     }
@@ -593,7 +610,7 @@ public struct ToastStyle {
     /**
      The background color. Default is `UIColor.blackColor()` at 80% opacity.
      */
-    public var backgroundColor = UIColor.black.withAlphaComponent(0.8)
+    public var backgroundColor = UIColor.black.withAlphaComponent(0.5)
     
     /**
      The title color. Default is `UIColor.whiteColor()`.
@@ -677,7 +694,7 @@ public struct ToastStyle {
     /**
      Enable or disable a shadow on the toast view. Default is `false`.
      */
-    public var displayShadow = false
+    public var displayShadow = true
     
     /**
      The shadow color. Default is `UIColor.blackColor()`.
@@ -769,6 +786,7 @@ public class ToastManager {
     public var position = ToastPosition.bottom
     
 }
+
 
 
 

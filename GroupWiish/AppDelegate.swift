@@ -10,9 +10,16 @@ import UIKit
 import CoreData
 import IQKeyboardManagerSwift
 import UserNotifications
+import FBSDKCoreKit
+import FBSDKLoginKit
+import FBSDKShareKit
+import TwitterKit
+import GoogleSignIn
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
-
+   
+    
+  
     var window: UIWindow?
 
 
@@ -23,12 +30,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             statusBar.backgroundColor = UIColor.init(red:60.0/255.0, green:16.0/255.0, blue:80.0/255.0, alpha:1.0)
         }
         
+        
+        
+        GBVersionTracking.track()
+        /* Facebook Login SDK */
+        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions:launchOptions)
+         /* Twitter Login SDK */
+    TWTRTwitter.sharedInstance().start(withConsumerKey:Constants.TWITTER_CONSUMER_KEY, consumerSecret:Constants.TWITTER_CONSUMER_SECRET)
+        
+
+        //If Remote Notification Not Allowed
+        savesharedprefrence(key:"devicetoken", value:"gfaeuhffguyeu4poof8rno")
+        
        IQKeyboardManager.shared.enable = true
         UIApplication.shared.statusBarStyle = .lightContent
         // Override point for customization after application launch.
+        
+        IQKeyboardManager.shared.enable = true
+        //For Push Notifications:-
+        self.registerForPushNotifications(application: application)
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        let center = UNUserNotificationCenter.current()
+        center.removeAllDeliveredNotifications()
+        
+        self.changeRootViewController(selectedIndexOfTabBar: 0)
         return true
     }
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
+    {
+         var handled = true
+  
+        if url.scheme?.localizedCaseInsensitiveCompare(Constants.FACEBOOK_URL_SCHEME) == .orderedSame
+        {
+           
+            handled = (FBSDKApplicationDelegate.sharedInstance()?.application(app, open:url, sourceApplication:[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation:[UIApplication.OpenURLOptionsKey.annotation]))!
+        }
+        else if url.scheme?.localizedCaseInsensitiveCompare(Constants.GOOGLE_URL_SCHEME) == .orderedSame
+        {
+            handled = GIDSignIn.sharedInstance().handle(url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+        }
+         else if url.scheme?.localizedCaseInsensitiveCompare(Constants.TWITTER_URL_SCHEME) == .orderedSame
+        {
+            
+            handled = TWTRTwitter.sharedInstance().application(app, open:url, options:options)
+        }
+    
+        return handled
+    }
+    
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -52,6 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+   
 
     // MARK: - Core Data stack
 
@@ -170,7 +223,7 @@ extension AppDelegate {
             token = token + String(format: "%02.2hhx", arguments: [deviceToken[i]])
         }
         print(token)
-        savesharedprefrence(key:"device_token", value:token)
+        savesharedprefrence(key:"devicetoken", value:token)
     }
     
 }
@@ -190,6 +243,8 @@ extension AppDelegate {
         }
         else
         {
+           
+            
             
             
             

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="fa-brands-400.ttf">
+            <string>FontAwesome5BrandsRegular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectanoptionVC" customModule="GroupWiish" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="185"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SN8-8P-xfR">
+                    <rect key="frame" x="337" y="8" width="30" height="30"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74i-VO-B1C">
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            <state key="normal" image="close_cancel_icon"/>
+                            <connections>
+                                <action selector="closebuttonaction:" destination="-1" eventType="touchUpInside" id="Eq2-Wg-LaC"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="74i-VO-B1C" secondAttribute="bottom" id="88Z-vQ-rhV"/>
+                        <constraint firstItem="74i-VO-B1C" firstAttribute="top" secondItem="SN8-8P-xfR" secondAttribute="top" id="MY8-X1-Xsj"/>
+                        <constraint firstItem="74i-VO-B1C" firstAttribute="leading" secondItem="SN8-8P-xfR" secondAttribute="leading" id="Plk-mj-U59"/>
+                        <constraint firstAttribute="width" constant="30" id="TSs-md-mBR"/>
+                        <constraint firstAttribute="height" constant="30" id="TrV-YK-A9f"/>
+                        <constraint firstAttribute="trailing" secondItem="74i-VO-B1C" secondAttribute="trailing" id="kLo-ax-sAR"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select an Option" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d62-r7-JNn">
+                    <rect key="frame" x="124" y="32" width="127" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Wki-kO-Ico"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cR4-Ti-VLE">
+                    <rect key="frame" x="124" y="57" width="127" height="1"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="wqk-8F-GX8"/>
+                    </constraints>
+                </view>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cZY-Em-2rk">
+                    <rect key="frame" x="67.5" y="90" width="240" height="40"/>
+                    <subviews>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-ca-oMG" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="115" height="40"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTz-fr-Z9v">
+                                    <rect key="frame" x="0.0" y="0.0" width="115" height="40"/>
+                                    <fontDescription key="fontDescription" name="FontAwesome5BrandsRegular" family="Font Awesome 5 Brands" pointSize="17"/>
+                                    <state key="normal" title="Due Today">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="dueTodaybuttonaction:" destination="-1" eventType="touchUpInside" id="atd-sA-5gn"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="mTz-fr-Z9v" secondAttribute="trailing" id="I8i-Hz-LwW"/>
+                                <constraint firstItem="mTz-fr-Z9v" firstAttribute="top" secondItem="hyQ-ca-oMG" secondAttribute="top" id="Tyh-GU-h9z"/>
+                                <constraint firstAttribute="bottom" secondItem="mTz-fr-Z9v" secondAttribute="bottom" id="Uk4-75-Eao"/>
+                                <constraint firstItem="mTz-fr-Z9v" firstAttribute="leading" secondItem="hyQ-ca-oMG" secondAttribute="leading" id="zsM-06-LYK"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jul-9P-Ehf" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                            <rect key="frame" x="125" y="0.0" width="115" height="40"/>
+                            <subviews>
+                                <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEZ-Wb-rNM" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="115" height="40"/>
+                                    <fontDescription key="fontDescription" name="FontAwesome5BrandsRegular" family="Font Awesome 5 Brands" pointSize="17"/>
+                                    <state key="normal" title="Pas Due">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="8"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="pasduedateaction:" destination="-1" eventType="touchUpInside" id="UEQ-uI-1AV"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="uEZ-Wb-rNM" firstAttribute="leading" secondItem="jul-9P-Ehf" secondAttribute="leading" id="Aeo-p0-sXU"/>
+                                <constraint firstAttribute="bottom" secondItem="uEZ-Wb-rNM" secondAttribute="bottom" id="CnZ-tc-k9D"/>
+                                <constraint firstAttribute="trailing" secondItem="uEZ-Wb-rNM" secondAttribute="trailing" id="Pwb-Yn-hdl"/>
+                                <constraint firstItem="uEZ-Wb-rNM" firstAttribute="top" secondItem="jul-9P-Ehf" secondAttribute="top" id="cEo-Yt-N6J"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="3pJ-fq-aLE"/>
+                        <constraint firstAttribute="height" constant="40" id="cv1-ZT-Nyx"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="0.90196078431372551" green="0.78823529411764703" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="cZY-Em-2rk" firstAttribute="centerX" secondItem="d62-r7-JNn" secondAttribute="centerX" id="9UG-Tu-Rqq"/>
+                <constraint firstItem="cR4-Ti-VLE" firstAttribute="top" secondItem="d62-r7-JNn" secondAttribute="bottom" constant="4" id="DD6-qU-g8W"/>
+                <constraint firstItem="cZY-Em-2rk" firstAttribute="top" secondItem="cR4-Ti-VLE" secondAttribute="bottom" constant="32" id="LcT-uz-ES0"/>
+                <constraint firstItem="SN8-8P-xfR" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="V31-sO-GCZ"/>
+                <constraint firstItem="cR4-Ti-VLE" firstAttribute="centerX" secondItem="d62-r7-JNn" secondAttribute="centerX" id="ij0-RY-G9d"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SN8-8P-xfR" secondAttribute="trailing" constant="8" id="ktB-Fy-cqg"/>
+                <constraint firstItem="cR4-Ti-VLE" firstAttribute="width" secondItem="d62-r7-JNn" secondAttribute="width" id="nrq-6b-Shd"/>
+                <constraint firstItem="d62-r7-JNn" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vsh-CL-vWu"/>
+                <constraint firstItem="d62-r7-JNn" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="xAK-ed-LbS"/>
+                <constraint firstItem="cZY-Em-2rk" firstAttribute="top" secondItem="d62-r7-JNn" secondAttribute="bottom" constant="37" id="z0w-h4-PBg"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="8"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="138.40000000000001" y="132.68365817091455"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close_cancel_icon" width="58" height="58"/>
+    </resources>
+</document>

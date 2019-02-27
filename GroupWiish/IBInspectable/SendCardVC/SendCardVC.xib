@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto_Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendCardVC" customModule="GroupWiish" customModuleProvider="target">
+            <connections>
+                <outlet property="messageTF" destination="LSR-xb-ml5" id="nq6-RC-Fho"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="ImageViewDesign" customModule="GroupWiish" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyj-0h-1yx">
+                    <rect key="frame" x="16" y="32" width="343" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="mRj-D3-3lz"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vc-1F-OzJ">
+                    <rect key="frame" x="16" y="69" width="343" height="54"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSR-xb-ml5" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="54"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="lineHeight">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write Message"/>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="LSR-xb-ml5" secondAttribute="trailing" id="0jB-s2-nj6"/>
+                        <constraint firstAttribute="height" constant="54" id="26K-7p-pfG"/>
+                        <constraint firstItem="LSR-xb-ml5" firstAttribute="leading" secondItem="5vc-1F-OzJ" secondAttribute="leading" id="4oY-Je-scG"/>
+                        <constraint firstAttribute="bottom" secondItem="LSR-xb-ml5" secondAttribute="bottom" id="Q5p-vq-Iky"/>
+                        <constraint firstItem="LSR-xb-ml5" firstAttribute="top" secondItem="5vc-1F-OzJ" secondAttribute="top" id="ylU-M0-WcU"/>
+                    </constraints>
+                </view>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Vgu-PT-0ZV">
+                    <rect key="frame" x="179" y="137" width="180" height="34"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B4Z-dN-VCX">
+                            <rect key="frame" x="0.0" y="0.0" width="90" height="34"/>
+                            <state key="normal" title="CANCEL">
+                                <color key="titleColor" red="1" green="0.01176470588" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </state>
+                            <connections>
+                                <action selector="cancel:" destination="-1" eventType="touchUpInside" id="9VZ-BI-xsX"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ns4-bl-jhq">
+                            <rect key="frame" x="90" y="0.0" width="90" height="34"/>
+                            <state key="normal" title="SEND">
+                                <color key="titleColor" red="1" green="0.01176470588" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </state>
+                            <connections>
+                                <action selector="sendbuttonaction:" destination="-1" eventType="touchUpInside" id="bWX-Ie-laZ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="6AM-qP-5Ih"/>
+                        <constraint firstAttribute="height" constant="34" id="Pau-9d-Xry"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="5vc-1F-OzJ" firstAttribute="top" secondItem="Jyj-0h-1yx" secondAttribute="bottom" constant="16" id="10f-BU-lfb"/>
+                <constraint firstItem="Jyj-0h-1yx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="3Us-7k-wOe"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5vc-1F-OzJ" secondAttribute="trailing" constant="16" id="49K-BL-g0y"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Vgu-PT-0ZV" secondAttribute="trailing" constant="16" id="HBs-Tk-Ouh"/>
+                <constraint firstItem="Vgu-PT-0ZV" firstAttribute="top" secondItem="5vc-1F-OzJ" secondAttribute="bottom" constant="14" id="MuP-bG-1cB"/>
+                <constraint firstItem="Jyj-0h-1yx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="PLj-oM-5pF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jyj-0h-1yx" secondAttribute="trailing" constant="16" id="gnp-eR-yLF"/>
+                <constraint firstItem="5vc-1F-OzJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ncs-Td-Rwx"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="16"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="138.40000000000001" y="143.02848575712144"/>
+        </view>
+    </objects>
+</document>

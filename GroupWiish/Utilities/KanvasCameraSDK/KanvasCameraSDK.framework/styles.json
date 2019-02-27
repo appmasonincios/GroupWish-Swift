@@ -1,0 +1,300 @@
+{
+  "baseurl": "https://d1d7t1ygvx8siu.cloudfront.net/SDK-Assets/styles",
+  "items" : [
+    {
+      "style_name" : "ballpoint",
+      "readable_name" : "ballpoint",
+      "thumbnail" : "ballpoint"
+    },
+    {
+      "style_name" : "barbarella",
+      "readable_name" : "barbarella",
+      "thumbnail" : "barbarella"
+    },
+    {
+      "style_name" : "bermuda",
+      "readable_name" : "bermuda",
+      "thumbnail" : "bermuda"
+    },
+    {
+      "style_name" : "bigfeather",
+      "readable_name" : "bigfeather",
+      "thumbnail" : "bigfeather"
+    },
+    {
+      "style_name" : "blockeye",
+      "readable_name" : "blockeye",
+      "thumbnail" : "blockeye"
+    },
+    {
+      "style_name" : "blockface",
+      "readable_name" : "blockface",
+      "thumbnail" : "blockface"
+    },
+    {
+      "style_name" : "blueball",
+      "readable_name" : "blueball",
+      "thumbnail" : "blueball"
+    },
+    {
+      "style_name" : "bluepat",
+      "readable_name" : "bluepat",
+      "thumbnail" : "bluepat"
+    },
+    {
+      "style_name" : "boat",
+      "readable_name" : "boat",
+      "thumbnail" : "boat"
+    },
+    {
+      "style_name" : "boygirl",
+      "readable_name" : "boygirl",
+      "thumbnail" : "boygirl"
+    },
+    {
+      "style_name" : "bubbles",
+      "readable_name" : "bubbles",
+      "thumbnail" : "bubbles"
+    },
+    {
+      "style_name" : "buda",
+      "readable_name" : "buda",
+      "thumbnail" : "buda"
+    },
+    {
+      "style_name" : "buildings",
+      "readable_name" : "buildings",
+      "thumbnail" : "buildings"
+    },
+    {
+      "style_name" : "button",
+      "readable_name" : "button",
+      "thumbnail" : "button"
+    },
+    {
+      "style_name" : "buttons",
+      "readable_name" : "buttons",
+      "thumbnail" : "buttons"
+    },
+    {
+      "style_name" : "cardtree",
+      "readable_name" : "cardtree",
+      "thumbnail" : "cardtree"
+    },
+    {
+      "style_name" : "characters",
+      "readable_name" : "characters",
+      "thumbnail" : "characters"
+    },
+    {
+      "style_name" : "circles",
+      "readable_name" : "circles",
+      "thumbnail" : "circles"
+    },
+    {
+      "style_name" : "clights",
+      "readable_name" : "clights",
+      "thumbnail" : "clights"
+    },
+    {
+      "style_name" : "colorspots",
+      "readable_name" : "colorspots",
+      "thumbnail" : "colorspots"
+    },
+    {
+      "style_name" : "colortree",
+      "readable_name" : "colortree",
+      "thumbnail" : "colortree"
+    },
+    {
+      "style_name" : "colpen",
+      "readable_name" : "colpen",
+      "thumbnail" : "colpen"
+    },
+    {
+      "style_name" : "cool",
+      "readable_name" : "cool",
+      "thumbnail" : "cool"
+    },
+    {
+      "style_name" : "crayon",
+      "readable_name" : "crayon",
+      "thumbnail" : "crayon"
+    },
+    {
+      "style_name" : "crossstitch",
+      "readable_name" : "crossstitch",
+      "thumbnail" : "crossstitch"
+    },
+    {
+      "style_name" : "dancer",
+      "readable_name" : "dancer",
+      "thumbnail" : "dancer"
+    },
+    {
+      "style_name" : "darkembro",
+      "readable_name" : "darkembro",
+      "thumbnail" : "darkembro"
+    },
+    {
+      "style_name" : "doodle",
+      "readable_name" : "doodle",
+      "thumbnail" : "doodle"
+    },
+    {
+      "style_name" : "eclectic",
+      "readable_name" : "eclectic",
+      "thumbnail" : "eclectic"
+    },
+    {
+      "style_name" : "eleph",
+      "readable_name" : "eleph",
+      "thumbnail" : "eleph"
+    },
+    {
+      "style_name" : "embro",
+      "readable_name" : "embro",
+      "thumbnail" : "embro"
+    },
+    {
+      "style_name" : "fairy",
+      "readable_name" : "fairy",
+      "thumbnail" : "fairy"
+    },
+    {
+      "style_name" : "fancy",
+      "readable_name" : "fancy",
+      "thumbnail" : "fancy"
+    },
+    {
+      "style_name" : "feather",
+      "readable_name" : "feather",
+      "thumbnail" : "feather"
+    },
+    {
+      "style_name" : "firstgandi",
+      "readable_name" : "firstgandi",
+      "thumbnail" : "firstgandi"
+    },
+    {
+      "style_name" : "gandi",
+      "readable_name" : "gandi",
+      "thumbnail" : "gandi"
+    },
+    {
+      "style_name" : "geometric",
+      "readable_name" : "geometric",
+      "thumbnail" : "geometric"
+    },
+    {
+      "style_name" : "girlhair",
+      "readable_name" : "girlhair",
+      "thumbnail" : "girlhair"
+    },
+    {
+      "style_name" : "hippie",
+      "readable_name" : "hippie",
+      "thumbnail" : "hippie"
+    },
+    {
+      "style_name" : "leppat",
+      "readable_name" : "leppat",
+      "thumbnail" : "leppat"
+    },
+    {
+      "style_name" : "mags",
+      "readable_name" : "mags",
+      "thumbnail" : "mags"
+    },
+    {
+      "style_name" : "manyflow",
+      "readable_name" : "manyflow",
+      "thumbnail" : "manyflow"
+    },
+    {
+      "style_name" : "marble",
+      "readable_name" : "marble",
+      "thumbnail" : "marble"
+    },
+    {
+      "style_name" : "market",
+      "readable_name" : "market",
+      "thumbnail" : "market"
+    },
+    {
+      "style_name" : "melted",
+      "readable_name" : "melted",
+      "thumbnail" : "melted"
+    },
+    {
+      "style_name" : "neclectic",
+      "readable_name" : "neclectic",
+      "thumbnail" : "neclectic"
+    },
+    {
+      "style_name" : "orbits",
+      "readable_name" : "orbits",
+      "thumbnail" : "orbits"
+    },
+    {
+      "style_name" : "original",
+      "readable_name" : "original",
+      "thumbnail" : "original"
+    },
+    {
+      "style_name" : "purple",
+      "readable_name" : "purple",
+      "thumbnail" : "purple"
+    },
+    {
+      "style_name" : "spiderman",
+      "readable_name" : "spiderman",
+      "thumbnail" : "spiderman"
+    },
+    {
+      "style_name" : "stained",
+      "readable_name" : "stained",
+      "thumbnail" : "stained"
+    },
+    {
+      "style_name" : "starry",
+      "readable_name" : "starry",
+      "thumbnail" : "starry"
+    },
+    {
+      "style_name" : "starry3",
+      "readable_name" : "starry3",
+      "thumbnail" : "starry3"
+    },
+    {
+      "style_name" : "stichtwo",
+      "readable_name" : "stichtwo",
+      "thumbnail" : "stichtwo"
+    },
+    {
+      "style_name" : "triflow",
+      "readable_name" : "triflow",
+      "thumbnail" : "triflow"
+    },
+    {
+      "style_name" : "two",
+      "readable_name" : "two",
+      "thumbnail" : "two"
+    },
+    {
+      "style_name" : "walking",
+      "readable_name" : "walking",
+      "thumbnail" : "walking"
+    },
+    {
+      "style_name" : "whale",
+      "readable_name" : "whale",
+      "thumbnail" : "whale"
+    },
+    {
+      "style_name" : "what",
+      "readable_name" : "what",
+      "thumbnail" : "what"
+    }
+  ]
+}

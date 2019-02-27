@@ -1,4 +1,19 @@
 PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
   - Alamofire (4.7.3)
   - AlamofireSwiftyJSON (1.0.1):
     - Alamofire (~> 4.0)
@@ -9,16 +24,20 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - Cache (5.2.0)
   - CTMediator (25)
   - CTPersistance (189):
     - CTMediator
     - SQLCipher
+  - DYBadgeButton (0.3.7)
+  - EMPageViewController (3.0.0)
   - FBSDKCoreKit (4.38.1):
     - Bolts (~> 1.9)
   - FBSDKLoginKit (4.38.1):
     - FBSDKCoreKit
   - FBSDKShareKit (4.38.1):
     - FBSDKCoreKit
+  - FLAnimatedImage (1.0.12)
   - Gloss (2.0.1)
   - GoogleSignIn (4.3.0):
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
@@ -33,6 +52,7 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.4)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
+  - GPUImage (0.1.7)
   - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
   - GTMSessionFetcher (1.2.0):
@@ -41,84 +61,152 @@ PODS:
   - GTMSessionFetcher/Full (1.2.0):
     - GTMSessionFetcher/Core (= 1.2.0)
   - HandyFrame (1.2.0)
+  - Hue (3.0.1)
+  - ImagePicker (3.1.0)
+  - Imaginary (4.2.0):
+    - Cache (~> 5.0)
   - IQKeyboardManagerSwift (6.2.0)
+  - Kingfisher (4.10.1)
+  - Lightbox (2.3.0):
+    - Imaginary (~> 4.0)
+  - PopItUp (1.0.1)
+  - PureLayout (3.1.4)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
+  - SearchTextField (1.2.2)
   - SideMenu (5.0.3)
+  - SkyFloatingLabelTextField (3.6.0)
   - SQLCipher (3.4.2):
     - SQLCipher/standard (= 3.4.2)
   - SQLCipher/common (3.4.2)
   - SQLCipher/standard (3.4.2):
     - SQLCipher/common
+  - SSZipArchive (2.1.4)
   - SwiftyJSON (4.2.0)
   - TransitionButton (0.5.2)
   - TwitterCore (3.2.0)
   - TwitterKit (3.4.2):
     - TwitterCore (>= 3.2.0)
   - ViewAnimator (2.2.0)
+  - YKPhotoCircleCrop (1.3.4)
 
 DEPENDENCIES:
+  - AFNetworking
   - AlamofireSwiftyJSON
   - CTPersistance
+  - DYBadgeButton
+  - EMPageViewController
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
+  - FLAnimatedImage
   - Gloss (~> 2.0)
   - GoogleSignIn
+  - GPUImage
   - HandyFrame
+  - Hue
+  - ImagePicker
   - IQKeyboardManagerSwift
+  - Kingfisher
+  - Lightbox
+  - PopItUp
+  - PureLayout
+  - SDWebImage
+  - SearchTextField
   - SideMenu
+  - SkyFloatingLabelTextField
+  - SSZipArchive
   - TransitionButton
   - TwitterKit
   - ViewAnimator
+  - YKPhotoCircleCrop
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AFNetworking
     - Alamofire
     - AlamofireSwiftyJSON
     - Bolts
+    - Cache
     - CTMediator
     - CTPersistance
+    - DYBadgeButton
+    - EMPageViewController
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
+    - FLAnimatedImage
     - Gloss
     - GoogleSignIn
     - GoogleToolboxForMac
+    - GPUImage
     - GTMOAuth2
     - GTMSessionFetcher
     - HandyFrame
+    - Hue
+    - ImagePicker
+    - Imaginary
     - IQKeyboardManagerSwift
+    - Kingfisher
+    - Lightbox
+    - PopItUp
+    - PureLayout
+    - SDWebImage
+    - SearchTextField
     - SideMenu
+    - SkyFloatingLabelTextField
     - SQLCipher
+    - SSZipArchive
     - SwiftyJSON
     - TransitionButton
     - TwitterCore
     - TwitterKit
     - ViewAnimator
+    - YKPhotoCircleCrop
 
 SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AlamofireSwiftyJSON: ad896b68b586aea5de8ddba641ad3b402b8d5511
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   CTMediator: 830c1fc204b3a6abf2a059510c7380f56343da0f
   CTPersistance: c9d4f20d65455df59ab74e2c195e740aac585f72
+  DYBadgeButton: 916a7d6604748118a516b56f6b9e8dd208ca5965
+  EMPageViewController: 8e0abc2b2f53f56a83044527eadbb56bd71ae3e3
   FBSDKCoreKit: 8d47857400e2f5bdea697a80daff882e91c84ef6
   FBSDKLoginKit: 4621c690d9dd8628031a4791497062183ea34b0d
   FBSDKShareKit: 6ffe22f0a0618eb7424d4104ab0ef3ce9643d42a
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Gloss: 1e8743f8de1fbe14a97f220ff901cba91ae5f8f8
   GoogleSignIn: 11183592dc63e105475c7305a325045ff95e02b7
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   HandyFrame: 437df83ba7563c56cd55b9bd0128561995463110
+  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
+  ImagePicker: db1fd7626337b2577c523bef5f499bbbe5a37079
+  Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  Lightbox: d317750e4132bfb871a5307cfe0a2c7d6a583c65
+  PopItUp: 8a95bf5d9bffdcc0da323a6eeb8fd58ee9e827de
+  PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SearchTextField: a0992739d4b05dcbb40fb3a5cc6526bd991bdd23
   SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
+  SkyFloatingLabelTextField: 38164979b79512f9ff9288ad8acfc4bbf5d843e3
   SQLCipher: f9fcf29b2e59ced7defc2a2bdd0ebe79b40d4990
+  SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TransitionButton: fb271583d9c9e4bb116b97103047e5157653f233
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
+  YKPhotoCircleCrop: 490de96b999aef44cea6d6dca8e0bc199a430e63
 
-PODFILE CHECKSUM: 3900f0068176d62b023a1048797fb165a9a61348
+PODFILE CHECKSUM: 6e76e2a955bc7a9124fdbd05396d121bbaa90011
 
 COCOAPODS: 1.5.3

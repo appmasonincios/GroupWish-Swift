@@ -16,8 +16,48 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb2213655088675019</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.451408287284-ajadruvp2om1mjg74vdlb9asuqpdu3sm</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>twitterkit-CSHOeFBPqqeLrYE5T3jn5f00s</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>2213655088675019</string>
+	<key>FacebookDisplayName</key>
+	<string>GroupWiish</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>twitter</string>
+		<string>twitterauth</string>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -25,6 +65,26 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>GroupWiish would like to use media library.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera for uploading purposes</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>GroupWiish would like to use your current location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>GroupWiish would like to use microphone to record videos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app uses the library for uploading purposes</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Roboto_Regular.ttf</string>
+		<string>Roboto_Light.ttf</string>
+		<string>fa-brands-400.ttf</string>
+		<string>fa-regular-400.ttf</string>
+		<string>fa-solid-400.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

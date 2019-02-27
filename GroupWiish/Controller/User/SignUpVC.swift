@@ -21,7 +21,13 @@ class SignUpVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.mobilenumberTF.delegate = self
         // Do any additional setup after loading the view.
+    }
+    @IBAction func signinbuttonaction(_ sender: Any)
+    {
+        let vc:LoginVC = storyboard?.instantiateViewController(withIdentifier:"LoginVC") as! LoginVC
+        self.navigationController?.pushViewController(vc, animated:false)
     }
     
     @IBAction func sugnupbuttonaction(_ sender: Any) {
@@ -37,7 +43,7 @@ class SignUpVC: UIViewController {
                         {
                             showToast(message:"Please Enter Email Address")
                         }
-                        else if (self.passwordTF.text?.isEmpty)! || ((self.passwordTF.text?.count)!) > 6 && ((self.passwordTF.text?.count)!) < 10
+                    else if (self.passwordTF.text?.isEmpty)! || ((self.passwordTF.text?.count)!) > 6 && ((self.passwordTF.text?.count)!) < 10
                         {
                             showToast(message:"Please Enter Vaild Password")
                         }
@@ -49,13 +55,13 @@ class SignUpVC: UIViewController {
                      {
                         showToast(message:"confirm password and new password field must be same")
                      }
-                     else if !self.validate(value:(self.mobilenumberTF?.text)!)
+                     else if self.mobilenumberTF.text?.isEmpty == true || self.mobilenumberTF.text?.count != 10
                      {
                         showToast(message:"please enter valid mobile number")
                      }
                      else if self.locationTF.text?.isEmpty == true
                      {
-                        showToast(message:"please enter valid mobile number")
+                        showToast(message:"please enter location")
                      }
                         else
                         {
@@ -88,19 +94,22 @@ class SignUpVC: UIViewController {
         let mobile:String = (self.mobilenumberTF?.text)!
         
         
-        let parameter:[String:Any] = [
+        var parameter:[String:Any] = [
             "email": email,
             "password":password,
             "username":name,
             "mobile":mobile
         ]
-        executePOST(view: self.view, path: Constants.LIVEURL + Constants.REGISTER, parameter: parameter){ response in
-            let status = response["description"].string
-            if(status == "success")
+        executePOSTLogin(view: self.view, path: Constants.LIVEURL + Constants.REGISTER, parameter: parameter){ response in
+            let status = response["status"].int
+            if(status == 200)
             {
+              
+                parameter["id"] = response["data"]["id"].stringValue
                 
-         AppConstants.appDelegete.changeRootViewController(selectedIndexOfTabBar:0)
-                print(response)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier:"VerficationOTPVC") as! VerficationOTPVC //change this to your class name
+                vc.someDict = parameter
+                self.present(vc, animated: true, completion: nil)
             }
             else
             {
@@ -115,3 +124,39 @@ class SignUpVC: UIViewController {
     
 
 }
+
+
+extension SignUpVC:UITextFieldDelegate
+{
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == self.mobilenumberTF
+        {
+            let currentCharacterCount = textField.text?.count ?? 0
+            if range.length + range.location > currentCharacterCount {
+                return false
+            }
+            let newLength = currentCharacterCount + string.count - range.length
+            return newLength <= 10
+        }
+        else
+        {
+            
+            return true
+        }
+        
+       
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+

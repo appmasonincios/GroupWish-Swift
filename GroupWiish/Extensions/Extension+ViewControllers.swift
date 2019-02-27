@@ -11,6 +11,7 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SwiftyJSON
+import Kingfisher
 extension UIViewController
 {
     func hideLoader(view: UIView) {
@@ -23,6 +24,9 @@ extension UIViewController
         })
     }
     
+  
+   
+    
     func showLoader(view: UIView) {
         
         DispatchQueue.main.async(execute: {
@@ -32,6 +36,59 @@ extension UIViewController
         
     }
     
+    
+    func topbarcolor() -> [UIColor]
+    {
+        return [
+            UIColor(red: 91.0/255.0, green: 37.0/255.0, blue: 91.0/255.0, alpha: 1),
+            UIColor(red: 111.0/255.0, green: 63.0/255.0, blue: 111.0/255.0, alpha: 1)
+        ]
+    }
+    
+    func convertDateFormater(_ date: String) -> String
+    {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = dateFormatter.date(from: date)
+        dateFormatter.dateFormat = "dd LLL yyyy"
+        return  dateFormatter.string(from: date!)
+    }
+    
+    func userprofilespecialmethod() -> UIImage
+    {
+        let sociallogin = getSharedPrefrance(key:Constants.social_login)
+        let profileimage:ImageViewDesign? = nil
+        if sociallogin == "1"
+        {
+           let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
+            if constant != ""
+            {
+                let imageURL = URL(string:constant)
+                profileimage?.kf.indicatorType = .activity
+                profileimage?.kf.setImage(with: imageURL)
+            }
+            else
+            {
+                profileimage?.image = UIImage.init(named:"no-user-img")
+            }
+        }
+        else
+        {
+            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
+            if constant != ""
+            {
+            let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
+                profileimage?.kf.indicatorType = .activity
+                profileimage?.kf.setImage(with: imageURL)
+            }
+            else
+            {
+                profileimage?.image = UIImage.init(named:"no-user-img")
+            }
+        }
+        
+        return profileimage?.image ?? UIImage.init(named:"no-user-img")!
+    }
     
     struct AppConstants
     {
@@ -55,9 +112,36 @@ extension UIViewController
     
   
     
+    func getrequestcount()
+    {
+        executeGET(view: self.view, path: Constants.LIVEURL + Constants.REQUESTCOUNT + "?userid=" + getSharedPrefrance(key:Constants.ID)){ response in
+            let status = response["status"].int
+            if(status == Constants.SUCCESS_CODE)
+            {
+
+                if let unseencount = response["unseencount"].int
+                {
+                     let unseencountstr = String(unseencount)
+                    savesharedprefrence(key:Constants.UNSEENCOUNT, value:unseencountstr)
+                }
+            
+                if let unseencount = response["usercount"].int
+                {
+                     let unseencountstr = String(unseencount)
+                        savesharedprefrence(key:Constants.USERCOUNT, value:unseencountstr)
+                }
+            }
+            else
+            {
+              
+                self.showToast(message:response["errors"].string ?? "")
+            }
+        }
+    }
     
-   
-  
+
+    
+    
     func checkstate(checkstate:String) -> String
     {
         let state:String = checkstate
@@ -68,14 +152,56 @@ extension UIViewController
     }
     
     
-    func getDateFormatterFromServer(stringDate: String) -> Date? {
+    func getDateFormatterFromServer(stringDate: String) -> String? {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         let date = dateFormatter.date(from: stringDate)
-        return date
+        let dateString = dateFormatter.string(from: date!)
+        return dateString
     }
 
+    
+    func showToastWithMessage(message:String,onVc:UIViewController,type:String) {
+    
+         onVc.view.makeToast(message, duration:3.0, position:.center)
+    }
+    
+
+    func requestViewController()
+    {
+        let requestViewController:RequestViewController = self.storyboard?.instantiateViewController(withIdentifier:"RequestViewController") as! RequestViewController
+        self.navigationController?.pushViewController(requestViewController, animated:false)
+    }
+    
+    func profileclicked()
+    {
+        let requestViewController:NotificationViewController = self.storyboard?.instantiateViewController(withIdentifier:"NotificationViewController") as! NotificationViewController
+        self.navigationController?.pushViewController(requestViewController, animated:false)
+    }
+    
+    func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0...length-1).map{ _ in letters.randomElement()! })
+    }
+    
+    
+    func formattedDateFromString(dateString: String, withFormat format: String) -> String? {
+        
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        
+        if let date = inputFormatter.date(from: dateString)
+        {
+            
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = format
+            
+            return outputFormatter.string(from: date)
+        }
+        
+        return nil
+    }
     
     //MARK: - Alert Methods
     internal func showAlertView(title OfAlert:String, message OfBody:String) {

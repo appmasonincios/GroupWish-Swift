@@ -8,23 +8,29 @@
 
 import UIKit
 
-class OTPViewController: UIViewController {
-
+class OTPViewController: UIViewController,SDOtpFieldDelegate {
+ @IBOutlet weak var otpField: SDOtpField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+         otpField.numberOfDigits = 4
         // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        otpField.becomeFirstResponder()
     }
-    */
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func getResults(_ sender: Any) {
+      //  displayLabel.text = otpField.currentOtp
+        otpField.clearOTPText()
+        otpField.resignFirstResponder()
+    }
 
 }

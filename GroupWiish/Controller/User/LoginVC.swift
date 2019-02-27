@@ -14,11 +14,12 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import GoogleSignIn
 import TwitterKit
-
+import TwitterCore
+import SkyFloatingLabelTextField
+import IQKeyboardManagerSwift
 class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
 {
-   
-    
+
      var userId:String = ""
      var idToken:String = ""
      var username:String = ""
@@ -29,15 +30,34 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
     var fbManager:FBSDKLoginManager?
     @IBOutlet weak var forgotpasswordbutton: UIButton!
     @IBOutlet weak var signinbutton: UIButton!
-    @IBOutlet weak var passwordTextF: UITextField!
-    @IBOutlet weak var emailTextF: UITextField!
+    @IBOutlet weak var passwordTextF:SkyFloatingLabelTextFieldWithIcon!
+    @IBOutlet weak var emailTextF:SkyFloatingLabelTextFieldWithIcon!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       self.emailTextF.iconType = .image
+       self.emailTextF.iconImage = UIImage.init(named:"email")
+        
+        
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
+  //  IQKeyboardManager.shared.enableAutoToolbar = false
+       
         // Do any additional setup after loading the view.
+   }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //IQKeyboardManager.shared.enableAutoToolbar(false)
+     //   IQKeyboardManager.shared.enableAutoToolbar = false
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        //IQKeyboardManager.shared.enableAutoToolbar(true)
+        //  IQKeyboardManager.shared.enableAutoToolbar = true
+        
+    }
+
     @IBAction func signupbuttonaction(_ sender: Any)
     {
        
@@ -56,29 +76,75 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
                 "email": email,
                 "password":password
             ]
-            executePOST(view: self.view, path: Constants.LIVEURL + Constants.Login_check, parameter: parameter){ response in
-                let status = response["description"].string
-                if(status == "success")
+            executePOSTLogin(view: self.view, path: Constants.LIVEURL + Constants.Login_check, parameter: parameter){ response in
+                let status = response["status"].int
+                if(status == Constants.SUCCESS_CODE)
                 {
-                    print(response)
-                    //  AppConstants.appDelegete.changeRootViewController(selectedIndexOfTabBar:0)
+                 let s = SignIn.init(json:response["data"].dictionaryObject!)
+                    savesharedprefrence(key:Constants.USERNAME, value:s?.username ?? "")
+                    savesharedprefrence(key:Constants.ID, value:s?.id ?? "")
+                    savesharedprefrence(key:Constants.LOCATION, value:s?.location ?? "")
+                    savesharedprefrence(key:Constants.FRIENDS, value:s?.friends ?? "")
+                    savesharedprefrence(key:Constants.PROFILE_PIC, value:s?.profile_pic ?? "")
+                    savesharedprefrence(key:Constants.TOKEN, value:response["token"].string ?? "")
+                    
+                 let token  =  getSharedPrefrance(key:Constants.TOKEN)
+                    
+                    print(token)
+                    
+                     savesharedprefrence(key:"loginsession", value:"true")
+                    
+                    AppConstants.appDelegete.changeRootViewController(selectedIndexOfTabBar:0)
                 }
                 else
                 {
-
                     self.showToast(message:response["errors"].string ?? "")
                 }
-                
             }
         }
         else
         {
             self.showToast(message:"No Internet Connection")
         }
-       
-        
     }
-    @IBAction func forgotbuttonaction(_ sender: Any) {
+    @IBAction func forgotbuttonaction(_ sender: Any)
+    {
+       // var email:String = self.emailTextF.text!
+        
+        
+        if !(emailTextF.text == "")
+        {
+            var forgotCredentials: [String : Any] = [:]
+            
+            forgotCredentials["email"] = emailTextF.text?.trimmingCharacters(in: CharacterSet.whitespaces)
+        
+            if Reachability.isConnectedToNetwork()
+            {
+                let email:String = (self.emailTextF?.text)!
+                let parameter:[String:Any] = [
+                    "email": email
+                ]
+                executePOST(view: self.view, path: Constants.LIVEURL + Constants.forgot_pass, parameter: parameter){ response in
+                    let status = response["status"].intValue
+                    if(status == Constants.SUCCESS_CODE)
+                    {
+                         self.showToast(message:response["description"].string ?? "")
+                    }
+                    else
+                    {
+                        self.showToast(message:response["errors"].string ?? "")
+                    }
+                }
+            }
+            else
+            {
+                self.showToast(message:"No Internet Connection")
+            }
+        }
+        else
+        {
+            self.showToast(message:"Please enter email")
+        }
     }
     
     
@@ -103,77 +169,79 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
 
     @IBAction func twitterbuttonaction(_ sender: Any)
     {
+      twittermethod()
+    }
+
+    
+    func twittermethod()
+    {
         if Reachability.isConnectedToNetwork()
         {
-            
-            TWTRTwitter.sharedInstance().logIn(completion: { session, error in
-                
-                if error != nil {
-                   // Shared.sharedInstance().showToast(withMessage: error?.localizedDescription, onVc: self, type: "2")
-                } else {
-                    
-                    let client = TWTRAPIClient()
-                    
-                    let request: URLRequest? = client.urlRequest(withMethod: "GET", urlString: "https://api.twitter.com/1.1/account/verify_credentials.json", parameters: [
-                        "include_email": "true",
-                        "skip_status": "true"
-                        ], error: nil)
-                    
-                    client.sendTwitterRequest(request!) { response, data, connectionError in
-                        if error != nil {
+            TWTRTwitter.sharedInstance().logIn { session, error in
+                if (session != nil)
+                {
+                    print("signed in as \(session!.userName)");
+                    let client = TWTRAPIClient.withCurrentUser()
+                    let request = client.urlRequest(withMethod: "GET",
+                                                    urlString: "https://api.twitter.com/1.1/account/verify_credentials.json",
+                                                    parameters: ["include_email": "true", "skip_status": "true"],
+                                                    error: nil)
+                    client.sendTwitterRequest(request)
+                    { response, data, connectionError in
+                      
+                        if (error != nil)
+                        {
                             DispatchQueue.main.async(execute: {
-                                 self.showToast(message:error?.localizedDescription ?? "")
+                                self.showToast(message:(error?.localizedDescription)!)
                             })
-                        } else {
-                            
-                            DispatchQueue.main.async(execute: {
-                              //  Shared.sharedInstance().showprogress("1", forViewController: self)
-                            })
-                            var twiterData: [AnyHashable : Any]? = nil
-                            if let data = data {
-                                twiterData = try! JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
-                            }
-                            if let twiterData = twiterData {
-                                print("reasponse in as  \(twiterData)")
-                            }
-                            
-                            var twiterDeatils: [AnyHashable : Any] = [:]
-                            
-                            twiterDeatils["social_id"] = twiterData?["id_str"]
-                            twiterDeatils["provider"] = "Twitter"
-                            twiterDeatils["username"] = twiterData?["name"]
-                            twiterDeatils["email"] = twiterData?["email"]
-                            twiterDeatils["profile_pic"] = twiterData?["profile_image_url_https"]
-                            twiterDeatils["device_token"] = UserDefaults.standard.value(forKey: "devicetoken")
-                            twiterDeatils["device"] = "Ios"
-                            if let data = data {
-                                twiterData = try! JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
-                            }
-                            if let twiterData = twiterData {
-                                print("reasponse in as  \(twiterData)")
-                            }
-                            UserDefaults.standard.set(twiterData?["profile_image_url_https"], forKey: "profile_pic")
-                            UserDefaults.standard.synchronize()
-                            
-                            
-                            
-                            
-                            
-                            
-                           // Shared.sharedInstance().webAPIRequestHelper(self, vc: self, postdata: twiterDeatils, tag: Tag_SocialLogin, httpMethod: "POST")
                         }
+                        else
+                        {
+                            DispatchQueue.main.async(execute: {
+                                
+                                self.hud?.show(animated:true)
+                                
+                            })
+                        }
+                        var twiterData = try? JSONSerialization.jsonObject(with: data!, options: []) as? [String : Any]
+                        if let twiterData = twiterData {
+                            print("reasponse in as  \(String(describing: twiterData))")
+                        }
+                 
+                     
+                        var twiterDeatils = [String:Any]()
+                       twiterDeatils["social_id"] = session?.userID
+                       twiterDeatils["username"] = session?.userName
+                       twiterDeatils["provider"] = "Twitter"
+                        twiterDeatils["device"] = "Ios"
+                        twiterDeatils["email"] = twiterData??["email"]
+                        //twiterDeatils["profile_pic"] = twiterData!["profile_image_url_https"]
+                        twiterDeatils["device_token"] = getSharedPrefrance(key:"devicetoken")
+                      
+                       
                         
-                    }
+                        self.postthegoogledetails(parameters:twiterDeatils)
+                   }
                 }
-            })
-
- 
+                else
+                {
+                    print("error: \(error!.localizedDescription)");
+                }
+            }
         }
+
         else
         {
-             self.showToast(message:"Please check internet connection")
+            
+              self.showToast(message:"Please check internet connection")
+            
         }
-    }
+
+   }
+    
+
+    
+            
     
     @IBAction func instgrambuttonaction(_ sender: Any)
     {
@@ -219,11 +287,11 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
                 else
                 {
                     DispatchQueue.main.async(execute: {
-                     self.showprogress("1", for:self)
+                      self.showprogress("1", for:self)
                                             })
                 }
             })
-       fetchUserinfo()
+              fetchUserinfo()
         }
         else
         {
@@ -240,11 +308,27 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
         {
         
             FBSDKGraphRequest.init(graphPath:"me", parameters:["fields": "id,name,email,picture.width(100).height(100)"]).start(completionHandler: { connection, result, error in
-                if error == nil {
-                    var userData = result as? [AnyHashable : Any]
+                if error == nil
+                {
+                    var userData = result as? [String : Any]
                     
-                    UserDefaults.standard.set(((userData?["picture"] as? [AnyHashable : Any])?["data"] as? [AnyHashable : Any])?["url"], forKey: "profile_pic")
-                    UserDefaults.standard.synchronize()
+                    let picture:[String:Any] = userData?["picture"] as! [String : Any]
+                    let data:[String:Any] = picture["data"] as! [String : Any]
+            
+                   print(data)
+                    
+                    if let url = data["url"] as? URL
+                    {
+                        let string = "\(url)"
+                    savesharedprefrence(key:Constants.PROFILE_PIC, value:string)
+                        
+                    }
+                    else
+                    {
+                        
+                    }
+        
+                    
                     
                     var parameter: [String: Any] = [:]
                     
@@ -255,22 +339,31 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
                     parameter["device_token"] = UserDefaults.standard.value(forKey: "devicetoken")
                     parameter["device"] = "Ios"
         
-                    var urlString = Constants.WS_ImageUrl + Constants.WS_GoogleSignIn
-                    var postString = ""
-                    
-                   
-                    if let object = parameter["social_id"], let object1 = parameter["provider"], let object2 = parameter["username"], let object3 = parameter["email"], let object4 = parameter["device_token"], let object5 = parameter["device"] {
-                        postString = "social_id = \(object)&provider = \(object1)&username = \(object2)&email = \(object3)&device_token=\(object4)&device=\(object5)"
-                    }
+                    let urlString = Constants.LIVEURL + Constants.social_login
 
 
-                    executePOST(view: self.view, path:urlString + postString, parameter: parameter){ response in
-                        let status = response["description"].string
-                        if(status == "success")
+                    executePOST(view: self.view, path:urlString, parameter: parameter){ response in
+                        let status = response["status"].int
+                        if(status == 200)
                         {
                             print(response)
-                           
                             
+                            
+                            savesharedprefrence(key:Constants.ID, value:response["data"]["id"].string ?? "")
+                            savesharedprefrence(key:Constants.USERNAME, value:response["data"]["username"].string ?? "")
+                            savesharedprefrence(key:Constants.EMAIL, value:response["data"]["email"].string ?? "")
+                            savesharedprefrence(key:Constants.FRIENDS_COUNT, value:response["data"]["friends"].string ?? "")
+                            savesharedprefrence(key:Constants.LOCATION, value:"")
+                            savesharedprefrence(key:Constants.social_login, value:"1")
+                           
+                            UIView.beginAnimations("View Flip", context: nil)
+                            UIView.setAnimationDuration(0.8)
+                            UIView.setAnimationTransition(.curlDown, for:self.view, cache: false)
+                            UIView.setAnimationBeginsFromCurrentState(true)
+                            UIView.commitAnimations()
+                            
+                            savesharedprefrence(key:"loginsession", value:"true")
+                            AppConstants.appDelegete.changeRootViewController(selectedIndexOfTabBar:0)
                         }
                         else
                         {
@@ -299,11 +392,17 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!)
     {
-        userId      = user.userID
-        idToken     = user.authentication.idToken
-        username    = user.profile.name
-        useremail   = user.profile.email
-        accessToken = user.authentication.accessToken
+        
+        if let error = error
+        {
+            print("\(error.localizedDescription)")
+        } else
+        {
+        self.userId      = user?.userID ?? ""
+        self.idToken     = user?.authentication.idToken ?? ""
+        self.username    = user?.profile.name ?? ""
+        self.useremail   = user?.profile.email ?? ""
+        self.accessToken = user?.authentication.accessToken ?? ""
 
         if (GIDSignIn.sharedInstance()?.currentUser.profile.hasImage)!
         {
@@ -313,19 +412,48 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
             DispatchQueue.main.async(execute: {
                 //processer
                 self.showprogress("1", for:self)
+               self.hud?.hide(animated:true)
             })
+        
+        
             let url = Constants.WS_GoogleSignIn + accessToken
+        print(url)
             executeGET(view: self.view, path:url){ response in
-                let status = response["description"].string
-                if(status == "success")
+                let status = response["name"]["givenName"].string
+                
+                print(response)
+                if(!(status?.isEmpty)!)
                 {
-                    print(response)
+                    let urlprofileimage:String = self.urlProfileImage?.absoluteString ?? ""
+                   
+                    savesharedprefrence(key:Constants.PROFILE_PIC, value:response["image"]["url"].string!)
+
+                    
+                var googleDetails = [String:Any]()
+                googleDetails["social_id"] = self.userId
+                googleDetails["provider"] = "Google"
+                googleDetails["username"] = self.username
+                googleDetails["email"] = self.useremail
+                googleDetails["profile_pic"] = urlprofileimage
+                googleDetails["devicetoken"] = getSharedPrefrance(key:Constants.DEVICETOKEN)
+                googleDetails["device"] = "Ios"
+                    
+                    
+                   self.postthegoogledetails(parameters:googleDetails)
+             
                 }
                 else
                 {
                     self.showToast(message:response["errors"].string ?? "")
                 }
         }
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
+              withError error: Error!)
+    {
+       
     }
     
     @IBAction func googleloginbuttonaction(_ sender: Any)
@@ -362,4 +490,38 @@ class LoginVC: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate
         }
     }
    
+    func postthegoogledetails(parameters:[String:Any])
+    {
+        let urlString = Constants.LIVEURL + Constants.social_login
+        executePOST(view: self.view, path:urlString, parameter: parameters){ response in
+            let status = response["status"].int
+            if(status == 200)
+            {
+                savesharedprefrence(key:Constants.ID, value:response["data"]["id"].string ?? "")
+                savesharedprefrence(key:Constants.USERNAME, value:response["data"]["username"].string ?? "")
+                savesharedprefrence(key:Constants.EMAIL, value:response["data"]["email"].string ?? "")
+                savesharedprefrence(key:Constants.FRIENDS_COUNT, value:response["data"]["friends"].string ?? "")
+                savesharedprefrence(key:Constants.LOCATION, value:"")
+                savesharedprefrence(key:Constants.social_login, value:"1")
+                
+                UIView.beginAnimations("View Flip", context: nil)
+                UIView.setAnimationDuration(0.8)
+                UIView.setAnimationTransition(.curlDown, for:self.view, cache: false)
+                UIView.setAnimationBeginsFromCurrentState(true)
+                UIView.commitAnimations()
+                
+                savesharedprefrence(key:"loginsession", value:"true")
+                AppConstants.appDelegete.changeRootViewController(selectedIndexOfTabBar:0)
+            }
+            else
+            {
+                
+                self.showToast(message:response["errors"].string ?? "")
+            }
+            
+        }
+    }
+    
 }
+
+

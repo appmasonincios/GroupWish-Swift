@@ -14,7 +14,11 @@ struct Constants
         
         static let alertTitle        = "GroupWiish"
     }
-
+    
+    struct AppConstants
+    {
+        static let appDelegete = UIApplication.shared.delegate as! AppDelegate
+    }
     
 //    /******************************************************
 //     Import Rgb colour helper macros
@@ -76,19 +80,20 @@ struct Constants
         case kTextFieldName
         case kTextFieldPassword
     }
-    let PREMIUM_APP_STORE_LINK = "https://itunes.apple.com/SG/app/id1211730146?mt=8"
+   
     
-
+   static let PREMIUM_APP_STORE_LINK = "https://itunes.apple.com/SG/app/id1211730146?mt=8"
 
 
 //    /******************************************************
 //     Server info by macros
 //     ******************************************************/
      let SPLASH_SCREEN_TIME = 3.0
-     let SUCCESS_CODE = 200
-     let FAILURE_CODE = 400
+    static let SUCCESS_CODE = 200
+    static let FAILURE_CODE = 400
     
-    
+    static let UNSEENCOUNT:String = "unseencount"
+    static let USERCOUNT:String = "usercount"
     static let WS_VideoUrl:String = "https://groupwish.s3.amazonaws.com/videos"
     static let WS_ImageUrl:String = "https://groupwish.s3.amazonaws.com/images"
     static let TWITTER_URL_SCHEME:String = "twitterkit-CSHOeFBPqqeLrYE5T3jn5f00s"
@@ -107,10 +112,11 @@ struct Constants
     static let TWITTER_CONSUMER_KEY:String  = "CSHOeFBPqqeLrYE5T3jn5f00s"
     static let TWITTER_CONSUMER_SECRET:String = "ffl5VVH0Ea5BFozu209WLr6XnAyyRrtnnJw0uD9mP1gXzni87d"
      static let LIVEURL:String = "http://ec2-18-217-201-202.us-east-2.compute.amazonaws.com/Group/"
+     static let REQUESTCOUNT = "Greetings/unseenCount_requestCount"
      static let REGISTER:String = "Register/insert_user"
      static let Login_check:String = "Login_check"
      static let social_login:String = "Login_check/social_login"
-     static let user_details:String = "user_details"
+     static let user_details:String = "User/user_details"
      static let update_user:String = "Register/update_user"
      static let forgot_pass:String = "User/forgot_pass"
      static let insert_greeting:String = "Greetings/insert_greeting"
@@ -142,7 +148,34 @@ struct Constants
      static let user_profile_pic:String = "User/user_profile_pic"
      static let get_friend_requests_counts:String = "Contacts/get_friend_requests_counts"
      static let RESEND_OTP:String = "Register/resend_OTP"
-    
+     static let SEND_FRIEND_REQUEST:String = "Contacts/send_friend_request"
+     static let KanvasSDKClientID:String = "59acccd92257524f1e7b4bdf"
+     static let KanvasSDKsignature:String = "MEUCIQD4VY+Wtnok/r+iV62815L2vcpE9Js9wSjxSObCYkCZ0AIgLNeu6FOQjtVwmfuyhkFoKwZWrpCYX0zuRnx91m+KZaw="
+    //first response
+
+     static let TOKEN:String = "token"
+     static let USERNAME:String = "username"
+     static let LOCATION:String = "location"
+     static let ACTIVATION:String = "activation"
+     static let FRIENDS:String = "friends"
+     static let PROFILE_PIC:String = "profile_pic"
+     static let ID:String = "id"
+     static let EMAIL:String = "email"
+     static let MOBILE:String = "mobile"
+     static let FRIENDS_COUNT:String = "friends_count"
+     static let DEVICETOKEN:String = "devicetoken"
+     static let  TABTYPE:String = "tabtype"
+     static let  FILTERDUETODAY:String = "filterdueTodaypopupview"
+     static let PASTDUE:String = "pastDue"
+     static let MyGREETINGMODELCLASS:String = "MyGreetingsModelClass"
+     static let NOTIFICATIONCLASS:String = "NotificationClass"
+     static let DELETECONTACTOBJ:String = "deleteContactObj"
+     static let BLOCK:String = "block"
+    static let DELETE:String = "delete"
+    static let openCamera:String = "openCamera"
+    static let openGallary:String = "openGallary"
+    static let friendnotification:String = "friendnotification"
+    static let createGreetingsViewController:String = "createGreetingsViewController"
 }
 
 

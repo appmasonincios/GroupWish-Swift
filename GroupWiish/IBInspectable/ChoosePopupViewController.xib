@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChoosePopupViewController" customModule="GroupWiish" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kyd-cW-J30" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                    <rect key="frame" x="37.5" y="50" width="300" height="200"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ub-hz-eiA">
+                            <rect key="frame" x="77" y="40" width="146" height="24"/>
+                            <attributedString key="attributedText">
+                                <fragment content="Select an option">
+                                    <attributes>
+                                        <color key="NSColor" white="0.0" alpha="0.69751082251082253" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <font key="NSFont" metaFont="system" size="20"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        <integer key="NSUnderline" value="1"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2L-F8-Wty" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                            <rect key="frame" x="155" y="104" width="90" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Record">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="recordVideoAction:" destination="-1" eventType="touchUpInside" id="2JL-cN-1Gd"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3W-ne-uwB" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                            <rect key="frame" x="50" y="104" width="90" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="D89-yK-T5N"/>
+                                <constraint firstAttribute="width" constant="90" id="Edd-vL-ZcF"/>
+                            </constraints>
+                            <state key="normal" title="Gallery">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="chooseGalleryAction:" destination="-1" eventType="touchUpInside" id="nQS-kU-Uav"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xW7-UZ-Fxg">
+                            <rect key="frame" x="265" y="10" width="25" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="25" id="QiZ-lH-EmC"/>
+                                <constraint firstAttribute="height" constant="25" id="wOi-rT-UE3"/>
+                            </constraints>
+                            <state key="normal" image="close_cancel_icon"/>
+                            <connections>
+                                <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="vTb-bE-Iir"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.97305089239999998" green="0.79022989649999997" blue="0.049385418760000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstItem="6Ub-hz-eiA" firstAttribute="top" secondItem="Kyd-cW-J30" secondAttribute="top" constant="40" id="4wx-MS-GjO"/>
+                        <constraint firstItem="xW7-UZ-Fxg" firstAttribute="top" secondItem="Kyd-cW-J30" secondAttribute="top" constant="10" id="59H-XJ-Aeh"/>
+                        <constraint firstItem="o2L-F8-Wty" firstAttribute="height" secondItem="w3W-ne-uwB" secondAttribute="height" id="9Z2-Hv-3Xc"/>
+                        <constraint firstItem="o2L-F8-Wty" firstAttribute="leading" secondItem="w3W-ne-uwB" secondAttribute="trailing" constant="15" id="JNt-Wr-NFO"/>
+                        <constraint firstItem="6Ub-hz-eiA" firstAttribute="centerX" secondItem="Kyd-cW-J30" secondAttribute="centerX" id="OVK-Dm-JUC"/>
+                        <constraint firstItem="o2L-F8-Wty" firstAttribute="width" secondItem="w3W-ne-uwB" secondAttribute="width" id="QFj-Qz-zEx"/>
+                        <constraint firstAttribute="trailing" secondItem="xW7-UZ-Fxg" secondAttribute="trailing" constant="10" id="W4B-ur-D7e"/>
+                        <constraint firstItem="w3W-ne-uwB" firstAttribute="top" secondItem="6Ub-hz-eiA" secondAttribute="bottom" constant="40" id="ZzJ-gN-qUw"/>
+                        <constraint firstItem="o2L-F8-Wty" firstAttribute="centerY" secondItem="w3W-ne-uwB" secondAttribute="centerY" id="aVO-jM-gZn"/>
+                        <constraint firstAttribute="width" constant="300" id="qoN-k3-ap0"/>
+                        <constraint firstAttribute="height" constant="200" id="sQs-Vc-Ywi"/>
+                        <constraint firstItem="w3W-ne-uwB" firstAttribute="leading" secondItem="Kyd-cW-J30" secondAttribute="leading" constant="50" id="wPB-4q-7Fx"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="16"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Kyd-cW-J30" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="6gK-uu-F2H"/>
+                <constraint firstItem="Kyd-cW-J30" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vZ0-qN-hM8"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="138.40000000000001" y="153.82308845577214"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close_cancel_icon" width="58" height="58"/>
+    </resources>
+</document>

@@ -24,7 +24,6 @@ class SplashScreenViewController: UIViewController
       self.gifImageView.image = UIImage.init(named:"layout_login_bg.png")
         
       
-        
         UIView.animate(withDuration: 0, animations: {
             
             self.logo.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
@@ -48,15 +47,16 @@ class SplashScreenViewController: UIViewController
     @objc func timercompleted() {
         DispatchQueue.main.async(execute: {
             
-            if GBVersionTracking.isFirstLaunchEver() {
-//                let TutorialViewController = self.storyboard.instantiateViewController(withIdentifier: "TutorialVC") as? TutorialViewController
-//                self.view.window.rootViewController = TutorialViewController
-//                self.view.window.makeKeyAndVisible()
+            if GBVersionTracking.isFirstLaunchEver()
+            {
+                let TutorialViewController = self.storyboard?.instantiateViewController(withIdentifier: "OnboardingControllerN") as? OnboardingControllerN
+                self.view.window?.rootViewController = TutorialViewController
+                self.view.window?.makeKeyAndVisible()
             } else {
                 
-//                let LoginViewController = self.storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginViewController
-//                self.view.window.rootViewController = LoginViewController
-//                self.view.window.makeKeyAndVisible()
+                let LoginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                self.view.window?.rootViewController = LoginViewController
+                self.view.window?.makeKeyAndVisible()
             }
             
             self.timer?.invalidate()
@@ -68,70 +68,3 @@ class SplashScreenViewController: UIViewController
 
 }
 
-
-/*
- #import "SplashScreenViewController.h"
- 
- @interface SplashScreenViewController ()
- {
- NSTimer * timer;
- }
- @end
- 
- @implementation SplashScreenViewController
- 
- - (void)viewDidLoad
- {
- [super viewDidLoad];
- }
- 
- -(void)viewWillAppear:(BOOL)animated
- {
- self.gifImageView.image = [UIImage imageNamed:@"layout_login_bg.png"];
- 
- [UIView animateWithDuration:0 animations:^{
- 
- self.logo.transform = CGAffineTransformMakeScale(0.01, 0.01);
- 
- }completion:^(BOOL finished){
- 
- [UIView animateWithDuration:0.4 animations:^{
- 
- self.logo.transform = CGAffineTransformIdentity;
- 
- }completion:^(BOOL finished){
- 
- }];
- }];
- 
- timer = [NSTimer scheduledTimerWithTimeInterval:SPLASH_SCREEN_TIME target:self selector:@selector(timercompleted) userInfo:nil repeats:NO];
- }
- 
- -(void)timercompleted
- {
- dispatch_async(dispatch_get_main_queue(), ^{
- 
- if([GBVersionTracking isFirstLaunchEver])
- {
- TutorialViewController * TutorialViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TutorialVC"];
- self.view.window.rootViewController = TutorialViewController;
- [self.view.window makeKeyAndVisible];
- 
- }else{
- 
- LoginViewController * LoginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
- self.view.window.rootViewController = LoginViewController;
- [self.view.window makeKeyAndVisible];
- }
- 
- [self->timer invalidate];
- });
- }
- 
- - (void)didReceiveMemoryWarning
- {
- [super didReceiveMemoryWarning];
- }
- 
- @end
- */

@@ -10,6 +10,9 @@ import UIKit
 
 class MenuHeaderTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var userprofileimage: UIImageView!
+    @IBOutlet weak var placelabel: UILabel!
+    @IBOutlet weak var namelabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

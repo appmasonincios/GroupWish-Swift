@@ -27,11 +27,16 @@ public func getSharedPrefrance(key:String) -> String
 
 public func logout()
 {
-     let defaults = UserDefaults.standard
-   
-    defaults.synchronize()
+   resetDefaults()
 }
 
+func resetDefaults() {
+    let defaults = UserDefaults.standard
+    let dictionary = defaults.dictionaryRepresentation()
+    dictionary.keys.forEach { key in
+        defaults.removeObject(forKey: key)
+    }
+}
 
 
 
