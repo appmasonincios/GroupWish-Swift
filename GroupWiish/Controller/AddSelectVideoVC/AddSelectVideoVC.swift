@@ -51,21 +51,32 @@ class AddSelectVideoVC: BottomPopupViewController {
     }
     
     //MARK: - Open the camera
-    func openCamera(){
-        
-         dismiss(animated: true, completion: nil)
-        let nc = NotificationCenter.default
-        nc.post(name: Notification.Name(Constants.openCamera), object: nil)
-       
+    func openCamera()
+    {
+        dismiss(animated: true, completion:
+            {
+                let nc = NotificationCenter.default
+                let tabbartype = getSharedPrefrance(key:Constants.TABTYPE)
+                if tabbartype == "3"
+                {
+                    nc.post(name: Notification.Name(Constants.openCamera1), object: nil)
+                }
+                else
+                {
+                    nc.post(name: Notification.Name(Constants.openCamera), object: nil)
+                }
+        })
+    
     }
     
     //MARK: - Choose image from camera roll
     
     func openGallary()
     {
-         dismiss(animated: true, completion: nil)
-        let nc = NotificationCenter.default
-        nc.post(name: Notification.Name(Constants.openGallary), object: nil)
+        dismiss(animated: true, completion:{
+            let nc = NotificationCenter.default
+            nc.post(name: Notification.Name(Constants.openGallary), object: nil)
+        })
     }
     
 }

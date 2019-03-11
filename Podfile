@@ -34,6 +34,7 @@ pod 'SSZipArchive'
 pod 'PureLayout'
 pod 'YKPhotoCircleCrop'
 pod 'DYBadgeButton'
+pod 'UCZProgressView'
   # Pods for GroupWiish
 
 end

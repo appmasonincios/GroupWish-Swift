@@ -10,13 +10,6 @@ import Foundation
 import UIKit
 
 extension String {
-    
-//    // Email validation Method
-//    internal func isValidEmail() -> Bool {
-//        return NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}").evaluate(with: self)
-//    }
-    
-    //Password validation
     internal func isValidPassword() -> Bool {
         return NSPredicate(format:"SELF MATCHES %@", "(?:(?:(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_])|(?:(?=.*?[0-9])|(?=.*?[A-Z])|(?=.*?[-!@#$%&*ˆ+=_])))|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_]))[A-Za-z0-9-!@#$%&*ˆ+=_]{6,15}").evaluate(with: self)
     }
@@ -29,12 +22,7 @@ extension String {
     
 }
 extension Data {
-    
-    /// Append string to NSMutableData
-    ///
-    /// Rather than littering my code with calls to `dataUsingEncoding` to convert strings to NSData, and then add that data to the NSMutableData, this wraps it in a nice convenient little extension to NSMutableData. This converts using UTF-8.
-    ///
-    /// - parameter string:       The string to be added to the `NSMutableData`.
+
     mutating func append(_ string: String) {
         if let data = string.data(using: .utf8) {
             append(data)

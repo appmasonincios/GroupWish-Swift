@@ -19,11 +19,10 @@ class SplashScreenViewController: UIViewController
     }
     
 
-    override func viewWillAppear(_ animated: Bool) {
-       
+    override func viewWillAppear(_ animated: Bool)
+    {
       self.gifImageView.image = UIImage.init(named:"layout_login_bg.png")
         
-      
         UIView.animate(withDuration: 0, animations: {
             
             self.logo.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
@@ -38,27 +37,27 @@ class SplashScreenViewController: UIViewController
                 
             }
         }
-        
-        
+    
         timer = Timer.scheduledTimer(timeInterval:0.3, target: self, selector: #selector(self.timercompleted), userInfo: nil, repeats: false)
     }
     
     
-    @objc func timercompleted() {
-        DispatchQueue.main.async(execute: {
-            
+    @objc func timercompleted()
+    {
+        DispatchQueue.main.async(execute:
+            {
             if GBVersionTracking.isFirstLaunchEver()
             {
                 let TutorialViewController = self.storyboard?.instantiateViewController(withIdentifier: "OnboardingControllerN") as? OnboardingControllerN
                 self.view.window?.rootViewController = TutorialViewController
                 self.view.window?.makeKeyAndVisible()
-            } else {
-                
-                let LoginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                self.view.window?.rootViewController = LoginViewController
+            }
+            else
+            {
+                let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                self.view.window?.rootViewController = loginViewController
                 self.view.window?.makeKeyAndVisible()
             }
-            
             self.timer?.invalidate()
         })
     }

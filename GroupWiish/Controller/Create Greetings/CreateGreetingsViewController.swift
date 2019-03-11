@@ -10,6 +10,7 @@ import UIKit
 import SideMenu
 import Kingfisher
 import DYBadgeButton
+import UCZProgressView
 class CreateGreetingsViewController: UIViewController {
 
     @IBOutlet weak var profilebutton: DYBadgeButton!
@@ -17,7 +18,6 @@ class CreateGreetingsViewController: UIViewController {
     @IBOutlet weak var selectrecipientTF: UITextField!
     @IBOutlet weak var selectRecipientbutton: UIButton!
     @IBOutlet weak var orginalprofileimage: UIImageView!
-    
     @IBOutlet weak var selectduedate: UIButton!
     @IBOutlet weak var editbutton: UIButton!
     @IBOutlet weak var uploadimage: UIImageView!
@@ -26,16 +26,17 @@ class CreateGreetingsViewController: UIViewController {
     @IBOutlet weak var addimage: UIImageView!
     @IBOutlet weak var profileimage: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
-    var textGroup = [
-        "Default"
-    ]
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var messageTextView:UITextView!
+    var textGroup = ["Default"]
     var buttonGroup = [UIButton]()
     var datePicker: UDatePicker? = nil
     var date = Date()
-    override func viewDidLoad() {
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
        
         messageTextView.text = "Message"
         messageTextView.textColor = UIColor.lightGray
@@ -47,10 +48,20 @@ class CreateGreetingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool)
     {
         self.bedgecountapi()
-        profileimagedisplay()
+        self.profileimagedisplay()
         savesharedprefrence(key:Constants.TABTYPE, value:"3")
     }
     
+    
+    @IBAction func profilebuttonaclicked(_ sender: Any)
+    {
+        self.profileclicked()
+    }
+    
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
+    }
     
     func bedgecountapi()
     {
@@ -80,40 +91,14 @@ class CreateGreetingsViewController: UIViewController {
     
     func profileimagedisplay() {
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
     func userNotificationCenter()
@@ -135,8 +120,6 @@ class CreateGreetingsViewController: UIViewController {
         
     }
     
-    
-    
     @objc func notification(notification:Notification)
     {
         let username = notification.userInfo?["username"] as? String
@@ -152,7 +135,7 @@ class CreateGreetingsViewController: UIViewController {
         presentPopup(TestPopupViewController(),
                      animated: true,
                      backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
-            constraints: [.leading(16), .trailing(16),.height(250)], // fix leading edge and the width
+            constraints: [.leading(16), .trailing(16),.height(217)], // fix leading edge and the width
             transitioning: .slide(.left), // the popup come and goes from the left side of the screen
             autoDismiss: false, // when touching outside the popup bound it is not dismissed
             completion: nil)
@@ -163,26 +146,23 @@ class CreateGreetingsViewController: UIViewController {
     {
         savesharedprefrence(key:"loginsession", value:"false")
         logout()
-        let sc:SplashScreenViewController = self.storyboard?.instantiateViewController(withIdentifier:"SplashScreenViewController") as! SplashScreenViewController
-        self.presentPopup(sc, animated:false)
-        
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+        UIApplication.shared.delegate?.window!?.rootViewController = loginVC
+        UIApplication.shared.delegate?.window!!.makeKeyAndVisible()
     }
     
    
     
     @objc func showSpinningWheel(notification: NSNotification)
     {
-           // self.orginalprofileimage.image = notification.userInfo?["image"] as? UIImage
         self.uploadimage.isHidden = false
         self.editbutton.isHidden = false
-            self.uploadimage.image = notification.userInfo?["image"] as? UIImage
+        self.uploadimage.image = notification.userInfo?["image"] as? UIImage
     }
     
     func setupSideMenu()
     {
-        // Define the menus
         SideMenuManager.default.menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? UISideMenuNavigationController
-        
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuAnimationFadeStrength = CGFloat(0)
         SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
@@ -205,6 +185,10 @@ class CreateGreetingsViewController: UIViewController {
         {
             self.showToast(message:"Please Select the image")
         }
+        else if self.selectrecipientTF.text == "Select Recipient"
+        {
+            self.showToast(message:"Please Select The Recipient")
+        }
         else if self.titleTF.text?.isEmpty == true
         {
              self.showToast(message:"Please Enter Title")
@@ -217,15 +201,10 @@ class CreateGreetingsViewController: UIViewController {
         {
             self.showToast(message:"Please Select The DueDate")
         }
-        else if self.selectrecipientTF.text == "Select Recipient"
-        {
-            self.showToast(message:"Please Select The Recipient")
-        }
+       
         else
         {
-    
             let showDate = formattedDateFromString(dateString:(self.selectduedate.titleLabel?.text)!, withFormat:"yyyy-MM-dd")
-        
             parameters["image"] = uploadimage.image
             parameters["title"] = self.titleTF.text
             parameters["message"] = self.messageTextView.text
@@ -249,7 +228,6 @@ class CreateGreetingsViewController: UIViewController {
     @IBAction func addphotobuttonaction(_ sender: Any)
     {
         guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "AddPhotoVC") as? AddPhotoVC else { return }
-    
         popupVC.popupDelegate = self
         present(popupVC, animated: true, completion: nil)
     }
@@ -266,30 +244,20 @@ class CreateGreetingsViewController: UIViewController {
         let index = 0
         if datePicker == nil {
             
-            // init picker when it is nil
             let picker = UDatePicker(frame: view.frame, willDisappear: {date in
-                if let date = date {
+                if let date = date
+                {
                     self.date = date as Date
                     let dateFormatter = DateFormatter()
                        dateFormatter.dateFormat = "yyyy-MM-dd"
                     dateFormatter.dateStyle = .medium
-                    
-//                    if index == 1 {
-//                        dateFormatter.locale = Locale(identifier: "zh_CN")
-//                    } else if index == 2 {
-//                        dateFormatter.dateFormat = "h:mm a"
-//                    }
-                   
                     sender.setTitleColor(UIColor.black, for:UIControl.State())
-                  
                     sender.setTitle(dateFormatter.string(from: date as Date), for: UIControl.State())
                 }
             })
-            
-
-            
-            // config picker
-            switch index {
+        
+            switch index
+            {
             case 1:
                 picker.picker.datePicker.maximumDate = Date()
                 picker.picker.datePicker.locale = Locale(identifier: "zh_CN")
@@ -302,15 +270,10 @@ class CreateGreetingsViewController: UIViewController {
             default:
                 break
             }
-            
             datePicker = picker
         }
-        
-        // set current date
-        // present view controller
         datePicker!.picker.date = date
         datePicker!.present(self)
-        
     }
     
     
@@ -352,15 +315,10 @@ extension CreateGreetingsViewController:UITextViewDelegate
     {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
-    
         self.heightoftext.constant = CGFloat(textView.numberOfLines() * 21) + 20
-        
-        
-        
-    
         self.countlabel.text = "\(numberOfChars)" + "/160"
         
-    
+        
         return numberOfChars < 160;
     }
     
@@ -378,10 +336,7 @@ extension CreateGreetingsViewController:UITextViewDelegate
             textView.textColor = UIColor.lightGray
         }
     }
-    
-    
-    
-    
+
 }
 
 extension UITextView{

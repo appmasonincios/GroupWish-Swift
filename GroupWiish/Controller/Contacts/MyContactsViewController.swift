@@ -13,12 +13,21 @@ import SwiftyJSON
 import Alamofire
 import ViewAnimator
 import PopItUp
+import DYBadgeButton
 class MyContactsViewController: UIViewController,UIPopoverPresentationControllerDelegate {
 
     private let image = UIImage(named: "friends-inactive")!.withRenderingMode(.alwaysTemplate)
     private let topMessage = ""
     private let bottomMessage = "No Friends Found"
+    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
     
+    var booleancheck:Bool = false
+    var myContactsModelClassdata = [MyContactsModelClass]()
+    var searchedArray = [MyContactsModelClass]()
+    var GridAction = false
+    
+    @IBOutlet weak var profilebutton: DYBadgeButton!
+    @IBOutlet weak var usernotification: DYBadgeButton!
     @IBOutlet weak var searchView: GradientView!
     @IBOutlet var searchtextfield: UITextField!
     @IBOutlet weak var tableview: UITableView!
@@ -26,78 +35,112 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
     @IBOutlet weak var contactcollectionview: UICollectionView!
     @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var profileimage: UIImageView!
-     private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
-    var booleancheck:Bool = false
-     var myContactsModelClassdata = [MyContactsModelClass]()
-      var searchedArray = [MyContactsModelClass]()
-    var GridAction = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //  self.searchtextfield.delegate = self
+      NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("friendzero"), object: nil)
+
+    }
+    
+    @objc private func methodOfReceivedNotification(notification: NSNotification)
+    {
+        let  vc:AddContactsViewControllern = self.storyboard?.instantiateViewController(withIdentifier:"AddContactsViewControllern") as! AddContactsViewControllern
+        self.navigationController?.pushViewController(vc, animated:false)
+    }
+    
+    func ui()
+    {
+        let flowLayout = CustomImageHorizontalFlowLayout()
+        self.contactcollectionview.collectionViewLayout = flowLayout
+        searchView.colors = topbarcolor()
+        gradientView.colors = topbarcolor()
+         self.user_contacts()
+    }
+    
+    func notification()
+    {
+        savesharedprefrence(key:Constants.menunumber, value:"2")
+        savesharedprefrence(key:Constants.TABTYPE, value:"4")
+        let notificationName = Notification.Name("requestpost")
+        NotificationCenter.default.addObserver(self, selector: #selector(requestmethod(notification:)), name: notificationName, object: nil)
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
-        
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(block), name: Notification.Name(Constants.BLOCK), object: nil)
         nc.addObserver(self, selector: #selector(deletef), name: Notification.Name(Constants.DELETE), object: nil)
-          GridAction    = true
-         tableview.isHidden = true
-         let flowLayout = CustomImageHorizontalFlowLayout()
-         self.contactcollectionview.collectionViewLayout = flowLayout
-        searchView.colors = topbarcolor()
-        gradientView.colors = topbarcolor()
-        setupSideMenu()
-        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        userlogout()
-        setupEmptyBackgroundView()
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
+        self.ui()
+        GridAction    = true
+        tableview.isHidden = true
+        setupSideMenu()
+        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
+        setupEmptyBackgroundView()
+        self.notification()
        profileimagedisplay()
-        savesharedprefrence(key:Constants.TABTYPE, value:"4")
-        self.user_contacts()
-    }
-
-    func profileimagedisplay() {
+        bedgecountapi()
+          userlogout()
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+    }
+    
+    func bedgecountapi()
+    {
+        self.getrequestcount()
+        
+        let usercount:String = getSharedPrefrance(key:Constants.USERCOUNT)
+        
+        if usercount == "" || usercount == "0"
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            self.profilebutton!.badgeString = "0"
         }
         else
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            self.profilebutton!.badgeString = usercount
+        }
+        let unseencount:String = getSharedPrefrance(key:Constants.UNSEENCOUNT)
+        if unseencount == "" || unseencount == "0"
+        {
+            self.usernotification!.badgeString = "0"
+        }
+        else
+        {
+            self.usernotification!.badgeString = unseencount
         }
     }
+    
+
+    @IBAction func profilebuttonaclicked(_ sender: Any)
+    {
+        self.profileclicked()
+    }
+    
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
+    }
+    
+   @objc func requestmethod(notification:Notification)
+    {
+                    let requestViewController:RequestViewController = self.storyboard?.instantiateViewController(withIdentifier:"RequestViewController") as! RequestViewController
+                    self.navigationController?.pushViewController(requestViewController, animated:false )
+    }
+    
+    func profileimagedisplay() {
+        
+        if  let userprofile  = self.userprofilespecialmethod()
+        {
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+        }
+    }
+    
     
     func setupEmptyBackgroundView()
     {
@@ -105,7 +148,6 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
         let emptyBackgroundView1 = EmptyBackgroundView(image: image, top: topMessage, bottom: bottomMessage)
         self.tableview.backgroundView = emptyBackgroundView
         self.contactcollectionview.backgroundView = emptyBackgroundView1
-      //  self.contactcollectionview.backgroundView = emptyBackgroundView
     }
     @objc func searchRecordsAsPerText(_ textfield:UITextField)
     {
@@ -122,7 +164,9 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
                     searchedArray.append(strCountry)
                 }
             }
-        } else {
+        }
+        else
+        {
             searchedArray = self.myContactsModelClassdata
         }
         
@@ -158,7 +202,7 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
         presentPopup(TestPopupViewController(),
                      animated: true,
                      backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
-            constraints: [.leading(16), .trailing(16),.height(250)], // fix leading edge and the width
+            constraints: [.leading(16), .trailing(16),.height(217)], // fix leading edge and the width
             transitioning: .slide(.left), // the popup come and goes from the left side of the screen
             autoDismiss: false, // when touching outside the popup bound it is not dismissed
             completion: nil)
@@ -177,7 +221,6 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
         parameter["friend_id"] = friendid
         parameter["userid"] = getSharedPrefrance(key:Constants.ID)
         
-        
         executePOST(view: self.view, path: Constants.LIVEURL + Constants.delete_contact, parameter: parameter){ response in
             let status = response["status"].int
             if(status == Constants.SUCCESS_CODE)
@@ -188,7 +231,7 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
     
@@ -196,12 +239,7 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
     
     @objc func block()
     {
-       // let i = getSharedPrefrance(key:Constants.DELETECONTACTOBJ)
-        
-       // let j = Int(i)
-        
-        
-        
+      
     }
     
     @IBAction func searchcontactsbuttonaction(_ sender: Any)
@@ -234,9 +272,9 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
     {
         savesharedprefrence(key:"loginsession", value:"false")
         logout()
-        let sc:SplashScreenViewController = self.storyboard?.instantiateViewController(withIdentifier:"SplashScreenViewController") as! SplashScreenViewController
-        self.presentPopup(sc, animated:false)
-        
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+        UIApplication.shared.delegate?.window!?.rootViewController = loginVC
+        UIApplication.shared.delegate?.window!!.makeKeyAndVisible()
     }
     
     func user_contacts()
@@ -257,7 +295,7 @@ class MyContactsViewController: UIViewController,UIPopoverPresentationController
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
     }

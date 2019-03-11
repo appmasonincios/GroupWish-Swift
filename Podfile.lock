@@ -88,6 +88,7 @@ PODS:
   - TwitterCore (3.2.0)
   - TwitterKit (3.4.2):
     - TwitterCore (>= 3.2.0)
+  - UCZProgressView (1.0.2)
   - ViewAnimator (2.2.0)
   - YKPhotoCircleCrop (1.3.4)
 
@@ -119,6 +120,7 @@ DEPENDENCIES:
   - SSZipArchive
   - TransitionButton
   - TwitterKit
+  - UCZProgressView
   - ViewAnimator
   - YKPhotoCircleCrop
 
@@ -162,6 +164,7 @@ SPEC REPOS:
     - TransitionButton
     - TwitterCore
     - TwitterKit
+    - UCZProgressView
     - ViewAnimator
     - YKPhotoCircleCrop
 
@@ -204,9 +207,10 @@ SPEC CHECKSUMS:
   TransitionButton: fb271583d9c9e4bb116b97103047e5157653f233
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
+  UCZProgressView: 55836987c15ee6efb7cd6dfe297556602ee46c94
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   YKPhotoCircleCrop: 490de96b999aef44cea6d6dca8e0bc199a430e63
 
-PODFILE CHECKSUM: 6e76e2a955bc7a9124fdbd05396d121bbaa90011
+PODFILE CHECKSUM: f692fdd1de5bd85070ae5f1feb2b3ad0f1e24f70
 
 COCOAPODS: 1.5.3

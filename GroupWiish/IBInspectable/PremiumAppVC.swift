@@ -13,6 +13,7 @@ class PremiumAppVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        savesharedprefrence(key:Constants.menunumber, value:"5")
         // Do any additional setup after loading the view.
     }
 

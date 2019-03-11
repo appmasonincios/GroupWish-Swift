@@ -176,7 +176,7 @@ class WebViewViewController: UIViewController,UIWebViewDelegate{
             else
             {
                 
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
             
         }

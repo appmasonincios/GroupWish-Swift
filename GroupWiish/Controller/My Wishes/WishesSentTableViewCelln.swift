@@ -24,6 +24,7 @@ class WishesSentTableViewCelln: UITableViewCell {
     @IBOutlet weak var viewimage: UIButton!
     @IBOutlet weak var play: UIButton!
     
+    @IBOutlet weak var sharebutton: UIButton!
     @IBOutlet weak var viewimageview: ViewDesign!
     override func awakeFromNib() {
         super.awakeFromNib()

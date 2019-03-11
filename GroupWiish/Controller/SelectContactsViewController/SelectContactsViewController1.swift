@@ -17,21 +17,31 @@ class SelectContactsViewController1: UIViewController
     private let image = UIImage(named: "friends-inactive")!.withRenderingMode(.alwaysTemplate)
     private let topMessage = ""
     private let bottomMessage = "No Notifications Found"
+    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
     @IBOutlet weak var searchView: UIView!
     @IBOutlet var searchtextfield: UITextField!
     @IBOutlet weak var tableview: UITableView!
     var myContactsModelClassdata = [MyContactsModelClass]()
     var searchedArray = [MyContactsModelClass]()
     var booleancheck:Bool = false
-    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
         setupEmptyBackgroundView()
-        user_contacts()
-        // Do any additional setup after loading the view.
+        
+        
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        self.user_contactsfun()
+    }
+    
+   
+
     
     func setupEmptyBackgroundView()
     {
@@ -78,7 +88,7 @@ class SelectContactsViewController1: UIViewController
         tableview.reloadData()
     }
     
-    func user_contacts()
+    func user_contactsfun()
     {
         executeGET(view: self.view, path: Constants.LIVEURL + Constants.user_contacts + "?userid=" + getSharedPrefrance(key:Constants.ID)){ response in
             let status = response["status"].int
@@ -87,16 +97,15 @@ class SelectContactsViewController1: UIViewController
                 self.myContactsModelClassdata.removeAll()
                 for store in response["data"].arrayValue
                 {
-self.myContactsModelClassdata.append(MyContactsModelClass(json:store.dictionaryObject!)!)
+                 self.myContactsModelClassdata.append(MyContactsModelClass(json:store.dictionaryObject!)!)
                 }
-    
                 self.tableview.reloadData()
                 UIView.animate(views: self.tableview.visibleCells, animations: self.animations, completion: {
                 })
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               self.showToast(message:response["errors"].string ?? "")
             }
         }
     }
@@ -155,7 +164,6 @@ extension SelectContactsViewController1:UITableViewDelegate,UITableViewDataSourc
             let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
             cell.contactimage.kf.indicatorType = .activity
             cell.contactimage.kf.setImage(with:imageURL)
-            //statements using 'constantName'
         } else {
             // the value of someOptional is not set (or nil).
         }
@@ -190,7 +198,7 @@ extension SelectContactsViewController1:UITableViewDelegate,UITableViewDataSourc
         let profile_pic:String = myContactsModelClass?.profile_pic ?? ""
         let id:String = self.myContactsModelClassdata[indexPath.row].id ?? ""
         dict = ["name":username,
-"profile_pic":profile_pic,"id":id]
+        "profile_pic":profile_pic,"id":id]
         NotificationCenter.default.post(name: Notification.Name("SelectContactsViewController"), object: nil, userInfo: dict)
         self.navigationController?.popViewController(animated:false)
     }

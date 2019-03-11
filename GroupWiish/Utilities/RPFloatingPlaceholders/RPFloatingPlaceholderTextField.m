@@ -145,10 +145,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:)
                                                  name:UITextFieldTextDidChangeNotification object:self];
     
-    // Forces drawRect to be called when the bounds change
     self.contentMode = UIViewContentModeRedraw;
-
-    // Set the default animation direction
     self.animationDirection = RPFloatingPlaceholderAnimateUpward;
     
     // Create the floating label instance and add it to the view
@@ -157,9 +154,6 @@
     self.floatingLabel.textAlignment = self.textAlignment;
     self.floatingLabel.backgroundColor = [UIColor clearColor];
     self.floatingLabel.alpha = 1.f;
-    
-    // Adjust the top margin of the text field and then cache the original
-    // view frame
     self.originalTextFieldFrame = UIEdgeInsetsInsetRect(self.frame, UIEdgeInsetsMake(5.f, 0.f, 2.f, 0.f));
     self.frame = self.originalTextFieldFrame;
     
@@ -335,7 +329,7 @@
     __weak __typeof(self) weakSelf = self;
     [self animateFloatingLabelColorChangeWithAnimationBlock:^{
         __strong __typeof(weakSelf) strongSelf = weakSelf;
-        _floatingLabel.textColor = strongSelf.floatingLabelActiveTextColor;
+        self.floatingLabel.textColor = strongSelf.floatingLabelActiveTextColor;
     }];
 }
 
@@ -352,8 +346,6 @@
 {
     BOOL previousShouldDrawPlaceholderValue = self.shouldDrawPlaceholder;
     self.shouldDrawPlaceholder = !self.hasText;
-    
-    // Only redraw if self.shouldDrawPlaceholder value was changed
     if (previousShouldDrawPlaceholderValue != self.shouldDrawPlaceholder) {
         if (self.shouldDrawPlaceholder) {
             [self hideFloatingLabel];

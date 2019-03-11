@@ -31,7 +31,9 @@ class ReceivedTYCardsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //  self.searchtextfield.delegate = self
+        savesharedprefrence(key:Constants.menunumber, value:"4")
+       
+       
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
         gradientView.colors = topbarcolor()
         searchView.colors = topbarcolor()
@@ -43,49 +45,57 @@ class ReceivedTYCardsVC: UIViewController {
     {
         profileimagedisplay()
         getdata()
+        self.bedgecountapi()
     }
     
     
-
-    func profileimagedisplay() {
+    func bedgecountapi()
+    {
+        self.getrequestcount()
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+        let usercount:String = getSharedPrefrance(key:Constants.USERCOUNT)
+        
+        if usercount == "" || usercount == "0"
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            self.profilebutton!.badgeString = "0"
         }
         else
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            self.profilebutton!.badgeString = usercount
+        }
+        let unseencount:String = getSharedPrefrance(key:Constants.UNSEENCOUNT)
+        if unseencount == "" || unseencount == "0"
+        {
+            self.usernotification!.badgeString = "0"
+        }
+        else
+        {
+            self.usernotification!.badgeString = unseencount
         }
     }
     
+    func profileimagedisplay()
+    {
+        if  let userprofile  = self.userprofilespecialmethod()
+        {
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+        }
+    }
+
+    @IBAction func profilebuttonaclicked(_ sender: Any)
+    {
+        self.profileclicked()
+    }
+    
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
+    }
    
     func setupEmptyBackgroundView()
     {
@@ -147,7 +157,7 @@ class ReceivedTYCardsVC: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+                //self.showToast(message:response["errors"].string ?? "")
             }
         }
     }
@@ -188,7 +198,6 @@ extension ReceivedTYCardsVC:UITableViewDelegate,UITableViewDataSource
         {
             if searchedArray.count == 0
             {
-                
                 tableView.backgroundView?.isHidden = false
             } else {
                 tableView.backgroundView?.isHidden = true
@@ -219,7 +228,6 @@ extension ReceivedTYCardsVC:UITableViewDelegate,UITableViewDataSource
             cell.userimage.kf.indicatorType = .activity
             cell.userimage.kf.setImage(with: imageURL)
         }
-    
         cell.username.text = get_Friend_Cards?.friend_name
         cell.datelabel.text = get_Friend_Cards?.datetime
     
@@ -248,20 +256,18 @@ extension ReceivedTYCardsVC:UITableViewDelegate,UITableViewDataSource
     
     func tag_deleteThankCard(user_id:String,card_id:String)
     {
-        
-      
         let  urlString = "\(Constants.LIVEURL)/\(Constants.delete_card)?user_id=\(getSharedPrefrance(key:Constants.ID))&card_id=\(card_id)"
      
         executeGET(view: self.view, path:urlString)
         { response in
             let status = response["status"].int
-            if(status == 200)
+            if(status == Constants.SUCCESS_CODE)
             {
                 self.getdata()
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
         

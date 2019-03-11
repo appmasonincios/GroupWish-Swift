@@ -98,7 +98,7 @@ class SelectFriendsVC: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+                //self.showToast(message:response["errors"].string ?? "")
             }
         }
 
@@ -122,7 +122,6 @@ class SelectFriendsVC: UIViewController {
         }
         else
         {
-            
             self.showToast(message:"Please Select The Image")
         }
     
@@ -305,9 +304,14 @@ extension SelectFriendsVC:UICollectionViewDelegate,UICollectionViewDataSource
         if let constantName = myContactsModelClass?.profile_pic
         {
             let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
-            cell.friendimage.kf.indicatorType = .activity
-            cell.friendimage.kf.setImage(with:imageURL)
-            //statements using 'constantName'
+            
+            cell.friendimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+            
+            
         } else {
             // the value of someOptional is not set (or nil).
         }

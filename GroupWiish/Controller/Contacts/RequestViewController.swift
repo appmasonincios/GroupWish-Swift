@@ -33,7 +33,7 @@ class RequestViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //  self.searchtextfield.delegate = self
+        self.searchView.colors = topbarcolor()
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
         self.tableview.delegate = self
         self.tableview.dataSource = self
@@ -75,43 +75,15 @@ class RequestViewController: UIViewController
             self.usernotification!.badgeString = unseencount
         }
     }
-    
     func profileimagedisplay() {
-        
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
     
@@ -135,7 +107,9 @@ class RequestViewController: UIViewController
                     searchedArray.append(strCountry)
                 }
             }
-        } else {
+        }
+        else
+        {
             searchedArray = self.get_Friend_RequestsModelClass
         }
         
@@ -146,30 +120,31 @@ class RequestViewController: UIViewController
     {
         self.navigationController?.popViewController(animated:false)
     }
-    
-    //getSharedPrefrance(key:Constants.ID)
+
     func get_friend_requests()
     {
+        
+       
+            self.get_Friend_RequestsModelClass.removeAll()
+           self.searchedArray.removeAll()
+        
        let urlstring = "\(Constants.LIVEURL)\(Constants.get_friend_requests)?userid=\(getSharedPrefrance(key:Constants.ID))"
        
         executeGET(view: self.view, path:urlstring){ response in
             let status = response["status"].int
             if(status == Constants.SUCCESS_CODE)
             {
-            
-                print(response)
-                
-
                 for store in response["data"].arrayValue
                 {
-self.get_Friend_RequestsModelClass.append(Get_Friend_RequestsModelClass(json:store.dictionaryObject!)!)
+        self.get_Friend_RequestsModelClass.append(Get_Friend_RequestsModelClass(json:store.dictionaryObject!)!)
                 }
                self.tableview.reloadData()
                 
             }
             else
             {
-            self.showToast(message:response["errors"].string ?? "")
+                self.tableview.reloadData()
+           // self.showToast(message:response["errors"].string ?? "")
             }
         }
     }
@@ -179,36 +154,37 @@ self.get_Friend_RequestsModelClass.append(Get_Friend_RequestsModelClass(json:sto
         let friend = self.get_Friend_RequestsModelClass[sender?.tag ?? 0].id
         var dic: [String : Any] = [:]
         dic["request_id"] = friend
-        dic["userid"] = UserDefaults.standard.value(forKey: "id")
+        dic["userid"] = getSharedPrefrance(key:Constants.ID)
         dic["response"] = "1"
      
-        request_response(parameter:dic)
+        self.request_response(parameter:dic)
     }
     
-    @objc func cancelbtnTapped(_ sender: UIButton?) {
+    @objc func cancelbtnTapped(_ sender: UIButton?)
+    {
         let friend = String(format: "%li", Int(sender?.tag ?? 0))
         var dic: [String : Any] = [:]
         dic["request_id"] = friend
-        dic["userid"] = UserDefaults.standard.value(forKey: "id")
+        dic["userid"] = getSharedPrefrance(key:Constants.ID)
         dic["response"] = "0"
         
-        request_response(parameter:dic)
+        self.request_response(parameter:dic)
     }
     
     func request_response(parameter:[String:Any])
     {
-        
-        executePOST(view: self.view, path: Constants.LIVEURL + Constants.get_friend_requests + "?userid=" + getSharedPrefrance(key:Constants.ID), parameter:parameter){ response in
+      
+        executePOST(view: self.view, path: Constants.LIVEURL + Constants.request_response + "?userid=" + getSharedPrefrance(key:Constants.ID), parameter:parameter){ response in
             let status = response["status"].int
             if(status == Constants.SUCCESS_CODE)
             {
-                 self.showToast(message:response["description"].string ?? "")
+                 self.showToast(message:"Request Accepted Successful")
                 
                 self.get_friend_requests()
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
     
@@ -276,8 +252,13 @@ extension RequestViewController:UITableViewDelegate,UITableViewDataSource
         if let profile_pic = get_Friend_RequestsModelClass?.profile_pic
         {
             let imageURL = URL(string:Constants.WS_ImageUrl + "/" + profile_pic)!
-            cell.userImageView.kf.indicatorType = .activity
-            cell.userImageView.kf.setImage(with: imageURL)
+            
+            cell.userImageView.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+          
         }
         
         cell.nameLbl.text = get_Friend_RequestsModelClass?.username

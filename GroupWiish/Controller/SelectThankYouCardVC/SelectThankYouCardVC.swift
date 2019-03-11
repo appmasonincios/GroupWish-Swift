@@ -15,11 +15,12 @@ import ViewAnimator
 import PopItUp
 class SelectThankYouCardVC: UIViewController
 {
-  private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
+  
     @IBOutlet weak var grandientview: GradientView!
     @IBOutlet weak var collectionview: UICollectionView!
     var show_all_cards = [Show_all_cards]()
     var myVideosModelClass:MyVideosModelClass? = nil
+    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
     override func viewDidLoad() {
         super.viewDidLoad()
          getthank_cardAPI()
@@ -67,7 +68,7 @@ class SelectThankYouCardVC: UIViewController
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
     }

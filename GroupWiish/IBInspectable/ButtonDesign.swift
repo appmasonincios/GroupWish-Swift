@@ -46,7 +46,6 @@ import UIKit
             layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         }
     }
-    
     @IBInspectable var masksToBounds: Bool = false {
         didSet {
             layer.masksToBounds = masksToBounds

@@ -12,16 +12,13 @@ class VerficationOTPVC: UIViewController,SDOtpFieldDelegate {
 
     @IBOutlet weak var otptextfield: SDOtpField!
     @IBOutlet weak var emailabel: UILabel!
-   var someDict = [String:Any]()
+     var someDict = [String:Any]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
           otptextfield.numberOfDigits = 4
       
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     
@@ -46,9 +43,8 @@ class VerficationOTPVC: UIViewController,SDOtpFieldDelegate {
     ]
     executePOST(view: self.view, path: Constants.LIVEURL + Constants.OTP_checker, parameter: parameter){ response in
     let status = response["status"].int
-    if(status == 200)
+    if(status == Constants.SUCCESS_CODE)
     {
-    
      let vc:SplashScreenViewController = self.storyboard?.instantiateViewController(withIdentifier:"SplashScreenViewController") as! SplashScreenViewController
         self.present(vc, animated:false, completion: nil)
     }
@@ -64,23 +60,20 @@ class VerficationOTPVC: UIViewController,SDOtpFieldDelegate {
     
     @IBAction func resendthecodeaction(_ sender: Any)
     {
-   
         let id:String = (someDict["id"] as? String)!
-        
         let parameter:[String:Any] = [
             "userid":id
         ]
+        
         executePOST(view: self.view, path: Constants.LIVEURL + Constants.resend_OTP, parameter: parameter){ response in
             let status = response["status"].int
-            if(status == 200)
+            if(status == Constants.SUCCESS_CODE)
             {
-        
-                
                  self.showToast(message:"Resend the code successfully")
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+              //  self.showToast(message:response["errors"].string ?? "")
             }
         }
 

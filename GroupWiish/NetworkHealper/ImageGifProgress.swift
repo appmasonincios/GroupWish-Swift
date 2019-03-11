@@ -21,38 +21,42 @@ extension UIImageView {
     }
     
     @available(iOS 9.0, *)
-    public func loadGif(asset: String) {
-        DispatchQueue.global().async {
+    public func loadGif(asset: String)
+    {
+        DispatchQueue.global().async
+            {
             let image = UIImage.gif(asset: asset)
-            DispatchQueue.main.async {
+            DispatchQueue.main.async
+            {
                 self.image = image
             }
         }
     }
-    
 }
 
 extension UIImage {
     
-    public class func gif(data: Data) -> UIImage? {
-        // Create source from data
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
+    public class func gif(data: Data) -> UIImage?
+    {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else
+        {
             print("SwiftGif: Source for the image does not exist")
             return nil
         }
-        
         return UIImage.animatedImageWithSource(source)
     }
     
     public class func gif(url: String) -> UIImage? {
         // Validate URL
-        guard let bundleURL = URL(string: url) else {
+        guard let bundleURL = URL(string: url) else
+        {
             print("SwiftGif: This image named \"\(url)\" does not exist")
             return nil
         }
         
         // Validate data
-        guard let imageData = try? Data(contentsOf: bundleURL) else {
+        guard let imageData = try? Data(contentsOf: bundleURL) else
+        {
             print("SwiftGif: Cannot turn image named \"\(url)\" into NSData")
             return nil
         }

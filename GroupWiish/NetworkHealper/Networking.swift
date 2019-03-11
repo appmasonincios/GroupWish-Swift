@@ -16,6 +16,7 @@ import SwiftyJSON
 func executePOSTLogin(view:UIView,path:String, parameter:Parameters , completion: @escaping (JSON) -> ()) {
     
     view.makeToastActivity(.center)
+    //spinnericon
     Alamofire.request(path,method: .post, parameters: parameter, encoding: URLEncoding.default,headers: nil).validate().responseJSON { response in
         
         view.hideToastActivity()
@@ -67,7 +68,31 @@ func executePOST(view:UIView,path:String, parameter:Parameters , completion: @es
     }
 }
 
-
+func executeGETForForgotPassword(view:UIView,path:String , completion: @escaping (JSON) -> ()) {
+    view.makeToastActivity(.center)
+  
+    Alamofire.request(path,method: .get,  encoding: JSONEncoding.default,headers:nil).validate().responseJSON { response in
+        view.hideToastActivity()
+        switch response.result {
+        case .success:
+            
+            do {
+                let jsonData = try JSON(data: response.data!)
+                completion(jsonData)
+            }catch{
+                
+            }
+        case .failure:
+            
+            do {
+                try completion(JSON(data: NSData() as Data))
+            }catch{
+                
+            }
+        }
+    }
+    
+}
 
 func executeGET(view:UIView,path:String , completion: @escaping (JSON) -> ()) {
     view.makeToastActivity(.center)

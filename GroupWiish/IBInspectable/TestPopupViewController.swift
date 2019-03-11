@@ -15,6 +15,8 @@ class TestPopupViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    
+    
    
     @IBAction func nobuttonaction(_ sender: Any)
     {
@@ -24,7 +26,6 @@ class TestPopupViewController: UIViewController {
     
     @IBAction func yesbuttonaction(_ sender: Any)
     {
-     
         dismiss(animated: true, completion: nil)
         
         let typeoftab = getSharedPrefrance(key:Constants.TABTYPE)
@@ -53,11 +54,6 @@ class TestPopupViewController: UIViewController {
         {
             let nc = NotificationCenter.default
             nc.post(name: Notification.Name("UserLoggedOut5"), object: nil)
-            
         }
-        
-
     }
-    
-    
 }

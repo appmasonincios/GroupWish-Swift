@@ -17,14 +17,12 @@ class MyVideoTableViewCell: UITableViewCell {
     @IBOutlet weak var friend_name: UILabel!
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var datelabel: UILabel!
-    
     @IBOutlet weak var downloadbutton: UIButton!
     @IBOutlet weak var sharebutton: UIButton!
     @IBOutlet weak var videobutton: UIButton!
-    
     @IBOutlet weak var replaybuttonaction: UIButton!
-    
     @IBOutlet weak var replayview: ViewDesign!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "856C27410C4BB09CAB7B60F818509E57"
+               BlueprintIdentifier = "5E8FE99EC7FCE6A26086E0BDC1A1862F"
                BuildableName = "Pods_GroupWiish.framework"
                BlueprintName = "Pods-GroupWiish"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "856C27410C4BB09CAB7B60F818509E57"
+            BlueprintIdentifier = "5E8FE99EC7FCE6A26086E0BDC1A1862F"
             BuildableName = "Pods_GroupWiish.framework"
             BlueprintName = "Pods-GroupWiish"
             ReferencedContainer = "container:Pods.xcodeproj">

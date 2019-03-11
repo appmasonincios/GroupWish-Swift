@@ -10,6 +10,8 @@ import UIKit
 
 class ArrangeVideosCollectionViewCelln: UICollectionViewCell
 {
+    @IBOutlet weak var profileimage: ImageViewDesign!
+    @IBOutlet weak var subtitlelabel: UILabel!
     @IBOutlet weak var cancelBtn: UIButton!
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var tumbNail: UIImageView!

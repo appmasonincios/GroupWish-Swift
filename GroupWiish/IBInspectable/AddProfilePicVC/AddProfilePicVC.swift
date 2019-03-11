@@ -13,29 +13,15 @@ class AddProfilePicVC: UIViewController,YKCircleCropViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        // NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(_:)), name: NSNotification.Name(rawValue: "g"), object: nil)
-        // Do any additional setup after loading the view.
     }
-
-    
-    
-    
-    
     @IBAction func chooseGalleryAction(_ sender: Any)
     {
-        
         openGallary()
-        //gallery
-       
-        
     }
     
     @IBAction func camaraVideoAction(_ sender: Any)
     {
         openCamera()
-//        let nc = NotificationCenter.default
-//        nc.post(name: Notification.Name("c"), object: nil)
     }
     
     @IBAction func cancelAction(_ sender: Any)

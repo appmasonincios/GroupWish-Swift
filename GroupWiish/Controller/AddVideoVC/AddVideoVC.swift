@@ -23,33 +23,38 @@ class AddVideoVC:UIViewController
     @IBOutlet weak var sendAction: UIButton!
     @IBOutlet weak var friendBtn: UIButton!
     @IBOutlet weak var plyBtnVideo: UIButton!
-    var imagePicker = UIImagePickerController()
     @IBOutlet weak var addVideoBack: UIImageView!
     @IBOutlet weak var addVideoImageView: ImageViewDesign!
     @IBOutlet weak var addVideoLbl: UILabel!
     @IBOutlet weak var videoPicker: UIButton!
     @IBOutlet weak var editActionBtn: UIButton!
     @IBOutlet weak var videoPlayer: UIView!
-    var video_url: URL?
-
-    var videoChoosen:Bool = false
-    var recipent_id = ""
     @IBOutlet weak var pickedImageView: UIImageView!
     @IBOutlet weak var profileimage: ImageViewDesign!
     @IBOutlet weak var gradientView: GradientView!
-    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
-    
     @IBOutlet weak var titleTF: UITextField!
-    
     @IBOutlet weak var chooseFriendTF: UITextField!
-    @IBOutlet weak var messageTF: UITextField!
-    
+    @IBOutlet weak var countlabel: UILabel!
+    @IBOutlet weak var heightoftext: NSLayoutConstraint!
+    @IBOutlet weak var messageTextView:UITextView!
+    var video_url: URL?
+    var imagePicker = UIImagePickerController()
+    var videoChoosen:Bool = false
+    var recipent_id = ""
+    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+
+        
+        messageTextView.text = "Message"
+        messageTextView.textColor = UIColor.lightGray
+        messageTextView.delegate = self
+        
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(openCamera), name: Notification.Name(Constants.openCamera), object: nil)
+        nc.addObserver(self, selector: #selector(openCamera), name: Notification.Name(Constants.openCamera1), object: nil)
         nc.addObserver(self, selector: #selector(openGallary), name: Notification.Name(Constants.openGallary), object: nil)
          nc.addObserver(self, selector: #selector(methodOfReceivedNotification(notification:)), name: Notification.Name(Constants.friendnotification), object: nil)
        self.profileimagedisplay()
@@ -59,13 +64,24 @@ class AddVideoVC:UIViewController
           self.friendBtn.setTitleColor(UIColor.lightGray, for:.normal)
         
        KanvasSDK.initialize(withClientID:Constants.KanvasSDKClientID, signature:Constants.KanvasSDKsignature)
-        
+    
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         bedgecountapi()
+    }
+    
+    
+    @IBAction func profilebuttonaclicked(_ sender: Any)
+    {
+        self.profileclicked()
+    }
+    
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
     }
     
     func bedgecountapi()
@@ -92,44 +108,17 @@ class AddVideoVC:UIViewController
             self.usernotification!.badgeString = unseencount
         }
     }
-
     
-    func profileimagedisplay() {
-        
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+    func profileimagedisplay()
+    {
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
     
@@ -154,13 +143,13 @@ class AddVideoVC:UIViewController
     {
         if videoChoosen == true
         {
-            if self.titleTF.text != "" && self.messageTF.text != "" && self.chooseFriendTF.text != ""
+            if self.titleTF.text != "" && self.messageTextView.text != "" && self.chooseFriendTF.text != ""
             {
              
                 var parameters = [String : Any]()
                 
                 let title:String = self.titleTF.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
-                let message:String = self.messageTF.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
+                let message:String = self.messageTextView.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
                 let object = getSharedPrefrance(key:Constants.ID)
                     parameters = [
                         "userid": object,
@@ -191,7 +180,7 @@ class AddVideoVC:UIViewController
     }
     
     func upload(parameter:[String:Any])
-    {//UIImage.jpegData(image)(compressionQuality:0.4)
+    {
         let url = Constants.LIVEURL + Constants.send_video_user
         
         let headers = [
@@ -242,7 +231,6 @@ class AddVideoVC:UIViewController
                                                 self.showToastWithMessage(message:"Sent Successfully", onVc:(UIApplication.shared.keyWindow?.rootViewController)!, type:"2")
                                             }
                                         }
-                                        
                                     }
                                     else
                                     {
@@ -290,20 +278,19 @@ class AddVideoVC:UIViewController
     
     @objc func openCamera(){
         
-        let videoPicker = UIImagePickerController()
+        let vc = KVNCameraViewController.verified()
+        vc?.delegate = self
+        vc?.settings.enableAssetPicker = false
+        vc?.settings.enableCameraMode = true
+        vc?.settings.enableGrid = false
+        vc?.settings.enableGifMode = false
+        vc?.settings.enableStopMotion = false
+        vc?.settings.enableFilters = false
+        vc?.settings.enableVideoMode = true
+        vc?.maxVideoDuration = 15
+    
+        present(vc!, animated: true)
         
-        videoPicker.sourceType = .camera
-        if let available = UIImagePickerController.availableMediaTypes(for: .camera) {
-            videoPicker.mediaTypes = available
-        }
-        videoPicker.delegate = self
-        videoPicker.cameraCaptureMode = .video
-        videoPicker.allowsEditing = true
-        videoPicker.mediaTypes = [kUTTypeMovie as String]
-        videoPicker.videoMaximumDuration = 15
-        
-        dismiss(animated: true)
-        present(videoPicker, animated: true)
         
     }
     
@@ -346,7 +333,7 @@ class AddVideoVC:UIViewController
         ]
         videoPicker.videoQuality = .typeHigh
         videoPicker.allowsEditing = true
-        
+        videoPicker.videoMaximumDuration = 15
         dismiss(animated: true)
         present(videoPicker, animated: true)
         //openGallary Notification
@@ -382,19 +369,55 @@ extension AddVideoVC: BottomPopupDelegate {
 }
 
 
+
+
 extension AddVideoVC:UINavigationControllerDelegate,UIImagePickerControllerDelegate,KVNCameraViewControllerDelegate,KVNEditViewControllerDelegate
 {
-    func presentEdit(_ url: URL?) {
+    func presentEdit(_ url: URL?)
+    {
         let viewController = KVNEditViewController.verified()
         viewController?.delegate = self
         viewController?.url = url
         present(viewController!, animated: true)
     }
+    
+    
     func cameraViewController(_ cameraViewController: KVNCameraViewController!, didFinishWith image: UIImage!) {
         // Do Nothing
+        
+        
+        
     }
     
-    func cameraViewController(_ cameraViewController: KVNCameraViewController!, didFinishWithVideo fileURL: URL!) {
+    func cameraViewController(_ cameraViewController: KVNCameraViewController!, didFinishWithVideo fileURL: URL!)
+    {
+        cameraViewController.dismiss(animated:true, completion:{
+                self.videoChoosen = true
+                self.video_url = fileURL
+                self.addVideoBack.isHidden = true
+                self.addVideoImageView.isHidden = true
+                self.addVideoLbl.isHidden = true
+                self.videoPicker.isHidden = true
+                self.editActionBtn.isHidden = false
+                self.plyBtnVideo.isHidden = false
+                
+                if fileURL != nil
+                {
+                    self.pickedImageView.image = self.thumbnailImageFor(fileUrl:fileURL)
+                }
+                else
+                {
+                    // self.videoplayercontainerview.isHidden = true
+                }
+        })
+        
+          self.dismiss(animated:false, completion:nil)
+
+    }
+    
+    func cameraViewController(_ cameraViewController: KVNCameraViewController!, backButtonPressed sender: Any!)
+    {
+        cameraViewController.dismiss(animated:true, completion:nil)
         // Do Nothing
     }
     
@@ -402,13 +425,14 @@ extension AddVideoVC:UINavigationControllerDelegate,UIImagePickerControllerDeleg
         // Do Nothing
     }
     
-    func cameraViewController(_ cameraViewController: KVNCameraViewController!, willDismiss sender: Any!) {
-        // [cameraViewController dismissViewControllerAnimated:YES completion:nil];
+    func cameraViewController(_ cameraViewController: KVNCameraViewController!, willDismiss sender: Any!)
+    {
+        
         cameraViewController.dismiss(animated:true, completion:nil)
     }
     
     func editViewController(_ viewController: KVNEditViewController!, backButtonPressed sender: Any!) {
-        // [viewController dismissViewControllerAnimated:YES completion:nil];
+        
         
         viewController.dismiss(animated:true, completion:nil)
     }
@@ -494,8 +518,6 @@ extension AddVideoVC:UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     }
                 }
             }
-            
-            
         }
         
     }
@@ -504,30 +526,43 @@ extension AddVideoVC:UINavigationControllerDelegate,UIImagePickerControllerDeleg
         
         picker.dismiss(animated:true, completion:nil)
     }
+
+}
+
+
+
+extension AddVideoVC:UITextViewDelegate
+{
     
+    func textView(_ textView:UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
+    {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.characters.count
+        
+        self.heightoftext.constant = CGFloat(textView.numberOfLines() * 21) + 20
+        
+        self.countlabel.text = "\(numberOfChars)" + "/160"
+        
+        return numberOfChars < 160;
+    }
     
-    func thumbnailImageFor(fileUrl:URL) -> UIImage? {
-        
-        let video = AVURLAsset(url: fileUrl, options: [:])
-        let assetImgGenerate = AVAssetImageGenerator(asset: video)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        
-        let videoDuration:CMTime = video.duration
-        let durationInSeconds:Float64 = CMTimeGetSeconds(videoDuration)
-        
-        let numerator = Int64(1)
-        let denominator = videoDuration.timescale
-        let time = CMTimeMake(value: numerator, timescale: denominator)
-        
-        do {
-            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-            let thumbnail = UIImage(cgImage: img)
-            return thumbnail
-        } catch {
-            print(error)
-            return nil
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray
+        {
+            textView.text = nil
+            heightoftext.constant = 46
+            textView.textColor = UIColor.black
         }
     }
     
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Message"
+            textView.textColor = UIColor.lightGray
+        }
+    }
+    
+    
+    
+    
 }
-

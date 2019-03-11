@@ -30,11 +30,32 @@ public func logout()
    resetDefaults()
 }
 
-func resetDefaults() {
+func resetDefaults()
+{
     let defaults = UserDefaults.standard
     let dictionary = defaults.dictionaryRepresentation()
-    dictionary.keys.forEach { key in
-        defaults.removeObject(forKey: key)
+    dictionary.keys.forEach
+        { key in
+        if key == Constants.DEVICETOKEN
+        {
+            
+        }
+        else if key == "kGBVersionTrail"
+        {
+            
+        }
+        else if key == "kGBVersion"
+        {
+            
+        }
+        else if key == "kGBBuild"
+        {
+            
+        }
+        else
+        {
+           defaults.removeObject(forKey: key)
+        }
     }
 }
 

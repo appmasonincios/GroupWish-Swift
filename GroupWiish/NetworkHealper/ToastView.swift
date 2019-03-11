@@ -207,6 +207,7 @@ public extension UIView {
         
         do {
             let toast = try self.toastViewForMessage(message, title: title, image: image, style: toastStyle)
+            
             self.showToast(toast, duration: duration, position: position, completion: completion)
         } catch ToastError.insufficientData {
             print("Error: message, title, and image cannot all be nil")
@@ -315,7 +316,8 @@ public extension UIView {
     /**
      Dismisses the active toast activity indicator view.
      */
-    public func hideToastActivity() {
+    public func hideToastActivity()
+    {
         if let toast = objc_getAssociatedObject(self, &ToastKeys.ActivityView) as? UIView {
             UIView.animate(withDuration: ToastManager.shared.style.fadeDuration, delay: 0.0, options: [.curveEaseIn, .beginFromCurrentState], animations: { () -> Void in
                 toast.alpha = 0.0
@@ -343,11 +345,8 @@ public extension UIView {
     
     private func createToastActivityView() -> UIView {
         var style = ToastManager.shared.style
-        
     
-        
        let activityView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.frame.width, height: self.frame.height))
-       // let activityView = UIView(frame: CGRect(x: 0.0, y: 0.0, width:50, height:50))
         activityView.backgroundColor = style.backgroundColor
         style.maxHeightPercentage = 1.0
         style.cornerRadius = 0.0
@@ -359,7 +358,8 @@ public extension UIView {
         activityView.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
         activityView.layer.cornerRadius = style.cornerRadius
         
-        if style.displayShadow {
+        if style.displayShadow
+        {
             activityView.layer.shadowColor = style.shadowColor.cgColor
             activityView.layer.shadowOpacity = style.shadowOpacity
             activityView.layer.shadowRadius = style.shadowRadius
@@ -368,13 +368,60 @@ public extension UIView {
         }
         
         //greetings_animation.gif
-        let image: UIImage = UIImage.gif(name: "greetings_animation")!
+        
+        var image: UIImage
+         let label = UILabel()
+        let toasttype:String = getSharedPrefrance(key:Constants.toasttype)
+        
+        if toasttype == "start"
+        {
+             image = UIImage.gif(name: "Spin-1s-53pxYellow")!
+             label.text = "validating credentials...please wait"
+             label.textColor = UIColor.white
+        }
+        
+       else if  toasttype == "1"
+        {
+              image = UIImage.gif(name: "videomerg_loader")!
+            label.text = "please wait....merging in progress"
+            
+        }
+        else
+        {
+             image = UIImage.gif(name: "greetings_animation")!
+            label.text = ""
+        }
         
         let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x:activityView.center.x, y:activityView.center.y, width:200, height:200)
-       // imageView.contentMode = .scaleToFill
+       
+        if toasttype == "start"
+        {
+            imageView.frame = CGRect(x:activityView.center.x, y:activityView.center.y, width:50, height:50)
+            label.frame = CGRect(x:activityView.center.x/2, y:activityView.center.y+45, width:250, height:21)
+            label.contentMode = .center
+            label.textColor = UIColor.white
+            label.font = UIFont.boldSystemFont(ofSize:15.0)
+        }
+       else if  toasttype == "1"
+        {
+             imageView.frame = CGRect(x:activityView.center.x, y:activityView.center.y, width:150, height:150)
+             label.frame = CGRect(x:activityView.center.x/2, y:activityView.center.y+80, width:250, height:21)
+              label.textColor = UIColor.init(red:255.0/255.0, green:3.0/255.0, blue: 92.0/255.0, alpha:1.0)
+              label.font = UIFont.boldSystemFont(ofSize:15.0)
+            label.isHidden = false
+        }
+        else
+        {
+           imageView.frame = CGRect(x:activityView.center.x, y:activityView.center.y, width:200, height:200)
+            label.frame = CGRect(x:activityView.center.x, y:activityView.center.y, width:150, height:21)
+            label.isHidden = true
+        }
         imageView.animationDuration = (image.duration) / 2
         imageView.center = CGPoint(x: activityView.bounds.size.width / 2.0, y: activityView.bounds.size.height / 2.0)
+        
+        let height = (activityView.bounds.size.height + 75.0)/2.0
+        label.center = CGPoint(x: activityView.bounds.size.width / 2.0, y:height)
+        activityView.addSubview(label)
         activityView.addSubview(imageView)
         
         return activityView

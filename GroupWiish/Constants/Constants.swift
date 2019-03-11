@@ -117,8 +117,8 @@ struct Constants
      static let Login_check:String = "Login_check"
      static let social_login:String = "Login_check/social_login"
      static let user_details:String = "User/user_details"
-     static let update_user:String = "Register/update_user"
-     static let forgot_pass:String = "User/forgot_pass"
+     static let update_user:String = "User/update_user"
+     static let forgot_pass:String = "Register/forgot_pass"
      static let insert_greeting:String = "Greetings/insert_greeting"
      static let greeting_list:String = "Greetings/greeting_list"
      static let greeting_videos:String = "Videos/greeting_videos"
@@ -174,8 +174,11 @@ struct Constants
     static let DELETE:String = "delete"
     static let openCamera:String = "openCamera"
     static let openGallary:String = "openGallary"
+    static let openCamera1:String = "openCamera1"
     static let friendnotification:String = "friendnotification"
     static let createGreetingsViewController:String = "createGreetingsViewController"
+    static let menunumber:String = "menunumber"
+    static let toasttype:String = "toasttype"
 }
 
 

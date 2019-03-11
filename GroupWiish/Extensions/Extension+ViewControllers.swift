@@ -14,23 +14,16 @@ import SwiftyJSON
 import Kingfisher
 extension UIViewController
 {
-    func hideLoader(view: UIView) {
-        
+    
+    func hideLoader(view: UIView)
+    {
         DispatchQueue.main.async(execute: {
-            //Indicator.sharedInstance.hideIndicator()
-            
             MBProgressHUD.hide(for: view, animated: true)
-            
         })
     }
-    
-  
-   
-    
     func showLoader(view: UIView) {
-        
-        DispatchQueue.main.async(execute: {
-            //Indicator.sharedInstance.showIndicator()
+        DispatchQueue.main.async(execute:
+            {
             MBProgressHUD.showAdded(to: view, animated: true)
         })
         
@@ -54,40 +47,23 @@ extension UIViewController
         return  dateFormatter.string(from: date!)
     }
     
-    func userprofilespecialmethod() -> UIImage
+   
+    
+    func userprofilespecialmethod() -> String?
     {
+        var constant:String = ""
         let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        let profileimage:ImageViewDesign? = nil
+      
         if sociallogin == "1"
         {
-           let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage?.kf.indicatorType = .activity
-                profileimage?.kf.setImage(with: imageURL)
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+           constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
         }
         else
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-            let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage?.kf.indicatorType = .activity
-                profileimage?.kf.setImage(with: imageURL)
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            constant = Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC)
         }
         
-        return profileimage?.image ?? UIImage.init(named:"no-user-img")!
+        return constant
     }
     
     struct AppConstants
@@ -109,45 +85,46 @@ extension UIViewController
         }
         return screenshotImage
     }
-    
-  
-    
     func getrequestcount()
+    {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.userNotificationUpdate(_:)), name: NSNotification.Name("UserNotificationUpdate"), object: nil)
+        self.requestCount()
+    }
+    @objc func userNotificationUpdate(_ notification: Notification?)
+    {
+        if ((notification?.name)!.rawValue == "UserNotificationUpdate")
+        {
+         self.requestCount()
+        }
+    }
+    func requestCount()
     {
         executeGET(view: self.view, path: Constants.LIVEURL + Constants.REQUESTCOUNT + "?userid=" + getSharedPrefrance(key:Constants.ID)){ response in
             let status = response["status"].int
             if(status == Constants.SUCCESS_CODE)
             {
-
                 if let unseencount = response["unseencount"].int
                 {
-                     let unseencountstr = String(unseencount)
-                    savesharedprefrence(key:Constants.UNSEENCOUNT, value:unseencountstr)
+                    let unseencountstr = String(unseencount)
+                    savesharedprefrence(key:Constants.USERCOUNT, value:unseencountstr)
                 }
-            
                 if let unseencount = response["usercount"].int
                 {
-                     let unseencountstr = String(unseencount)
-                        savesharedprefrence(key:Constants.USERCOUNT, value:unseencountstr)
+                    let unseencountstr = String(unseencount)
+                    savesharedprefrence(key:Constants.UNSEENCOUNT, value:unseencountstr)
                 }
             }
             else
             {
-              
-                self.showToast(message:response["errors"].string ?? "")
+        
             }
         }
     }
-    
-
     
     
     func checkstate(checkstate:String) -> String
     {
         let state:String = checkstate
-        print(state)
-    
-        
         return state
     }
     
@@ -160,24 +137,29 @@ extension UIViewController
         let dateString = dateFormatter.string(from: date!)
         return dateString
     }
-
-    
     func showToastWithMessage(message:String,onVc:UIViewController,type:String) {
-    
          onVc.view.makeToast(message, duration:3.0, position:.center)
     }
-    
-
     func requestViewController()
     {
-        let requestViewController:RequestViewController = self.storyboard?.instantiateViewController(withIdentifier:"RequestViewController") as! RequestViewController
-        self.navigationController?.pushViewController(requestViewController, animated:false)
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let vc: TabBarVC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
+
+        vc.selectedIndex =  3
+        self.present(vc, animated:false, completion:
+        {
+            let notificationName = Notification.Name("requestpost")
+            // Post notification
+            NotificationCenter.default.post(name: notificationName, object: nil)
+        })
     }
     
     func profileclicked()
     {
-        let requestViewController:NotificationViewController = self.storyboard?.instantiateViewController(withIdentifier:"NotificationViewController") as! NotificationViewController
-        self.navigationController?.pushViewController(requestViewController, animated:false)
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let vc: TabBarVC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
+        vc.selectedIndex =  4
+        self.present(vc, animated:false, completion:nil)
     }
     
     func randomString(length: Int) -> String {
@@ -193,10 +175,8 @@ extension UIViewController
         
         if let date = inputFormatter.date(from: dateString)
         {
-            
             let outputFormatter = DateFormatter()
             outputFormatter.dateFormat = format
-            
             return outputFormatter.string(from: date)
         }
         
@@ -217,19 +197,18 @@ extension UIViewController
     //toast
     
     internal func showToast(message : String) {
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 100, y: self.view.frame.size.height-100, width: self.view.frame.size.width - 100, height: 60))
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 100, y: self.view.frame.size.height-100, width: self.view.frame.size.width - 100, height: 50))
         toastLabel.center = self.view.center
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.backgroundColor = UIColor.gray.withAlphaComponent(1.0)
         toastLabel.textColor = UIColor.white
         toastLabel.textAlignment = .center;
         toastLabel.numberOfLines = 3
-        //toastLabel.font = constantsNaming.fontType.kOpenSans_RegularMedium
         toastLabel.text = message
         toastLabel.alpha = 1.0
         toastLabel.layer.cornerRadius = 10;
         toastLabel.clipsToBounds  =  true
         self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 6.0, delay: 0.1, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
         }, completion: {(isCompleted) in
             toastLabel.isHidden = true
@@ -237,12 +216,7 @@ extension UIViewController
     }
     
     internal func setGradientColorToView(view : AnyObject, hexString1:String, hexString2:String) {
-        
-        /// Step 1 set the colors which you want to show in the view /
-        //        let colorTop = UIColor().hexStringToUIColor(hex: hexString1)
-        //        let colorBottom = UIColor().hexStringToUIColor(hex: hexString2)
-        
-        /// Step 2 create the gradient layer, add the colors and set the frame /
+    
         let gradient: CAGradientLayer = CAGradientLayer()
         //      gradient.colors = [colorTop.cgColor, colorBottom.cgColor]
         gradient.locations = [0.0, 0.7]
@@ -303,6 +277,25 @@ extension UIViewController
         return date
         
     }
+    func thumbnailImageFor(fileUrl:URL) -> UIImage? {
+        
+        let video = AVURLAsset(url: fileUrl, options: [:])
+        let assetImgGenerate = AVAssetImageGenerator(asset: video)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        let videoDuration:CMTime = video.duration
+        let numerator = Int64(1)
+        let denominator = videoDuration.timescale
+        let time = CMTimeMake(value: numerator, timescale: denominator)
+        do {
+            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let thumbnail = UIImage(cgImage: img)
+            return thumbnail
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
     
     //MARK: - Keyboard Hide Method
     internal func hideKeyboardWhenTappedAround() {
@@ -356,7 +349,6 @@ extension UITableViewCell
 {
     internal func simplemethod(heartbeatrate:String)
     {
-      print(heartbeatrate)
         myComputedProperty = heartbeatrate
     }
     

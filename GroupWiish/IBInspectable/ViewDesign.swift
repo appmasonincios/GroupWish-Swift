@@ -9,10 +9,12 @@
 import UIKit
 
 @IBDesignable
-class ViewDesign: UIView {
-    
-    @IBInspectable var borderColor: UIColor? {
-        didSet {
+class ViewDesign: UIView
+{
+    @IBInspectable var borderColor: UIColor?
+        {
+        didSet
+        {
             layer.borderColor = borderColor?.cgColor
         }
     }
@@ -23,8 +25,10 @@ class ViewDesign: UIView {
         }
     }
     
-    @IBInspectable var cornurRadius: CGFloat = 0.0 {
-        didSet {
+    @IBInspectable var cornurRadius: CGFloat = 0.0
+        {
+        didSet
+        {
             layer.cornerRadius = cornurRadius
         }
     }

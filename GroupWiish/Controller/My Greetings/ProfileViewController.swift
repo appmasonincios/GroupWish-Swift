@@ -36,27 +36,28 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       
+       savesharedprefrence(key:Constants.menunumber, value:"0")
        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(_:)), name: Notification.Name(rawValue: "notificationName"), object: nil)
-        
-        
-        
-        
+    
         self.namelabel.text = getSharedPrefrance(key:Constants.USERNAME)
-      //  self.emailTF.text = getSharedPrefrance(key:Constants.)
-        
-        
         executeGET(view: self.view, path: Constants.LIVEURL + Constants.user_details + "?userid=" + getSharedPrefrance(key:Constants.ID)){ response in
-            let status = response["description"].string
-            if(status == "success")
+            let status = response["status"].int
+            if(status == Constants.SUCCESS_CODE)
             {
-                print(response)
-              
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + response["data"]["profile_pic"].stringValue)!
+                let sociallogin = getSharedPrefrance(key:Constants.social_login)
+                var imageURL:URL? = nil
+                if sociallogin == "1"
+                {
+                    let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
+                     imageURL = URL(string:constant)
+                }
+                else
+                {
+                    imageURL = URL(string:Constants.WS_ImageUrl + "/" + response["data"]["profile_pic"].stringValue)!
+                }
+            
                 self.photoImageView.kf.indicatorType = .activity
                 self.photoImageView.kf.setImage(with: imageURL)
-                
                 self.emailTF.text = response["data"]["email"].stringValue
                 self.nameTF.text = response["data"]["username"].stringValue
                 self.locationTF.text = response["data"]["location"].stringValue
@@ -66,7 +67,7 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               //self.showToast(message:response["errors"].string ?? "")
             }
     
         }
@@ -111,8 +112,7 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
             transitioning: .slide(.left), // the popup come and goes from the left side of the screen
             autoDismiss: false, // when touching outside the popup bound it is not dismissed
             completion: nil)
-        //375
-        
+      
     }
     
     @IBAction func updatebuttonaction(_ sender: Any)
@@ -144,8 +144,8 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
             ]
         
             executePOST(view: self.view, path: Constants.LIVEURL + Constants.update_user, parameter: parameter){ response in
-                let status = response["description"].string
-                if(status == "success")
+                let status = response["status"].int
+                if(status == Constants.SUCCESS_CODE)
                 {
                     self.showToast(message:"Successful updated")
                     savesharedprefrence(key:Constants.USERNAME, value:response["description"]["username"].string ?? "")
@@ -155,7 +155,7 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
                 }
                 else
                 {
-                    self.showToast(message:response["errors"].string ?? "")
+                    //self.showToast(message:response["errors"].string ?? "")
                 }
             }
         }
@@ -192,13 +192,12 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
                     let Json = (response.result.value as AnyObject?)
                     
                     if let httpStatus = response.response , httpStatus.statusCode == 200 {
-                        if response.result.isSuccess {
-                            print(response)
-                            
+                        if response.result.isSuccess
+                        {
                             if let jsonResult = Json as? Dictionary<String, AnyObject>
                             {
                                 if let responeCode = jsonResult["status"] as? Int {
-                                    if  responeCode == 200
+                                    if  responeCode == Constants.SUCCESS_CODE
                                     {
                                            self.showToast(message:"Successful updated")
                                         if let description = jsonResult["description"] as? Dictionary<String,String>
@@ -206,7 +205,19 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
                                              savesharedprefrence(key:Constants.USERNAME, value:description["username"] ?? "")
                                              savesharedprefrence(key:Constants.EMAIL, value:description["email"] ?? "")
                                              savesharedprefrence(key:Constants.MOBILE, value:description["mobile"] ?? "")
-                                             savesharedprefrence(key:Constants.PROFILE_PIC, value:description["profile_pic"] ?? "")
+                                            let sociallogin = getSharedPrefrance(key:Constants.social_login)
+                                            if sociallogin == "1"
+                                            {
+                                               savesharedprefrence(key:Constants.PROFILE_PIC, value:description["full_profile_path"] ?? "")
+                                            }
+                                            else
+                                            {
+                                                if let profileimage = description["profile_pic"]
+                                                {
+                                                    let  constant:String = Constants.WS_ImageUrl + "/" + profileimage
+                                                    savesharedprefrence(key:Constants.PROFILE_PIC, value:constant)
+                                                }
+                                            }
                                         }
                                     }
                                     else
@@ -223,7 +234,9 @@ class ProfileViewController: UIViewController,ImagePickerDelegate {
                                 print("Data is not in proper format")
                                 self.hideLoader(view: self.view)
                             }
-                        }  else {
+                        }
+                        else
+                        {
                             self.showToast(message:"something went wrong")
                             self.hideLoader(view: self.view)
                         }

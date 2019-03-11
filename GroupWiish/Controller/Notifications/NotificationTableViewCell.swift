@@ -11,16 +11,16 @@ import UIKit
 class NotificationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileimage: ImageViewDesign!
-    
+    @IBOutlet weak var titlelabel: UILabel!
     @IBOutlet weak var sendreplayview: ViewDesign!
-    @IBOutlet weak var mainimage: ImageViewDesign!
-    
+    @IBOutlet weak var mainimage: UIImageView!
     @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var heightofimage: NSLayoutConstraint!
     @IBOutlet weak var subtitle: UILabel!
-    
     @IBOutlet weak var sendreplaybutton: UIButton!
     @IBOutlet weak var simpletextview: UITextView!
     @IBOutlet weak var timelabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

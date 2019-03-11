@@ -20,12 +20,15 @@ class AddContactsViewControllern: UIViewController {
     @IBOutlet weak var searchviewinstackview: UIView!
     @IBOutlet weak var profilebutton: DYBadgeButton!
     @IBOutlet weak var usernotification: DYBadgeButton!
-     @IBOutlet weak var firstbutton: UIButton!
+    @IBOutlet weak var firstbutton: UIButton!
     @IBOutlet weak var secondbutton: UIButton!
     @IBOutlet weak var thirdbutton: UIButton!
+    @IBOutlet weak var firstlabel: UILabel!
+    @IBOutlet weak var secondlabel: UILabel!
+    @IBOutlet weak var thirdlabel: UILabel!
+    
     @IBOutlet weak var stackview: UIView!
     @IBOutlet weak var menuview: UIView!
-    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
     @IBOutlet weak var noDataLbl: UIStackView!
     @IBOutlet weak var profileimage: ImageViewDesign!
     @IBOutlet weak var gradientview: GradientView!
@@ -34,18 +37,24 @@ class AddContactsViewControllern: UIViewController {
     @IBOutlet weak var searchTF1: SearchTextField!
     @IBOutlet weak var friendsLbl: UILabel!
     @IBOutlet weak var searchbutton: UIButton!
+    
+    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
     var search_contactsModelClass = [Search_contactsModelClass]()
     var search_contactsModelClassOrginal = [Search_contactsModelClass]()
     
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+         savesharedprefrence(key:Constants.menunumber, value:"1")
 
         self.firstbutton.isSelected = true
         self.secondbutton.isSelected = false
         self.thirdbutton.isSelected = false
-        
+        self.firstlabel.textColor = UIColor.init(red:255.0/255.0, green:3.0/255.0, blue:92.0/255.0, alpha:1.0)
+        self.secondlabel.textColor = UIColor.black
+        self.thirdlabel.textColor = UIColor.black
+    
+    
         self.searchfriend(criteria:"")
         
          profileimagedisplay()
@@ -84,48 +93,29 @@ class AddContactsViewControllern: UIViewController {
             self.usernotification!.badgeString = unseencount
         }
     }
-
-    
-    
     func profileimagedisplay() {
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
     
+    
+    @IBAction func profilebuttonaclicked(_ sender: Any)
+    {
+        self.profileclicked()
+    }
+    
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
+    }
    
     @IBAction func firstbuttonaction(_ sender: Any)
     {
@@ -133,33 +123,10 @@ class AddContactsViewControllern: UIViewController {
         self.secondbutton.isSelected = false
         self.thirdbutton.isSelected = false
         
-        self.search_contactsModelClass.removeAll()
-        for item in self.search_contactsModelClassOrginal
-        {
-            if item.is_friend == 2
-            {
-                self.search_contactsModelClass.append(item)
-            }
-        }
-
-        if self.search_contactsModelClass.count == 0
-        {
-            self.noDataLbl.isHidden = false
-        }
-        else
-        {
-            self.noDataLbl.isHidden = true
-        }
-        self.tableview.reloadData()
+        self.firstlabel.textColor = UIColor.init(red:255.0/255.0, green:3.0/255.0, blue:92.0/255.0, alpha:1.0)
+        self.secondlabel.textColor = UIColor.black
+        self.thirdlabel.textColor = UIColor.black
         
-       
-    }
-    
-    @IBAction func secondbuttonaction(_ sender: Any)
-    {
-        self.firstbutton.isSelected = false
-        self.secondbutton.isSelected = true
-        self.thirdbutton.isSelected = false
         
         self.search_contactsModelClass.removeAll()
         for item in self.search_contactsModelClassOrginal
@@ -178,6 +145,38 @@ class AddContactsViewControllern: UIViewController {
             self.noDataLbl.isHidden = true
         }
         self.tableview.reloadData()
+    
+    }
+    
+    @IBAction func secondbuttonaction(_ sender: Any)
+    {
+        self.firstbutton.isSelected = false
+        self.secondbutton.isSelected = true
+        self.thirdbutton.isSelected = false
+        
+        self.firstlabel.textColor = UIColor.black
+        self.secondlabel.textColor = UIColor.init(red:255.0/255.0, green:3.0/255.0, blue:92.0/255.0, alpha:1.0)
+        self.thirdlabel.textColor = UIColor.black
+        
+        self.search_contactsModelClass.removeAll()
+        for item in self.search_contactsModelClassOrginal
+        {
+            if item.is_friend == 2
+            {
+                self.search_contactsModelClass.append(item)
+            }
+        }
+        
+        if self.search_contactsModelClass.count == 0
+        {
+            self.noDataLbl.isHidden = false
+        }
+        else
+        {
+            self.noDataLbl.isHidden = true
+        }
+        self.tableview.reloadData()
+       
         
     }
     @IBAction func thirdbuttonaction(_ sender: Any)
@@ -185,6 +184,10 @@ class AddContactsViewControllern: UIViewController {
         self.firstbutton.isSelected = false
         self.secondbutton.isSelected = false
         self.thirdbutton.isSelected = true
+        self.firstlabel.textColor = UIColor.black
+        self.secondlabel.textColor = UIColor.black
+        self.thirdlabel.textColor = UIColor.init(red:255.0/255.0, green:3.0/255.0, blue:92.0/255.0, alpha:1.0)
+        
         
         self.search_contactsModelClass.removeAll()
         for item in self.search_contactsModelClassOrginal
@@ -344,20 +347,6 @@ class AddContactsViewControllern: UIViewController {
                     self.secondbutton.isSelected = false
                     self.thirdbutton.isSelected = false
                     
-                    for item in self.search_contactsModelClassOrginal
-                    {
-                        if item.is_friend == 2
-                        {
-                            self.search_contactsModelClass.append(item)
-                        }
-                    }
-                }
-                else if self.secondbutton.isSelected == true
-                {
-                    self.firstbutton.isSelected = false
-                    self.secondbutton.isSelected = true
-                    self.thirdbutton.isSelected = false
-                    
                     self.search_contactsModelClass.removeAll()
                     for item in self.search_contactsModelClassOrginal
                     {
@@ -366,6 +355,23 @@ class AddContactsViewControllern: UIViewController {
                             self.search_contactsModelClass.append(item)
                         }
                     }
+                   
+                }
+                else if self.secondbutton.isSelected == true
+                {
+                    self.firstbutton.isSelected = false
+                    self.secondbutton.isSelected = true
+                    self.thirdbutton.isSelected = false
+                    
+                      self.search_contactsModelClass.removeAll()
+                    for item in self.search_contactsModelClassOrginal
+                    {
+                        if item.is_friend == 2
+                        {
+                            self.search_contactsModelClass.append(item)
+                        }
+                    }
+                    
                 }
                 else
                 {
@@ -394,7 +400,7 @@ class AddContactsViewControllern: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+                //self.showToast(message:response["errors"].string ?? "")
             }
         }
     }
@@ -420,7 +426,7 @@ class AddContactsViewControllern: UIViewController {
             }
             else
             {
-               
+                self.showToast(message:response["errors"].string ?? "")
             }
         }
         
@@ -464,6 +470,7 @@ extension AddContactsViewControllern:UITableViewDelegate,UITableViewDataSource
         }
   
         cell.username.text = search_contactsModelClass.username
+        cell.locationlabel.text = search_contactsModelClass.location
 
          cell.addfriendbutton.isHidden = true
         
@@ -473,13 +480,12 @@ extension AddContactsViewControllern:UITableViewDelegate,UITableViewDataSource
         }
         else if search_contactsModelClass.is_friend == 1
         {
-             cell.addfriendbutton.isHidden = false
+             cell.addfriendbutton.isHidden = true
         }
         else
         {
              cell.addfriendbutton.isHidden = true
         }
-        
         
        cell.addfriendbutton.tag = indexPath.row
         

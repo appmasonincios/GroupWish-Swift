@@ -17,21 +17,17 @@ class SendCardVC: UIViewController {
     
     
     @IBOutlet weak var messageTF: SkyFloatingLabelTextField!
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-
       
     }
 
     
-    
-   
     @IBAction func cancel(_ sender: Any)
     {
         self.dismiss(animated: true)
-        
     }
-    
     
     @IBAction func sendbuttonaction(_ sender: Any)
     {
@@ -42,7 +38,6 @@ class SendCardVC: UIViewController {
         else
         {
             self.sendCardVC()
-            
         }
     }
     
@@ -68,7 +63,7 @@ class SendCardVC: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
         

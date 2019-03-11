@@ -10,28 +10,29 @@ import UIKit
 import UserNotifications
 class DownloadVC: UIViewController, URLSessionDownloadDelegate,UIDocumentInteractionControllerDelegate
 {
-
     var downloadTask: URLSessionDownloadTask!
     var backgroundSession: URLSession!
     var url:String = ""
 
     @IBAction func cancel(_ sender: AnyObject)
     {
-        if downloadTask != nil{
+        if downloadTask != nil
+        {
             downloadTask.cancel()
         }
         dismiss(animated: true)
     }
     @IBOutlet var progressView: UIProgressView!
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
      let urlstr = getSharedPrefrance(key:"keyurl")
         
         if urlstr != ""
         {
-            progressView.transform = progressView.transform.scaledBy(x: 1, y: 20)
+            progressView.transform = progressView.transform.scaledBy(x: 1, y:15)
             let backgroundSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "backgroundSession")
             backgroundSession = Foundation.URLSession(configuration: backgroundSessionConfiguration, delegate: self, delegateQueue: OperationQueue.main)
             progressView.setProgress(0.0, animated: false)
@@ -112,9 +113,22 @@ class DownloadVC: UIViewController, URLSessionDownloadDelegate,UIDocumentInterac
             print(error!.localizedDescription)
         }else
         {
-             dismiss(animated: true)
+            if downloadTask != nil
+            {
+                downloadTask.cancel()
+            }
+            
+            dismiss(animated: true)
+            {
+                 self.backgroundSession.finishTasksAndInvalidate();
+            }
             print("The task finished transferring data successfully")
         }
+    }
+    
+    deinit
+    {
+        self.backgroundSession.finishTasksAndInvalidate();
     }
     
     //MARK: UIDocumentInteractionControllerDelegate

@@ -24,6 +24,7 @@ class ArrangeVideosViewController: UIViewController {
     var selectedVideosArray = [Greeting_VideosModelClass]()
     var booleancheck:Bool = false
     var searchedArray = [Greeting_VideosModelClass]()
+    var myGreetingsModel:MyGreetingsModelClass? = nil
     @IBOutlet weak var searchView: GradientView!
     @IBOutlet var searchtextfield: UITextField!
     
@@ -33,22 +34,18 @@ class ArrangeVideosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        savesharedprefrence(key:Constants.toasttype, value:"1")
+        
         let longGR = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
         longGR.minimumPressDuration = 0.1
         videosCollectionView.addGestureRecognizer(longGR)
         
-        gradientview.colors = [
-            UIColor(red: 91.0/255.0, green: 37.0/255.0, blue: 91.0/255.0, alpha: 1),
-            UIColor(red: 111.0/255.0, green: 63.0/255.0, blue: 111.0/255.0, alpha: 1)]
-        
+        gradientview.colors = topbarcolor()
+    
         //  self.searchtextfield.delegate = self
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
         self.selectedVideosArray = selectedArray
-        
         self.videosCollectionView.reloadData()
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     
@@ -116,7 +113,8 @@ class ArrangeVideosViewController: UIViewController {
     
     func tag_videosforMerge(parameters:[String:Any])
     {
-      //  Tag_videosforMerge
+     
+          savesharedprefrence(key:Constants.toasttype, value:"1")
         
         executePOST(view: self.view, path: Constants.LIVEURL + Constants.merge_videos, parameter:parameters){ response in
             let status = response["status"].int
@@ -127,19 +125,17 @@ class ArrangeVideosViewController: UIViewController {
                 {
                     preview.url = URL(string: "\(Constants.WS_VideoUrl)/\(object)")
                     preview.sendUrl = object
+                    savesharedprefrence(key:Constants.toasttype, value:"0")
                 }
+                preview.myGreetingsModel = self.myGreetingsModel
                 preview.greeting_id = self.greeting_id
                     self.navigationController?.pushViewController(preview, animated: true)
-               
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+                savesharedprefrence(key:"0", value:Constants.toasttype)
             }
         }
-        
-        
-        
     }
     
     @IBAction func backbuttonaction(_ sender: Any)
@@ -245,6 +241,9 @@ extension ArrangeVideosViewController:UICollectionViewDelegate,UICollectionViewD
            greeting_VideosModelClass = self.searchedArray[indexPath.row]
         }
         
+
+        cell.subtitlelabel.text = convertDateFormater(greeting_VideosModelClass?.datetime ?? "")
+        
         cell.userName?.text = greeting_VideosModelClass?.friend_name
 
         cell.playBtn.accessibilityHint = greeting_VideosModelClass?.video_name
@@ -258,18 +257,38 @@ extension ArrangeVideosViewController:UICollectionViewDelegate,UICollectionViewD
         {
             let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
             
-            cell.tumbNail.kf.indicatorType = .activity
-            cell.tumbNail.kf.setImage(with:imageURL)
-            //statements using 'constantName'
+            cell.tumbNail.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"image_sample.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+            
         } else {
             // the value of someOptional is not set (or nil).
         }
 
+        if let constantname = greeting_VideosModelClass?.profile_pic
+        {
+            let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantname)!
+
+            cell.profileimage.kf.setImage(with:imageURL,
+                                     placeholder: UIImage(named:"default.png"),
+                                     options: [.transition(ImageTransition.fade(1))],
+                                     progressBlock: { receivedSize, totalSize in },
+                                     completionHandler: { image, error, cacheType, imageURL in})
+        }
+        else
+        {
+            
+        }
+        
+        
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
-        return CGSize(width: collectionView.frame.size.width / 2, height: 170)
+        return CGSize(width: collectionView.frame.size.width / 2, height:300)
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool
@@ -284,16 +303,4 @@ extension ArrangeVideosViewController:UICollectionViewDelegate,UICollectionViewD
         selectedVideosArray.insert(sourceDic, at:destinationIndexPath.row)
         videosCollectionView.reloadData()
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

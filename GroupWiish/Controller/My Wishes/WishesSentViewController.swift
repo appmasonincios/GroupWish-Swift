@@ -20,37 +20,29 @@ class WishesSentViewController: UIViewController {
    
     @IBOutlet weak var profilebutton: DYBadgeButton!
     @IBOutlet weak var usernotification: DYBadgeButton!
-
-    private let image = UIImage(named: "home-empty")!.withRenderingMode(.alwaysTemplate)
-    private let topMessage = ""
-    private let bottomMessage = "No Videos Found"
     @IBOutlet weak var searchView: GradientView!
     @IBOutlet var searchtextfield: UITextField!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var profileimage: ImageViewDesign!
     @IBOutlet weak var gradientView: GradientView!
+    private let image = UIImage(named: "home-empty")!.withRenderingMode(.alwaysTemplate)
+    private let topMessage = ""
+    private let bottomMessage = "No Videos Found"
     private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
-     var booleancheck:Bool = false
+    var booleancheck:Bool = false
     var myGreetingsModelClassdata = [MyVideosHistoryModelClass]()
-      var searchedArray = [MyVideosHistoryModelClass]()
+    var searchedArray = [MyVideosHistoryModelClass]()
     var leftConstraint: NSLayoutConstraint!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //  self.searchtextfield.delegate = self
+        savesharedprefrence(key:Constants.menunumber, value:"3")
+       
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
-        
-      profileimagedisplay()
-        
-        gradientView.colors = [
-            UIColor(red: 91.0/255.0, green: 37.0/255.0, blue: 91.0/255.0, alpha: 1),
-            UIColor(red: 111.0/255.0, green: 63.0/255.0, blue: 111.0/255.0, alpha: 1)]
-        searchView.colors = [
-            UIColor(red: 91.0/255.0, green: 37.0/255.0, blue: 91.0/255.0, alpha: 1),
-            UIColor(red: 111.0/255.0, green: 63.0/255.0, blue: 111.0/255.0, alpha: 1)
-        ]
+         profileimagedisplay()
+        gradientView.colors = topbarcolor()
+        searchView.colors = topbarcolor()
         setupSideMenu()
         SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
@@ -87,45 +79,19 @@ class WishesSentViewController: UIViewController {
         }
     }
     
-    
     func profileimagedisplay() {
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
+
     func setupEmptyBackgroundView()
     {
         let emptyBackgroundView = EmptyBackgroundView(image: image, top: topMessage, bottom: bottomMessage)
@@ -187,7 +153,7 @@ class WishesSentViewController: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
     }
@@ -227,8 +193,7 @@ class WishesSentViewController: UIViewController {
     @objc func toggle() {
         
         let isOpen = leftConstraint.isActive == true
-        
-        // Inactivating the left constraint closes the expandable header.
+    
         leftConstraint.isActive = isOpen ? false : true
         
         // Animate change to visible.
@@ -241,16 +206,17 @@ class WishesSentViewController: UIViewController {
 
 extension WishesSentViewController:UITableViewDelegate,UITableViewDataSource
 {
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if booleancheck == false
         {
-            if myGreetingsModelClassdata.count == 0 {
+            if myGreetingsModelClassdata.count == 0
+            {
                 tableView.separatorStyle = .none
                 tableView.backgroundView?.isHidden = false
-            } else {
+            }
+            else
+            {
                 tableView.separatorStyle = .singleLine
                 tableView.backgroundView?.isHidden = true
             }
@@ -289,25 +255,34 @@ extension WishesSentViewController:UITableViewDelegate,UITableViewDataSource
             myGreetingsModel = self.searchedArray[indexPath.row]
         }
         
-      
     
         if let constantName = myGreetingsModel?.friend_pic
         {
             let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
-            cell.profileimage.kf.indicatorType = .activity
-            cell.profileimage.kf.setImage(with:imageURL)
-            //statements using 'constantName'
-        } else {
+            cell.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+        }
+        else
+        {
             // the value of someOptional is not set (or nil).
         }
 
         if let constantName1 = myGreetingsModel?.thumb_image
         {
-            let mainimageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName1)!
-            cell.thumb_image.kf.indicatorType = .activity
-            cell.thumb_image.kf.setImage(with:mainimageURL)
-            //statements using 'constantName'
-        } else {
+            
+            let url = URL(string:Constants.WS_ImageUrl + "/" + constantName1)!
+            
+            cell.thumb_image.kf.setImage(with: url,
+                                         placeholder: UIImage(named:"image_sample.png"),
+                                         options: [.transition(ImageTransition.fade(1))],
+                                         progressBlock: { receivedSize, totalSize in },
+                                         completionHandler: { image, error, cacheType, imageURL in})
+        }
+        else
+        {
             // the value of someOptional is not set (or nil).
         }
         
@@ -327,37 +302,31 @@ extension WishesSentViewController:UITableViewDelegate,UITableViewDataSource
             cell.datelabel.text = myStringafd
         }
         cell.playbutton1.accessibilityHint = myGreetingsModel?.video_name
-       // cell.playbutton.tag = indexPath.row
        cell.playbutton1.tag = indexPath.row
         cell.playbutton1.addTarget(self, action:#selector(sayAction(_:)), for:.touchUpInside)
         cell.downloadbutton.accessibilityHint = myGreetingsModel?.video_name
        cell.downloadbutton.tag = indexPath.row
         cell.downloadbutton.addTarget(self, action:#selector(downloadbuttonaction(_:)), for:.touchUpInside)
-        
-        
         cell.viewimage.tag = indexPath.row
         cell.viewimage.addTarget(self, action: #selector(viewimagedisplay(_:)), for:.touchUpInside)
-        
+         cell.sharebutton.accessibilityHint = myGreetingsModel?.video_name
+        cell.sharebutton.tag = indexPath.row
+        cell.sharebutton.addTarget(self, action:#selector(sharebuttonaction(_:)), for:.touchUpInside)
         if myGreetingsModel?.thank_card == 1
         {
-            
             cell.viewimageview.isHidden = false
         }
         else
         {
             cell.viewimageview.isHidden = true
         }
-        
-        
-        
-        
+    
         return cell
     }
     
     @objc func viewimagedisplay(_ sender: UIButton?)
     {
         var myGreetingsModel:MyVideosHistoryModelClass? = nil
-        
         if  booleancheck == false
         {
             myGreetingsModel = self.myGreetingsModelClassdata[sender?.tag ?? 0]
@@ -366,10 +335,39 @@ extension WishesSentViewController:UITableViewDelegate,UITableViewDataSource
         {
             myGreetingsModel = self.searchedArray[sender?.tag ?? 0]
         }
-        
          let vc:FullImageViewCardVC = self.storyboard?.instantiateViewController(withIdentifier:"FullImageViewCardVC") as! FullImageViewCardVC
         vc.video_id = myGreetingsModel?.id
         self.navigationController?.pushViewController(vc, animated:false)
+    }
+    
+    
+    @objc func sharebuttonaction(_ sender: UIButton?)
+    {
+        
+        var myVideosHistoryModelClass:MyVideosHistoryModelClass? = nil
+        
+        if  booleancheck == false
+        {
+            myVideosHistoryModelClass = self.myGreetingsModelClassdata[sender?.tag ?? 0]
+        }
+        else
+        {
+            myVideosHistoryModelClass = self.searchedArray[sender?.tag ?? 0]
+        }
+        var textToShare: String? = nil
+        if let value = myVideosHistoryModelClass?.friend_name
+        {
+            // My sent Wish Video Hey i have sent a Surprising wish video to
+            textToShare = "My sent Wish Video Hey i have sent a Surprising wish video to  \(value).\n Lets watch it \n \("\(Constants.WS_VideoUrl)/\(sender?.accessibilityHint ?? "")")  \n Download app now: \n https://play.google.com/store/apps/details?id=com.pyklocal"
+        }
+        
+        let image = UIImage(named: "AppIcon")
+        var shareAll = [Any]()
+        shareAll = [textToShare, image!]
+        let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+        
     }
     
     

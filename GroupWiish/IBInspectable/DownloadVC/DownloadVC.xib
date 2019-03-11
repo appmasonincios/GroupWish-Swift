@@ -43,6 +43,7 @@
                         </button>
                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mGj-Dc-dZh">
                             <rect key="frame" x="32" y="138.5" width="311" height="2"/>
+                            <color key="tintColor" red="1" green="0.01176470588" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                         </progressView>
                     </subviews>
                     <color key="backgroundColor" red="0.97305089239999998" green="0.79022989649999997" blue="0.049385418760000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

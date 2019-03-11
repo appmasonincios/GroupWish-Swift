@@ -56,8 +56,7 @@ static NSString * const kBuildsKey =                        @"kGBBuild";
     }
     else {
         _controller.isFirstLaunchEver = NO;
-        
-        //read the old datastructure out but make a deeply mutable copy of it first
+    
         _controller.versionTrail = @{kVersionsKey: [oldVersionTrail[kVersionsKey] mutableCopy], kBuildsKey: [oldVersionTrail[kBuildsKey] mutableCopy]};
         
         needsSync = YES;

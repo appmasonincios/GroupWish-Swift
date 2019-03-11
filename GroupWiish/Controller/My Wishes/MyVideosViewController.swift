@@ -38,6 +38,9 @@ class MyVideosViewController: UIViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+
+        
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
         settingsui()
         userNotificationCenter()
@@ -46,20 +49,11 @@ class MyVideosViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool)
     {
-        bedgecountapi()
-        profileimagedisplay()
+        self.profileimagedisplay()
         savesharedprefrence(key:Constants.TABTYPE, value:"2")
         self.get_final_videos()
-        
-        self.usernotification.badgeFont = UIFont(name: "Helvetica Neue", size: 15.0)!
-        self.usernotification.badgeColor = UIColor.red
-        self.profilebutton.badgeFont = UIFont(name: "Helvetica Neue", size: 15.0)!
-        self.profilebutton.badgeColor = UIColor.red
-        self.profilebutton.badgeString = "0"
-        self.usernotification.badgeString = "0"
-        
+         bedgecountapi()
     }
-
     func setupEmptyBackgroundView()
     {
         let emptyBackgroundView = EmptyBackgroundView(image: image, top: topMessage, bottom: bottomMessage)
@@ -69,8 +63,6 @@ class MyVideosViewController: UIViewController {
     
     func bedgecountapi()
     {
-        
-        
         self.getrequestcount()
         let usercount = getSharedPrefrance(key:Constants.USERCOUNT)
         
@@ -137,7 +129,6 @@ class MyVideosViewController: UIViewController {
         self.tableview.reloadData()
     }
     
-    
     func userNotificationCenter()
     {
         let nc = NotificationCenter.default
@@ -147,40 +138,14 @@ class MyVideosViewController: UIViewController {
     
     func profileimagedisplay() {
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
     @objc func userLoggedIn()
@@ -189,7 +154,7 @@ class MyVideosViewController: UIViewController {
         presentPopup(TestPopupViewController(),
                      animated: true,
                      backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
-            constraints: [.leading(16), .trailing(16),.height(250)], // fix leading edge and the width
+            constraints: [.leading(16), .trailing(16),.height(217)], // fix leading edge and the width
             transitioning: .slide(.left), // the popup come and goes from the left side of the screen
             autoDismiss: false, // when touching outside the popup bound it is not dismissed
             completion: nil)
@@ -200,27 +165,28 @@ class MyVideosViewController: UIViewController {
     {
         savesharedprefrence(key:"loginsession", value:"false")
         logout()
-        let sc:SplashScreenViewController = self.storyboard?.instantiateViewController(withIdentifier:"SplashScreenViewController") as! SplashScreenViewController
-        self.presentPopup(sc, animated:false)
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+        UIApplication.shared.delegate?.window!?.rootViewController = loginVC
+        UIApplication.shared.delegate?.window!!.makeKeyAndVisible()
     }
     
 
     @IBAction func profilebuttonaclicked(_ sender: Any)
     {
-        profileclicked()
+        self.profileclicked()
     }
     
-    @IBAction func requestbuttonaction(_ sender: Any)
+    @IBAction func notificationbuttonaction(_ sender: Any)
     {
         self.requestViewController()
     }
-
+  
     func get_final_videos()
     {
         
         executeGET(view: self.view, path: Constants.LIVEURL + Constants.get_final_videos + "?userid=" + getSharedPrefrance(key:Constants.ID)){ response in
-            let status = response["description"].string
-            if(status == "success")
+            let status = response["status"].int
+            if(status == Constants.SUCCESS_CODE)
             {
                 self.myVideosdata.removeAll()
             
@@ -235,7 +201,7 @@ class MyVideosViewController: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
         
@@ -298,18 +264,21 @@ extension MyVideosViewController:UITableViewDelegate,UITableViewDataSource
             notificationdataone = self.searchedArray[indexPath.row]
         }
     
-        if let image = notificationdataone?.friend_pic
+        if let constantName = notificationdataone?.friend_pic
         {
-            let imageURL = URL(string:Constants.WS_ImageUrl + "/" + image)!
-            cell.profileimage.kf.indicatorType = .activity
-            cell.profileimage.kf.setImage(with:imageURL)
+           
+                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
+                cell.profileimage.kf.setImage(with:imageURL,
+                                              placeholder: UIImage(named:"no-user-img.png"),
+                                              options: [.transition(ImageTransition.fade(1))],
+                                              progressBlock: { receivedSize, totalSize in },
+                                              completionHandler: { image, error, cacheType, imageURL in})
         }
         else
         {
-            cell.profileimage.image = UIImage.init(named:"no-user-img")
+            
         }
-        
-        
+
         if let mainimageURL = notificationdataone?.thumb_image
         {
     
@@ -397,7 +366,7 @@ extension MyVideosViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         
-        return 360
+        return 390.0
     }
     
     @objc  func sayAction(_ sender: UIButton?)
@@ -423,7 +392,7 @@ extension MyVideosViewController:UITableViewDelegate,UITableViewDataSource
         var textToShare: String? = nil
         if let value = notificationdataone.friend_name
         {
-            textToShare = "Hey i got a suprising wish video from \(value). Lets watch it <br> \("\(Constants.WS_VideoUrl)/\(sender?.accessibilityHint ?? "")")"
+            textToShare = "Hey i got a suprising wish video from \(value). Lets watch it \n \("\(Constants.WS_VideoUrl)/\(sender?.accessibilityHint ?? "")")"
         }
     
         let image = UIImage(named: "AppIcon")

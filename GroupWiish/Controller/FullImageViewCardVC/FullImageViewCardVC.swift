@@ -15,7 +15,7 @@ class FullImageViewCardVC: UIViewController {
     var video_id:String? = nil
     var thankyoucardimagedata:Thankyoucardimagedata? = nil
     
-     @IBOutlet weak var simpleilabel:UILabel!
+    @IBOutlet weak var simpleilabel:UILabel!
     @IBOutlet weak var simpleimage: UIImageView!
     @IBOutlet weak var gradientview: GradientView!
     override func viewDidLoad() {
@@ -58,7 +58,7 @@ class FullImageViewCardVC: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+                //self.showToast(message:response["errors"].string ?? "")
             }
         }
         

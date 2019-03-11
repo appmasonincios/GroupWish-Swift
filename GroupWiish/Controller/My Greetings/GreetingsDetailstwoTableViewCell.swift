@@ -10,6 +10,8 @@ import UIKit
 
 class GreetingsDetailstwoTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var friendnamelabel: UILabel!
+    @IBOutlet weak var locationlabel: UILabel!
     @IBOutlet weak var heightoftop: NSLayoutConstraint!
     @IBOutlet weak var videostatus: UILabel!
     @IBOutlet weak var backview:UIView!

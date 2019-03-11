@@ -19,27 +19,27 @@ import AVKit
 import DYBadgeButton
 class PreviewVideoViewController: UIViewController
 {
-
     @IBOutlet weak var usernotification: DYBadgeButton!
-
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var countlabel: UILabel!
     @IBOutlet weak var heightoftext: NSLayoutConstraint!
     @IBOutlet weak var messageTextView:UITextView!
     @IBOutlet weak var videoView: UIView!
+    @IBOutlet weak var profilebutton: DYBadgeButton!
+    @IBOutlet weak var profileimage: ImageViewDesign!
+    @IBOutlet weak var gradientview: GradientView!
+    var player: AVPlayer!
+    var imagePicker = UIImagePickerController()
+    var avpController = AVPlayerViewController()
     var videoDataURL: URL?
     var greeting_id:String? = nil
     var friend_id:String? = nil
+    var titlestr: String? = ""
     
-    
-    @IBOutlet weak var profileimage: ImageViewDesign!
-     var imagePicker = UIImagePickerController()
-    @IBOutlet weak var gradientview: GradientView!
-    var player: AVPlayer!
-    var avpController = AVPlayerViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
 
+self.titleTF.text = self.titlestr
         messageTextView.text = "Message"
         messageTextView.textColor = UIColor.lightGray
         messageTextView.delegate = self
@@ -53,7 +53,7 @@ class PreviewVideoViewController: UIViewController
         avpController.view.frame = videoView.frame
         self.videoView.addSubview(avpController.view)
         videoView.layer.masksToBounds = true
-        
+        profileimagedisplay()
         bedgecountapi()
         // Do any additional setup after loading the view.
     }
@@ -61,7 +61,17 @@ class PreviewVideoViewController: UIViewController
     func bedgecountapi()
     {
         self.getrequestcount()
-       
+        
+        let usercount = getSharedPrefrance(key:Constants.USERCOUNT)
+        
+        if usercount == "" || usercount == "0"
+        {
+            self.profilebutton!.badgeString = ""
+        }
+        else
+        {
+            self.profilebutton!.badgeString = usercount
+        }
         let unseencount = getSharedPrefrance(key:Constants.UNSEENCOUNT)
         if unseencount == "" || unseencount == "0"
         {
@@ -73,51 +83,29 @@ class PreviewVideoViewController: UIViewController
         }
     }
 
+        func profileimagedisplay() {
+            if  let userprofile  = self.userprofilespecialmethod()
+            {
+                let imageURL = URL(string:userprofile)
+                self.profileimage.kf.setImage(with:imageURL,
+                                              placeholder: UIImage(named:"no-user-img.png"),
+                                              options: [.transition(ImageTransition.fade(1))],
+                                              progressBlock: { receivedSize, totalSize in },
+                                              completionHandler: { image, error, cacheType, imageURL in})
+            }
+        }
     
-    func profileimagedisplay() {
-        
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
+    
+
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
     }
     
     
 
     @IBAction func sharebuttonaction(_ sender: Any)
     {
-        
         if self.titleTF.text?.isEmpty == true
         {
             self.showToast(message:"Please Enter Title")
@@ -139,19 +127,16 @@ class PreviewVideoViewController: UIViewController
             parameters["title"] = self.titleTF.text
             parameters["message"] = self.messageTextView.text
             parameters["apptype"] = "free"
-           // WS_Send_to_host
             upload(parameter:parameters, video_url:videoDataURL)
             
         }
     }
     
     func upload(parameter:[String:Any],video_url:URL?)
-    {//UIImage.jpegData(image)(compressionQuality:0.4)
+    {
         let url = Constants.LIVEURL + Constants.send_video_host
-        
         let headers = [
             "Authorization": getSharedPrefrance(key:Constants.TOKEN)]
-        
         self.showLoader(view: self.view)
         Alamofire.upload(multipartFormData: { (multipartFormData) in
             for (key, value) in parameter
@@ -160,11 +145,8 @@ class PreviewVideoViewController: UIViewController
             }
             if let imageData = video_url
             {
-                //  let r = arc4random()
-                //video.mp4
                 let ext:String = "video."
                 let str:String = ext + (video_url?.pathExtension)!
-                
                 let parameterName = "video_file"
                 multipartFormData.append(imageData, withName:parameterName, fileName:str, mimeType: "video/mp4")
             }
@@ -186,17 +168,10 @@ class PreviewVideoViewController: UIViewController
                                 {
                                     if  responeCode == Constants.SUCCESS_CODE
                                     {
-                                        self.showToast(message:"Uploaded Successfully")
-                                        
-                                        let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as? TabBarVC
-                                        if let tabVC = tabVC
-                                        {
-                                            self.present(tabVC, animated: false)
-                                            {
-                                                self.showToastWithMessage(message:"Sent Successfully", onVc:(UIApplication.shared.keyWindow?.rootViewController)!, type:"4")
-                                            }
-                                        }
-                                        
+                                        let nc = NotificationCenter.default
+                                        nc.post(name: Notification.Name("backview"), object: nil)
+                                
+                                        self.navigationController?.popViewController(animated:false)
                                     }
                                     else
                                     {

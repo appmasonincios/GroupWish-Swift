@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CC60250C738D501AA8B16DD3BD0CBBB7"
+               BlueprintIdentifier = "07A26200F7BAF493DE998FCAD527CAA6"
                BlueprintName = "YKPhotoCircleCrop"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "YKPhotoCircleCrop.framework">

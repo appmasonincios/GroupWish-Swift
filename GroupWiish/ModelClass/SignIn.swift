@@ -14,7 +14,7 @@ class SignIn:JSONDecodable
     var username:String? = ""
     var location: String? = ""
     var activation: String? = ""
-    var friends: String? = ""
+    var friends:Int?
     var profile_pic:String? = ""
     var id:String? = ""
     var token:String? = ""

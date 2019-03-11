@@ -14,57 +14,52 @@ import Alamofire
 import ViewAnimator
 import MobileCoreServices
 import DYBadgeButton
-class NotificationViewController: UIViewController {
-
+class NotificationViewController: UIViewController
+{
     @IBOutlet weak var usernotification: DYBadgeButton!
     @IBOutlet weak var profilebutton: DYBadgeButton!
-    var greeting_id:String? = nil
-    var friend_id:String? = nil
-    private let image = UIImage(named: "black-email")!.withRenderingMode(.alwaysTemplate)
-    private let topMessage = ""
-    private let bottomMessage = "No Notifications Found"
-     var imagePicker = UIImagePickerController()
     @IBOutlet weak var searchView: GradientView!
     @IBOutlet var searchtextfield: UITextField!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var profileimage: ImageViewDesign!
+    private let image = UIImage(named: "black-email")!.withRenderingMode(.alwaysTemplate)
+    private let topMessage = ""
+    private let bottomMessage = "No Notifications Found"
     private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
+    var imagePicker = UIImagePickerController()
+    var greeting_id:String? = nil
+    var friend_id:String? = nil
     var notificationdata = [NotificationClass]()
     var orginalnotificationdata = [NotificationClass]()
     var filterArray = [NotificationClass]()
     var booleancheck:Bool = false
-     var searchedArray = [NotificationClass]()
+    var searchedArray = [NotificationClass]()
+    var mainimageheight:CGFloat = 220.0
+    var titlestr:String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(openCamera), name: Notification.Name(Constants.openCamera), object: nil)
         nc.addObserver(self, selector: #selector(openGallary), name: Notification.Name(Constants.openGallary), object: nil)
-    
-        
-        //  self.searchtextfield.delegate = self
+         nc.addObserver(self, selector: #selector(backview), name: Notification.Name("backview"), object: nil)
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
         gradientView.colors = topbarcolor()
         searchView.colors = topbarcolor()
-    
         setupSideMenu()
-        setupApis()
         SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
          userlogout()
-        
         setupEmptyBackgroundView()
-        
           KanvasSDK.initialize(withClientID:Constants.KanvasSDKClientID, signature:Constants.KanvasSDKsignature)
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         savesharedprefrence(key:Constants.TABTYPE, value:"5")
        profileimagedisplay()
-        setupApis()
+        self.setupApis()
         self.bedgecountapi()
     }
     
@@ -96,48 +91,21 @@ class NotificationViewController: UIViewController {
     
     func profileimagedisplay() {
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
     
     
-    @objc func openCamera(){
-        
+    @objc func openCamera()
+    {
         let videoPicker = UIImagePickerController()
-        
         videoPicker.sourceType = .camera
         if let available = UIImagePickerController.availableMediaTypes(for: .camera) {
             videoPicker.mediaTypes = available
@@ -147,7 +115,6 @@ class NotificationViewController: UIViewController {
         videoPicker.allowsEditing = true
         videoPicker.mediaTypes = [kUTTypeMovie as String]
         videoPicker.videoMaximumDuration = 15
-        
         dismiss(animated: true)
         present(videoPicker, animated: true)
         
@@ -155,9 +122,7 @@ class NotificationViewController: UIViewController {
     
     @objc func openGallary()
     {
-        
         let videoPicker = UIImagePickerController()
-        
         videoPicker.delegate = self
         videoPicker.modalPresentationStyle = .currentContext
         videoPicker.mediaTypes = [
@@ -166,13 +131,18 @@ class NotificationViewController: UIViewController {
             kUTTypeVideo as String,
             kUTTypeMPEG4 as String
         ]
+        videoPicker.videoMaximumDuration = 15
         videoPicker.videoQuality = .typeHigh
         videoPicker.allowsEditing = true
-        
         dismiss(animated: true)
         present(videoPicker, animated: true)
-        //openGallary Notification
-        
+     
+    }
+    
+    @objc func backview()
+    {
+      self.showToast(message:"Uploaded Successfully")
+         self.bedgecountapi()
     }
     
     func setupEmptyBackgroundView()
@@ -197,7 +167,8 @@ class NotificationViewController: UIViewController {
                     searchedArray.append(strCountry)
                 }
             }
-        } else {
+        } else
+        {
             searchedArray = self.notificationdata
         }
         
@@ -218,16 +189,17 @@ class NotificationViewController: UIViewController {
     
     @objc func FILTERDUETODAYMyGREETINGMODELCLASS()
     {
-        self.filterArray.removeAll()
         self.notificationdata.removeAll()
-
+        self.filterArray.removeAll()
+        
         for item in self.orginalnotificationdata
         {
-            if item.dueby == "Due Today"
+            if item.dueby == "Due by Today"
             {
                 self.filterArray.append(item)
             }
         }
+    
         self.notificationdata.append(contentsOf:self.filterArray)
         self.tableview.reloadData()
     }
@@ -235,18 +207,31 @@ class NotificationViewController: UIViewController {
     @objc func FILTERPASTDUEMyGREETINGMODELCLASS()
     {
         self.filterArray.removeAll()
-        
+        self.notificationdata.removeAll()
+       
         for item in self.orginalnotificationdata
         {
             if item.dueby == "Past Due"
             {
                 self.filterArray.append(item)
             }
-            self.notificationdata.removeAll()
             self.notificationdata.append(contentsOf:self.filterArray)
             self.tableview.reloadData()
         }
     }
+    
+    @IBAction func profilebuttonaclicked(_ sender: Any)
+    {
+        self.profileclicked()
+    }
+    
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
+    }
+    
+    
+    
     @IBAction func searchbuttonaction(_ sender: Any)
     {
         booleancheck = true
@@ -274,14 +259,16 @@ class NotificationViewController: UIViewController {
     
     @objc func userLoggedIn()
     {
-        dismiss(animated:true, completion:nil)
-        presentPopup(TestPopupViewController(),
-                     animated: true,
-                     backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
-            constraints: [.leading(16), .trailing(16),.height(250)], // fix leading edge and the width
-            transitioning: .slide(.left), // the popup come and goes from the left side of the screen
-            autoDismiss: false, // when touching outside the popup bound it is not dismissed
-            completion: nil)
+        dismiss(animated:true, completion:{
+            self.presentPopup(TestPopupViewController(),
+                         animated: true,
+                         backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
+                constraints: [.leading(16), .trailing(16),.height(217)], // fix leading edge and the width
+                transitioning: .slide(.left), // the popup come and goes from the left side of the screen
+                autoDismiss: false, // when touching outside the popup bound it is not dismissed
+                completion: nil)
+        })
+        
     }
     
     
@@ -289,15 +276,16 @@ class NotificationViewController: UIViewController {
     {
         savesharedprefrence(key:"loginsession", value:"false")
         logout()
-        let sc:SplashScreenViewController = self.storyboard?.instantiateViewController(withIdentifier:"SplashScreenViewController") as! SplashScreenViewController
-        self.presentPopup(sc, animated:false)
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+        UIApplication.shared.delegate?.window!?.rootViewController = loginVC
+        UIApplication.shared.delegate?.window!!.makeKeyAndVisible()
         
     }
     
-    func setupSideMenu() {
+    func setupSideMenu()
+    {
         // Define the menus
         SideMenuManager.default.menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? UISideMenuNavigationController
-        
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuAnimationFadeStrength = CGFloat(0)
         
@@ -305,30 +293,27 @@ class NotificationViewController: UIViewController {
     
     func setupApis()
     {
-
         let url = Constants.LIVEURL + Constants.friends_greetings_list + "?userid=" + getSharedPrefrance(key:Constants.ID)
-        
         executeGET(view: self.view, path:url){ response in
             let status = response["status"].int
             if(status == Constants.SUCCESS_CODE)
             {
                 self.notificationdata.removeAll()
+                self.orginalnotificationdata.removeAll()
                 
                     for store in response["data"].arrayValue
                     {
-        self.notificationdata.append(NotificationClass(json:store.dictionaryObject!)!)
-        self.orginalnotificationdata.append(NotificationClass(json:store.dictionaryObject!)!)
+             self.notificationdata.append(NotificationClass(json:store.dictionaryObject!)!)
+             self.orginalnotificationdata.append(NotificationClass(json:store.dictionaryObject!)!)
                     }
-                
                 self.tableview.reloadData()
                 UIView.animate(views: self.tableview.visibleCells, animations: self.animations, completion: {
                    
                 })
-                
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               // self.showToast(message:response["errors"].string ?? "")
             }
         }
   
@@ -404,16 +389,14 @@ extension NotificationViewController:UITableViewDelegate,UITableViewDataSource
         } else {
             // the value of someOptional is not set (or nil).
         }
-    
-        
+
+        cell.titlelabel.text = notificationdataone?.title
         cell.username.text = notificationdataone?.username
         cell.subtitle.text = convertDateFormater(notificationdataone?.created_date ?? "")
         cell.simpletextview.text = notificationdataone?.message
-        
         cell.timelabel.text  = notificationdataone?.dueby
     
-
-        if notificationdataone?.video_sent == 0
+        if notificationdataone?.video_sent == 0 && notificationdataone?.dueby != "Past Due"
         {
           cell.sendreplayview.isHidden = false
         }
@@ -421,45 +404,35 @@ extension NotificationViewController:UITableViewDelegate,UITableViewDataSource
         {
             cell.sendreplayview.isHidden = true
         }
-        
         cell.sendreplaybutton.tag = indexPath.row
         cell.sendreplaybutton.addTarget(self, action:#selector(sendreplaybutton(sender:)), for:.touchUpInside)
-        
-        
-        
-        
         return cell
     }
     
     
     @objc  func sendreplaybutton(sender:UIButton)
     {
-        
-       
-        
         if booleancheck == false
         {
             self.greeting_id = self.notificationdata[sender.tag].id
             self.friend_id = self.notificationdata[sender.tag].recipient_id
+             self.titlestr = self.notificationdata[sender.tag].title
         }
         else
         {
             self.greeting_id = self.searchedArray[sender.tag].id
             self.friend_id = self.searchedArray[sender.tag].recipient_id
+            self.titlestr = self.searchedArray[sender.tag].title
         }
-        
+       
         guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "AddSelectVideoVC") as? AddSelectVideoVC else { return }
         popupVC.popupDelegate = self
         present(popupVC, animated: true, completion: nil)
     }
     
-    
-    
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        
-        return 330
+    
+        return 357.0
     }
     
     
@@ -500,6 +473,7 @@ extension NotificationViewController:UINavigationControllerDelegate,UIImagePicke
         viewController?.delegate = self
         viewController?.url = url
         present(viewController!, animated: true)
+        
     }
     func cameraViewController(_ cameraViewController: KVNCameraViewController!, didFinishWith image: UIImage!) {
         // Do Nothing
@@ -538,6 +512,7 @@ extension NotificationViewController:UINavigationControllerDelegate,UIImagePicke
                 previewVideoViewController.friend_id = self.friend_id
                 previewVideoViewController.greeting_id = self.greeting_id
                 previewVideoViewController.videoDataURL = videoDataURL
+                previewVideoViewController.titlestr = self.titlestr
                 self.navigationController?.pushViewController(previewVideoViewController, animated:false)
             }
             else
@@ -564,13 +539,13 @@ extension NotificationViewController:UINavigationControllerDelegate,UIImagePicke
         if asset != nil
         {
             durationInSeconds = CMTimeGetSeconds((asset?.duration)!)
-            if durationInSeconds <= 15
+            if durationInSeconds <= 16
             {
-                picker.dismiss(animated:true)
-                {
+                picker.dismiss(animated:true, completion:{
                     self.presentEdit(videoURL)
-                }
-            }
+                })
+                
+             }
             else
             {
                 if picker.sourceType == UIImagePickerController.SourceType.camera
@@ -614,27 +589,26 @@ extension NotificationViewController:UINavigationControllerDelegate,UIImagePicke
     }
     
     
-    func thumbnailImageFor(fileUrl:URL) -> UIImage? {
-        
-        let video = AVURLAsset(url: fileUrl, options: [:])
-        let assetImgGenerate = AVAssetImageGenerator(asset: video)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        
-        let videoDuration:CMTime = video.duration
-        let durationInSeconds:Float64 = CMTimeGetSeconds(videoDuration)
-        
-        let numerator = Int64(1)
-        let denominator = videoDuration.timescale
-        let time = CMTimeMake(value: numerator, timescale: denominator)
-        
-        do {
-            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-            let thumbnail = UIImage(cgImage: img)
-            return thumbnail
-        } catch {
-            print(error)
-            return nil
+    
+}
+
+class ScaledHeightImageView: ImageViewDesign {
+    
+    override var intrinsicContentSize: CGSize
+    {
+        if let myImage = self.image
+        {
+            let myImageWidth = myImage.size.width
+            let myImageHeight = myImage.size.height
+            let myViewWidth = self.frame.size.width
+            
+            let ratio = myViewWidth/myImageWidth
+            let scaledHeight = myImageHeight * ratio
+            
+            return CGSize(width: myViewWidth, height: scaledHeight)
         }
+        
+        return CGSize(width: -1.0, height: -1.0)
     }
     
 }

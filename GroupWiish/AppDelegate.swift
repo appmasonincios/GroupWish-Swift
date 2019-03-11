@@ -15,6 +15,7 @@ import FBSDKLoginKit
 import FBSDKShareKit
 import TwitterKit
 import GoogleSignIn
+import DYBadgeButton
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
    
@@ -23,27 +24,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
+    {
         
         let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
         if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
             statusBar.backgroundColor = UIColor.init(red:60.0/255.0, green:16.0/255.0, blue:80.0/255.0, alpha:1.0)
         }
+    
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.lightGray], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(red:255.0/255.0, green:3.0/255.0, blue:92.0/255.0, alpha:1.0)], for: .selected)
         
-        
-        
+         savesharedprefrence(key:Constants.toasttype, value:"start")
+      
         GBVersionTracking.track()
+    
         /* Facebook Login SDK */
         FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions:launchOptions)
          /* Twitter Login SDK */
     TWTRTwitter.sharedInstance().start(withConsumerKey:Constants.TWITTER_CONSUMER_KEY, consumerSecret:Constants.TWITTER_CONSUMER_SECRET)
-        
-
-        //If Remote Notification Not Allowed
-        savesharedprefrence(key:"devicetoken", value:"gfaeuhffguyeu4poof8rno")
-        
+      
        IQKeyboardManager.shared.enable = true
-        UIApplication.shared.statusBarStyle = .lightContent
+         UIApplication.shared.statusBarStyle = .lightContent
         // Override point for customization after application launch.
         
         IQKeyboardManager.shared.enable = true
@@ -160,13 +162,13 @@ extension AppDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,  willPresent notification: UNNotification, withCompletionHandler   completionHandler: @escaping (_ options:   UNNotificationPresentationOptions) -> Void) {
         print("Handle push from foreground")
         
-        if let pushDict = notification.request.content.userInfo["aps"] as? [String : AnyObject] {
+        if let pushDict = notification.request.content.userInfo["aps"] as? [String : AnyObject]
+        {
             print(pushDict)
         }
         
         completionHandler([.sound, .alert, .badge])
     }
-    
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("Handle push from background or closed")
@@ -176,15 +178,13 @@ extension AppDelegate {
          
             guard
                 let aps = response.notification.request.content.userInfo[AnyHashable("aps")] as? NSDictionary
-                else {
+                else
+               {
                     // handle any error here
                     return
-            }
-            
-            print(aps)
-          
-            
-            
+                }
+            let nc = NotificationCenter.default
+            nc.post(name: Notification.Name("UserNotificationUpdate"), object: nil)
         }
         
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -200,8 +200,6 @@ extension AppDelegate {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         
         print("APNs registration failed: \(error)")
-        
-        savesharedprefrence(key:"device_token", value:"123456789")
         
     }
     
@@ -219,10 +217,12 @@ extension AppDelegate {
     
     func application(_ application: UIApplication,didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         var token = ""
-        for i in 0..<deviceToken.count {
+        for i in 0..<deviceToken.count
+        {
             token = token + String(format: "%02.2hhx", arguments: [deviceToken[i]])
         }
         print(token)
+        
         savesharedprefrence(key:"devicetoken", value:token)
     }
     
@@ -233,13 +233,10 @@ extension AppDelegate {
     {
         if getSharedPrefrance(key:"loginsession") == "true"
         {
-            
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let centerViewController = storyboard.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
             centerViewController.selectedIndex = selectedIndexOfTabBar
             self.window?.rootViewController = centerViewController
-            
-            
         }
         else
         {

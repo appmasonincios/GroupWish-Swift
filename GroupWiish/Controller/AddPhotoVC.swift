@@ -93,9 +93,6 @@ extension AddPhotoVC: UIImagePickerControllerDelegate, UINavigationControllerDel
        
         let image = info[UIImagePickerController.InfoKey.originalImage]! as! UIImage
       
-        print(image)
-        
-        
          picker.dismiss(animated: true, completion: nil)
           dismiss(animated: true, completion: nil)
         

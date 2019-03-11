@@ -15,6 +15,8 @@ import PopItUp
 import DYBadgeButton
 class GreetingDetailViewController1: UIViewController {
 
+   
+    @IBOutlet weak var videocountlabel: UILabel!
     @IBOutlet weak var profilebutton: DYBadgeButton!
     @IBOutlet weak var usernotification: DYBadgeButton!
     @IBOutlet weak var scroll: UIScrollView!
@@ -31,7 +33,7 @@ class GreetingDetailViewController1: UIViewController {
     @IBOutlet weak var profileimage: ImageViewDesign!
     @IBOutlet weak var gradientView: GradientView!
     var greetDataClass:Greet_dataClass? = nil
-    
+    var myGreetingsModel:MyGreetingsModelClass? = nil
     var friends_dataModelClass = [Friends_dataModelClass]()
     var greeting_id = ""
     var id = ""
@@ -39,13 +41,13 @@ class GreetingDetailViewController1: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      userprofile()
-        gradientView.colors = topbarcolor()
+        
+        self.profileimagedisplay()
+        self.gradientView.colors = topbarcolor()
             bedgecountapi()
-        // Do any additional setup after loading the view.
+        
     }
-    
-    
+
     func bedgecountapi()
     {
         self.getrequestcount()
@@ -71,45 +73,18 @@ class GreetingDetailViewController1: UIViewController {
         }
     }
     
-    func userprofile()
-    {
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-        if sociallogin == "1"
+    func profileimagedisplay() {
+        
+        if  let userprofile  = self.userprofilespecialmethod()
         {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:constant)
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
-        }
-        else
-        {
-            let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-            if constant != ""
-            {
-                let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                profileimage.kf.setImage(with:imageURL,
-                                         placeholder: UIImage(named:"image_sample.png"),
-                                         options: [.transition(ImageTransition.fade(1))],
-                                         progressBlock: { receivedSize, totalSize in },
-                                         completionHandler: { image, error, cacheType, imageURL in})
-            }
-            else
-            {
-                profileimage?.image = UIImage.init(named:"no-user-img")
-            }
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
         }
     }
-
     override func viewWillAppear(_ animated: Bool) {
         
         getdatagreetingDetails()
@@ -121,31 +96,25 @@ class GreetingDetailViewController1: UIViewController {
     
     func getdatagreetingDetails()
     {
-        
        let object = getSharedPrefrance(key:Constants.ID)
         let object1 = self.id
 
         let urlString = "\(Constants.LIVEURL)\(Constants.get_greeting_details)?userid=\(object)&greeting_id=\(object1)"
-        
-
+    
             executeGET(view: self.view, path:urlString){ response in
                 let status = response["status"].int
                 if(status == Constants.SUCCESS_CODE)
                 {
-                 
                     self.greetDataClass = Greet_dataClass(json:response["data"]["greet_data"].dictionaryObject!)!
-                
-                
                     if let constantName = self.greetDataClass?.image
                     {
                         let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
                         self.userImage.kf.indicatorType = .activity
                         self.userImage.kf.setImage(with:imageURL)
-                      
-                    } else {
-                       
+                    } else
+                    {
                     }
-                    
+                        self.videocountlabel.text = self.greeting_id
                     self.titleMsg.text = self.greetDataClass?.title
                     self.messageLbl.text = self.greetDataClass?.message
                     self.dateLbl.text = self.greetDataClass?.duedate
@@ -153,10 +122,7 @@ class GreetingDetailViewController1: UIViewController {
                     {
                         self.friends_dataModelClass.append(Friends_dataModelClass(json:store.dictionaryObject!)!)
                     }
-                 
-    
                     self.mainViewHeight.constant = CGFloat(700 + self.friends_dataModelClass.count * 100)
-                  
                     self.frndsTableView.reloadData()
                 }
                 else
@@ -164,9 +130,7 @@ class GreetingDetailViewController1: UIViewController {
                     self.showToast(message:response["errors"].string ?? "")
                 }
             }
-        
     }
-
 }
 
 extension GreetingDetailViewController1:UITableViewDelegate,UITableViewDataSource
@@ -197,7 +161,7 @@ extension GreetingDetailViewController1:UITableViewDelegate,UITableViewDataSourc
         {
             return 0.0
         }
-        return 10.0
+        return 0.0
     }
     
     
@@ -224,22 +188,20 @@ extension GreetingDetailViewController1:UITableViewDelegate,UITableViewDataSourc
             if let name = self.greetDataClass?.recipient_name
             {
                    cell.friendname.text = name
+                   cell.friendnamelabel.text = name
+                   cell.friendname.isHidden = true
             }
             else
             {
                 cell.friendname.text = ""
             }
-            
            cell.videostatus.isHidden = true
-    
-          cell.heightoftop.constant = 32
-            
-            
-            
+           cell.locationlabel.isHidden = true
+           cell.heightoftop.constant = 16
         }
         else
         {
-            
+             cell.locationlabel.isHidden = false
             cell.heightoftop.constant = 16
             
             if let constantName = self.friends_dataModelClass[indexPath.row].profile_pic
@@ -256,10 +218,9 @@ extension GreetingDetailViewController1:UITableViewDelegate,UITableViewDataSourc
             {
         
             }
-            
+             cell.friendnamelabel.isHidden = true
             cell.videostatus.isHidden = false
-            
-            
+        
             if self.friends_dataModelClass[indexPath.row].is_video == 1
             {
                 cell.videostatus.text = "Video Received"
@@ -268,25 +229,20 @@ extension GreetingDetailViewController1:UITableViewDelegate,UITableViewDataSourc
             {
                 cell.videostatus.text = "Video Pending"
             }
-        
+            cell.locationlabel.text = self.friends_dataModelClass[indexPath.row].location
             cell.friendname.text = self.friends_dataModelClass[indexPath.row].username
         }
-        
             return cell
     }
-    
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    
-            
-            return 100.0
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        if indexPath.section == 0
+        {
+            return 70.0
+        }
+        else
+        {
+            return 89.0
+        }
     }
-    
-    
-    
-    
-    
-    
-    
-    
 }

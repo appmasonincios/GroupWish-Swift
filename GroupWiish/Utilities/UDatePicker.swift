@@ -65,6 +65,7 @@ open class UDatePicker: UIViewController {
         public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
         
         public let datePicker = UIDatePicker()
+    
         public let barView = UIView()
         public let doneButton = UIButton()
         
@@ -112,7 +113,7 @@ open class UDatePicker: UIViewController {
             widgetView.addSubview(datePicker)
             datePicker.datePickerMode = .date
             datePicker.backgroundColor = UIColor.white
-            
+            datePicker.minimumDate = Date()
             // bar view and done button
             widgetView.addSubview(barView)
             barView.addSubview(doneButton)

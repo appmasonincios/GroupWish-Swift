@@ -22,22 +22,18 @@ class ChooseFriendVC: UIViewController {
     private let image = UIImage(named: "friends-inactive")!.withRenderingMode(.alwaysTemplate)
     private let topMessage = ""
     private let bottomMessage = "No Friends Found"
-    
     var myContactsModelClassdata = [MyContactsModelClass]()
-     var searchedArray = [MyContactsModelClass]()
-      var booleancheck:Bool = false
-    override func viewDidLoad() {
+    var searchedArray = [MyContactsModelClass]()
+    var booleancheck:Bool = false
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-
-       getfriendslist()
+       self.getfriendslist()
         let flowLayout = CustomImageHorizontalFlowLayout()
         self.collectionview.collectionViewLayout = flowLayout
-        
-        gradientView.colors = [
-            UIColor(red: 91.0/255.0, green: 37.0/255.0, blue: 91.0/255.0, alpha: 1),
-            UIColor(red: 111.0/255.0, green: 63.0/255.0, blue: 111.0/255.0, alpha: 1)
-        ]
-        //  self.searchtextfield.delegate = self
+        gradientView.colors = topbarcolor()
+        self.searchView.colors = topbarcolor()
         self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
         setupEmptyBackgroundView()
     }
@@ -86,11 +82,9 @@ class ChooseFriendVC: UIViewController {
     func getfriendslist()
     {
         executeGET(view: self.view, path: Constants.LIVEURL + Constants.user_contacts + "?userid=" + getSharedPrefrance(key:Constants.ID)){ response in
-            let status = response["description"].string
-            if(status == "success")
+            let status = response["status"].int
+            if(status == Constants.SUCCESS_CODE)
             {
-                print(response)
-                
                 self.myContactsModelClassdata.removeAll()
                 
                 for store in response["data"].arrayValue
@@ -106,13 +100,12 @@ class ChooseFriendVC: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               self.showToast(message:response["errors"].string ?? "")
             }
         }
         
     }
-    
-    
+
     
     @IBAction func backbuttonaction(_ sender: Any)
     {
@@ -120,7 +113,15 @@ class ChooseFriendVC: UIViewController {
     }
     
     
+    @IBAction func profilebuttonaclicked(_ sender: Any)
+    {
+        self.profileclicked()
+    }
     
+    @IBAction func notificationbuttonaction(_ sender: Any)
+    {
+        self.requestViewController()
+    }
     
 
 }
@@ -172,11 +173,14 @@ extension ChooseFriendVC:UICollectionViewDelegate,UICollectionViewDataSource
         if let constantName = myContactsModelClass?.profile_pic
         {
             let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
-            cell.friendimage.kf.indicatorType = .activity
-            cell.friendimage.kf.setImage(with:imageURL)
-            //statements using 'constantName'
+            cell.friendimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+           
         } else {
-            // the value of someOptional is not set (or nil).
+           
         }
         cell.friendname.text = myContactsModelClass?.username
         cell.subtitlelabel.text = myContactsModelClass?.location
@@ -205,8 +209,7 @@ extension ChooseFriendVC:UICollectionViewDelegate,UICollectionViewDataSource
         NotificationCenter.default.post(name: Notification.Name(Constants.friendnotification), object:nil, userInfo:parameters)
         
          NotificationCenter.default.post(name: Notification.Name(Constants.friendnotification), object:nil, userInfo:parameters)
-        
-        
+    
         self.navigationController?.popViewController(animated:false)
         
      

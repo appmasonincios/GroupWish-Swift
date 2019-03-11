@@ -16,65 +16,67 @@ import PopItUp
 import DYBadgeButton
 class MyGreetingsViewController: UIViewController {
 
+    
     @IBOutlet weak var profilebutton: DYBadgeButton!
     @IBOutlet weak var usernotification: DYBadgeButton!
-    private let image = UIImage(named: "receivedgreetings-inactive")!.withRenderingMode(.alwaysTemplate)
-    private let topMessage = ""
-    private let bottomMessage = "No Greetings Found"
-    
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var profileimage: ImageViewDesign!
     @IBOutlet weak var gradientView: GradientView!
-       private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
-    var myGreetingsModelClassdata = [MyGreetingsModelClass]()
-     var orginalmyGreetingsModelClassdata = [MyGreetingsModelClass]()
-    var filterArray = [MyGreetingsModelClass]()
-     var searchedArray = [MyGreetingsModelClass]()
-    
-    var booleancheck:Bool = false
-    var leftConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchView1: GradientView!
     @IBOutlet weak var searchtextfield:UITextField!
-    
+    var myGreetingsModelClassdata = [MyGreetingsModelClass]()
+    var orginalmyGreetingsModelClassdata = [MyGreetingsModelClass]()
+    var filterArray = [MyGreetingsModelClass]()
+    var searchedArray = [MyGreetingsModelClass]()
+    var countdictionary:Counts? = nil
+    var booleancheck:Bool = false
+    var dueTodayCount:Int = 0
+    var pastDueCount:Int = 0
+    var leftConstraint: NSLayoutConstraint!
+    private let image = UIImage(named: "receivedgreetings-inactive")!.withRenderingMode(.alwaysTemplate)
+    private let topMessage = ""
+    private let bottomMessage = "No Greetings Found"
+    private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
     override func viewDidLoad()
     {
         super.viewDidLoad()
-       
       NotificationCenter.default.addObserver(self, selector: #selector(sendmessagesetup(notification:)), name: NSNotification.Name(rawValue: "showmessage"), object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(showsimplemessagesteup(notification:)), name: NSNotification.Name(rawValue: "showsimplemessage"), object: nil)
+        
        setupEmptyBackgroundView()
-      
     }
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        userlogout()
+        profileimagedisplay()
+        ui()
+        savesharedprefrence(key:Constants.TABTYPE, value:"1")
+        savesharedprefrence(key:Constants.toasttype, value:"")
+        self.getdata()
+        self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("VideoSentNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.videoSentMessage(_:)), name: NSNotification.Name("VideoSentNotification"), object: nil)
+        
+        self.bedgecountapi()
+    }
     
-    
+    @objc func showsimplemessagesteup(notification:Notification)
+    {
+        self.showToast(message:"Uploaded Successfully")
+    }
   @objc func sendmessagesetup(notification:Notification)
     {
         self.showToast(message:"Card Send Successfully")
     }
-    
-    
     func setupEmptyBackgroundView()
     {
         let emptyBackgroundView = EmptyBackgroundView(image: image, top: topMessage, bottom: bottomMessage)
         self.tableview.backgroundView = emptyBackgroundView
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-           self.bedgecountapi()
-        userlogout()
-      profileimagedisplay()
-        ui()
-        savesharedprefrence(key:Constants.TABTYPE, value:"1")
-        getdata()
-    
-     
-      //  self.searchtextfield.delegate = self
-        self.searchtextfield.addTarget(self, action: #selector(searchRecordsAsPerText(_ :)), for: .editingChanged)
-        
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("VideoSentNotification"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.videoSentMessage(_:)), name: NSNotification.Name("VideoSentNotification"), object: nil)
-    }
+   
     
     @objc func searchRecordsAsPerText(_ textfield:UITextField)
     {
@@ -94,6 +96,7 @@ class MyGreetingsViewController: UIViewController {
         } else {
             searchedArray = self.myGreetingsModelClassdata
         }
+        
         
         tableview.reloadData()
     }
@@ -135,43 +138,16 @@ class MyGreetingsViewController: UIViewController {
     
     func profileimagedisplay() {
         
-        let sociallogin = getSharedPrefrance(key:Constants.social_login)
-            if sociallogin == "1"
-            {
-                let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-                if constant != ""
-                {
-                       let imageURL = URL(string:constant)
-                     profileimage.kf.setImage(with:imageURL,
-                                               placeholder: UIImage(named:"image_sample.png"),
-                                               options: [.transition(ImageTransition.fade(1))],
-                                               progressBlock: { receivedSize, totalSize in },
-                                               completionHandler: { image, error, cacheType, imageURL in})
-                }
-                else
-                {
-                    profileimage?.image = UIImage.init(named:"no-user-img")
-                }
-            }
-            else
-            {
-                let constant = getSharedPrefrance(key:Constants.PROFILE_PIC)
-                if constant != ""
-                {
-                    let imageURL = URL(string:Constants.WS_ImageUrl + "/" + getSharedPrefrance(key:Constants.PROFILE_PIC))!
-                    profileimage.kf.setImage(with:imageURL,
-                                             placeholder: UIImage(named:"image_sample.png"),
-                                             options: [.transition(ImageTransition.fade(1))],
-                                             progressBlock: { receivedSize, totalSize in },
-                                             completionHandler: { image, error, cacheType, imageURL in})
-                }
-                else
-                {
-                    profileimage?.image = UIImage.init(named:"no-user-img")
-                }
-            }
+        if  let userprofile  = self.userprofilespecialmethod()
+        {
+            let imageURL = URL(string:userprofile)
+            self.profileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+        }
     }
-    
     
     func userlogout()
     {
@@ -187,12 +163,10 @@ class MyGreetingsViewController: UIViewController {
     {
         gradientView.colors = topbarcolor()
         searchView1.colors = topbarcolor()
-        
         setupSideMenu()
         SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
     }
-    
     
     
     @IBAction func searchbuttonaction(_ sender: Any)
@@ -210,14 +184,16 @@ class MyGreetingsViewController: UIViewController {
 
     @objc func userLoggedIn()
     {
-        dismiss(animated:true, completion:nil)
-        presentPopup(TestPopupViewController(),
-                     animated: true,
-                     backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
-            constraints: [.leading(16), .trailing(16),.height(250)], // fix leading edge and the width
-            transitioning: .slide(.left), // the popup come and goes from the left side of the screen
-            autoDismiss: false, // when touching outside the popup bound it is not dismissed
-            completion: nil)
+        dismiss(animated:true, completion:{
+            self.presentPopup(TestPopupViewController(),
+                         animated: true,
+                         backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
+                constraints: [.leading(16), .trailing(16),.height(217)], // fix leading edge and the width
+                transitioning: .slide(.left), // the popup come and goes from the left side of the screen
+                autoDismiss: false, // when touching outside the popup bound it is not dismissed
+                completion: nil)
+        })
+        
     }
     
     @objc func FILTERDUETODAYMyGREETINGMODELCLASS()
@@ -258,27 +234,29 @@ class MyGreetingsViewController: UIViewController {
     @objc func userLoggedIn1()
     {
         savesharedprefrence(key:"loginsession", value:"false")
-              logout()
-        let sc:SplashScreenViewController = self.storyboard?.instantiateViewController(withIdentifier:"SplashScreenViewController") as! SplashScreenViewController
-        self.presentPopup(sc, animated:false)
+            logout()
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+        UIApplication.shared.delegate?.window!?.rootViewController = loginVC
+        UIApplication.shared.delegate?.window!!.makeKeyAndVisible()
+    
         
     }
     
-      func setupSideMenu() {
-        // Define the menus
-       // greeting_list
+      func setupSideMenu()
+      {
         SideMenuManager.default.menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? UISideMenuNavigationController
-        
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuAnimationFadeStrength = CGFloat(0)
         SideMenuManager.default.menuWidth = self.view.frame.width/2+120
-       
     }
     
    
     @IBAction func filterbuttonaction(_ sender: Any)
     {
-        presentPopup(FilterPopupViewController(),
+        let filterPopupViewController:FilterPopupViewController = FilterPopupViewController()
+        filterPopupViewController.pastDuecount = self.countdictionary?.pastDue ?? 0
+        filterPopupViewController.duetodaycount = self.countdictionary?.dueToday ?? 0
+        presentPopup(filterPopupViewController,
                      animated: true,
                      backgroundStyle: .blur(.dark), // present the popup with a blur effect has background
             constraints: [.leading(16), .trailing(16),.height(206)], // fix leading edge and the width
@@ -289,7 +267,8 @@ class MyGreetingsViewController: UIViewController {
     
     
     
-    func getdata()  {
+    func getdata()
+    {
         executeGETHEADER(view: self.view, path: Constants.LIVEURL + Constants.greeting_list + "?userid=" + getSharedPrefrance(key:Constants.ID)){ response in
             let status = response["status"].int
             if(status == Constants.SUCCESS_CODE)
@@ -297,17 +276,19 @@ class MyGreetingsViewController: UIViewController {
                 self.myGreetingsModelClassdata.removeAll()
                 for store in response["data"].arrayValue
                 {
-                    self.myGreetingsModelClassdata.append(MyGreetingsModelClass(json:store.dictionaryObject!)!)
-                    self.orginalmyGreetingsModelClassdata.append(MyGreetingsModelClass(json:store.dictionaryObject!)!)
+                  self.myGreetingsModelClassdata.append(MyGreetingsModelClass(json:store.dictionaryObject!)!)
+                  self.orginalmyGreetingsModelClassdata.append(MyGreetingsModelClass(json:store.dictionaryObject!)!)
                 }
+            
+                self.countdictionary = Counts(json:response["counts"].dictionaryObject!)
                 
-                self.tableview.reloadData()
+               self.tableview.reloadData()
                 UIView.animate(views: self.tableview.visibleCells, animations: self.animations, completion: {
                 })
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+              //  self.showToast(message:response["errors"].string ?? "")
             }
         }
     }
@@ -339,9 +320,8 @@ class MyGreetingsViewController: UIViewController {
   @objc  func receivedVideoAction(_ sender: UIButton?)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ReceivedVideosViewControllern") as? ReceivedVideosViewControllern
-        
-        vc?.greeting_id = String(format: "%li", Int(sender?.tag ?? 0))
-        
+        vc?.greeting_id =  self.myGreetingsModelClassdata[sender?.tag ?? 0].id ?? ""
+        vc?.myGreetingsModel = self.myGreetingsModelClassdata[sender?.tag ?? 0]
         if let vc = vc {
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -352,8 +332,6 @@ extension MyGreetingsViewController:UITableViewDelegate,UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-       
-        
         if booleancheck == false
         {
             if myGreetingsModelClassdata.count == 0 {
@@ -400,9 +378,12 @@ extension MyGreetingsViewController:UITableViewDelegate,UITableViewDataSource
         if let constantName = myGreetingsModel?.recipient_image
         {
             let imageURL = URL(string:Constants.WS_ImageUrl + "/" + constantName)!
-            cell.grettingprofileimage.kf.indicatorType = .activity
-            cell.grettingprofileimage.kf.setImage(with:imageURL)
-            //statements using 'constantName'
+            cell.grettingprofileimage.kf.setImage(with:imageURL,
+                                          placeholder: UIImage(named:"no-user-img.png"),
+                                          options: [.transition(ImageTransition.fade(1))],
+                                          progressBlock: { receivedSize, totalSize in },
+                                          completionHandler: { image, error, cacheType, imageURL in})
+            
         } else
         {
          //no-user-img
@@ -436,22 +417,22 @@ extension MyGreetingsViewController:UITableViewDelegate,UITableViewDataSource
         {
               cell.countlabel.text = "0"
         }
-        cell.numberOfVideosBtn.tag = Int(myGreetingsModel?.id ?? "0") ?? 0
-
+      
+        cell.numberOfVideosBtn.tag = indexPath.row
         cell.numberOfVideosBtn.addTarget(self, action:#selector(receivedVideoAction(_:)), for:.touchUpInside)
-        
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         
-        return 296
+        return 380.0
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
          let myGreetingsModel:MyGreetingsModelClass = self.myGreetingsModelClassdata[indexPath.row]
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "GreetingDetailViewController1") as! GreetingDetailViewController1
         vc.id = myGreetingsModel.id ?? ""
         if myGreetingsModel.videos_cnt != "" && myGreetingsModel.videos_cnt != nil
@@ -462,6 +443,7 @@ extension MyGreetingsViewController:UITableViewDelegate,UITableViewDataSource
         {
             vc.greeting_id = "0"
         }
+        
     self.navigationController?.pushViewController(vc, animated: true)
 
     }

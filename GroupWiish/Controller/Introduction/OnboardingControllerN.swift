@@ -12,8 +12,6 @@ class OnboardingControllerN: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var skipbutton: ButtonDesign!
     @IBOutlet weak var getstartedbutton: ButtonDesign!
     @IBOutlet weak var pageControl: UIPageControl!
-    
-    
     var slides:[Slide] = [];
     
     override func viewDidLoad() {

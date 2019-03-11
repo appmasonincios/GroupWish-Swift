@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180EC1C32228367200DB3CBD /* videomerg_loader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 180EC1C22228366F00DB3CBD /* videomerg_loader.gif */; };
 		18197043221BD96900680EB7 /* GDIIndexBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 18197042221BD96900680EB7 /* GDIIndexBar.m */; };
 		18197045221BDF6600680EB7 /* SearchTextField.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18197044221BDF6600680EB7 /* SearchTextField.framework */; };
 		18197049221BF37E00680EB7 /* Search_contactsModelClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18197048221BF37E00680EB7 /* Search_contactsModelClass.swift */; };
@@ -30,6 +31,7 @@
 		187544DC221D20CF006DF037 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187544DB221D20CF006DF037 /* AFNetworking.framework */; };
 		187544DE221D2224006DF037 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187544DD221D2224006DF037 /* FLAnimatedImage.framework */; };
 		187544E0221D2224006DF037 /* SSZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187544DF221D2224006DF037 /* SSZipArchive.framework */; };
+		188C78772232934C00B9B789 /* Spin-1s-53pxYellow.gif in Resources */ = {isa = PBXBuildFile; fileRef = 188C78762232934C00B9B789 /* Spin-1s-53pxYellow.gif */; };
 		188D350F22157225006341C3 /* UDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D350E22157225006341C3 /* UDatePicker.swift */; };
 		188D351122157A2C006341C3 /* SelectFriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D351022157A2C006341C3 /* SelectFriendsVC.swift */; };
 		188D351322157E37006341C3 /* SelectAFriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D351222157E37006341C3 /* SelectAFriendCollectionViewCell.swift */; };
@@ -160,6 +162,7 @@
 		18AD25CE222063880019B38E /* TKParallaxScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AD25CC222063880019B38E /* TKParallaxScrollView.m */; };
 		18AD25D12221129B0019B38E /* SelectContactsViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD25D02221129B0019B38E /* SelectContactsViewController1.swift */; };
 		18AD25D3222114660019B38E /* SelectContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD25D2222114660019B38E /* SelectContactsTableViewCell.swift */; };
+		18BB98F322362907000B87AA /* Counts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BB98F222362907000B87AA /* Counts.swift */; };
 		18C170182224F8F8000D76F2 /* SelectThankYouCardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C170172224F8F8000D76F2 /* SelectThankYouCardVC.swift */; };
 		18C1701C2224F9EA000D76F2 /* SelectThankYouCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C1701B2224F9EA000D76F2 /* SelectThankYouCardCollectionViewCell.swift */; };
 		18C170212224FBCF000D76F2 /* CustomImageTwoHorizontalFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C170202224FBCF000D76F2 /* CustomImageTwoHorizontalFlowLayout.m */; };
@@ -169,6 +172,7 @@
 		18C1702E22251CC8000D76F2 /* FullImageViewCardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C1702D22251CC8000D76F2 /* FullImageViewCardVC.swift */; };
 		18C17030222525D6000D76F2 /* Thankyoucardimagedata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C1702F222525D6000D76F2 /* Thankyoucardimagedata.swift */; };
 		18C1703422254E06000D76F2 /* DYBadgeButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18C1703322254E06000D76F2 /* DYBadgeButton.framework */; };
+		18C2E3E6222E6CD5009A7018 /* UCZProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18C2E3E5222E6CD5009A7018 /* UCZProgressView.framework */; };
 		18C699D12221B33C000DFA4D /* DownloadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C699CF2221B33C000DFA4D /* DownloadVC.swift */; };
 		18C699D22221B33C000DFA4D /* DownloadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C699D02221B33C000DFA4D /* DownloadVC.xib */; };
 		18E3FDE4220EA026009629C5 /* MyContactsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E3FDE3220EA026009629C5 /* MyContactsCollectionViewCell.swift */; };
@@ -177,6 +181,7 @@
 		18E3FDEB220EA201009629C5 /* fa-regular-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18E3FDE8220EA200009629C5 /* fa-regular-400.ttf */; };
 		18E3FDEE220EA611009629C5 /* ExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E3FDED220EA611009629C5 /* ExpandableView.swift */; };
 		18E3FDF022112EA1009629C5 /* EMPageViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E3FDEF22112EA1009629C5 /* EMPageViewController.framework */; };
+		18EFE500222F8BFC00475383 /* ForgotPasswordPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EFE4FE222F8BFC00475383 /* ForgotPasswordPopUpVC.swift */; };
 		18F086FA221148C400DCBD9D /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F086F9221148C400DCBD9D /* GreetingViewController.swift */; };
 		18F086FC221148CB00DCBD9D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F086FB221148CB00DCBD9D /* RootViewController.swift */; };
 		18F087002211529C00DCBD9D /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F086FE2211529C00DCBD9D /* Slide.swift */; };
@@ -233,6 +238,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		180EC1C22228366F00DB3CBD /* videomerg_loader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = videomerg_loader.gif; sourceTree = "<group>"; };
 		18197041221BD96900680EB7 /* GDIIndexBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDIIndexBar.h; sourceTree = "<group>"; };
 		18197042221BD96900680EB7 /* GDIIndexBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDIIndexBar.m; sourceTree = "<group>"; };
 		18197044221BDF6600680EB7 /* SearchTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SearchTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,6 +263,7 @@
 		187544DB221D20CF006DF037 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187544DD221D2224006DF037 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FLAnimatedImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187544DF221D2224006DF037 /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		188C78762232934C00B9B789 /* Spin-1s-53pxYellow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Spin-1s-53pxYellow.gif"; sourceTree = "<group>"; };
 		188D350C2215711D006341C3 /* UDatePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UDatePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		188D350E22157225006341C3 /* UDatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UDatePicker.swift; sourceTree = "<group>"; };
 		188D351022157A2C006341C3 /* SelectFriendsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFriendsVC.swift; sourceTree = "<group>"; };
@@ -417,6 +424,7 @@
 		18AD25CD222063880019B38E /* TKParallaxScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKParallaxScrollView.h; sourceTree = "<group>"; };
 		18AD25D02221129B0019B38E /* SelectContactsViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectContactsViewController1.swift; sourceTree = "<group>"; };
 		18AD25D2222114660019B38E /* SelectContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectContactsTableViewCell.swift; sourceTree = "<group>"; };
+		18BB98F222362907000B87AA /* Counts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Counts.swift; sourceTree = "<group>"; };
 		18C170172224F8F8000D76F2 /* SelectThankYouCardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThankYouCardVC.swift; sourceTree = "<group>"; };
 		18C1701B2224F9EA000D76F2 /* SelectThankYouCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThankYouCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		18C1701F2224FBCF000D76F2 /* CustomImageTwoHorizontalFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomImageTwoHorizontalFlowLayout.h; sourceTree = "<group>"; };
@@ -427,6 +435,8 @@
 		18C1702D22251CC8000D76F2 /* FullImageViewCardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewCardVC.swift; sourceTree = "<group>"; };
 		18C1702F222525D6000D76F2 /* Thankyoucardimagedata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thankyoucardimagedata.swift; sourceTree = "<group>"; };
 		18C1703322254E06000D76F2 /* DYBadgeButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DYBadgeButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18C2E3E4222E334B009A7018 /* GroupWiish.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GroupWiish.entitlements; sourceTree = "<group>"; };
+		18C2E3E5222E6CD5009A7018 /* UCZProgressView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UCZProgressView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C699CF2221B33C000DFA4D /* DownloadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVC.swift; sourceTree = "<group>"; };
 		18C699D02221B33C000DFA4D /* DownloadVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadVC.xib; sourceTree = "<group>"; };
 		18E3FDE3220EA026009629C5 /* MyContactsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyContactsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -435,6 +445,7 @@
 		18E3FDE8220EA200009629C5 /* fa-regular-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-regular-400.ttf"; sourceTree = "<group>"; };
 		18E3FDED220EA611009629C5 /* ExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableView.swift; sourceTree = "<group>"; };
 		18E3FDEF22112EA1009629C5 /* EMPageViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EMPageViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18EFE4FE222F8BFC00475383 /* ForgotPasswordPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordPopUpVC.swift; sourceTree = "<group>"; };
 		18F086F9221148C400DCBD9D /* GreetingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
 		18F086FB221148CB00DCBD9D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		18F086FE2211529C00DCBD9D /* Slide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
@@ -485,6 +496,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18C2E3E6222E6CD5009A7018 /* UCZProgressView.framework in Frameworks */,
 				18C1703422254E06000D76F2 /* DYBadgeButton.framework in Frameworks */,
 				18FCD9BA2223E53700062484 /* YKPhotoCircleCrop.framework in Frameworks */,
 				18AD2571221EEC7C0019B38E /* PureLayout.framework in Frameworks */,
@@ -614,6 +626,8 @@
 		18A35673220BEDF8006EAA61 /* NetworkHealper */ = {
 			isa = PBXGroup;
 			children = (
+				188C78762232934C00B9B789 /* Spin-1s-53pxYellow.gif */,
+				180EC1C22228366F00DB3CBD /* videomerg_loader.gif */,
 				18262279220D7F0B006B703E /* greetings_animation.gif */,
 				18262277220D7E54006B703E /* ImageGifProgress.swift */,
 				18A35674220BEDF8006EAA61 /* Networking.swift */,
@@ -668,6 +682,7 @@
 		18AAF2DA220954D000C4EED9 /* GroupWiish */ = {
 			isa = PBXGroup;
 			children = (
+				18C2E3E4222E334B009A7018 /* GroupWiish.entitlements */,
 				18A35678220BFC6A006EAA61 /* GroupWiish.pch */,
 				18E3FDE5220EA1B2009629C5 /* Font */,
 				18A3568B220C2C43006EAA61 /* Rechability */,
@@ -692,6 +707,7 @@
 		18AAF2F02209561B00C4EED9 /* ModelClass */ = {
 			isa = PBXGroup;
 			children = (
+				18BB98F222362907000B87AA /* Counts.swift */,
 				18C1702F222525D6000D76F2 /* Thankyoucardimagedata.swift */,
 				18C1702222250468000D76F2 /* Show_all_cards.swift */,
 				18F0872A2212E88E00DCBD9D /* MyVideosHistoryModelClass.swift */,
@@ -963,6 +979,7 @@
 		18AAF387220ADA0100C4EED9 /* IBInspectable */ = {
 			isa = PBXGroup;
 			children = (
+				18EFE4FD222F8BDF00475383 /* ForgotPasswordPopUpVC */,
 				18C170272225089A000D76F2 /* SendCardVC */,
 				18FCD9BB2223E94100062484 /* AddProfilePicVC */,
 				18C699CE2221B327000DFA4D /* DownloadVC */,
@@ -1319,6 +1336,14 @@
 			path = ExpandableView;
 			sourceTree = "<group>";
 		};
+		18EFE4FD222F8BDF00475383 /* ForgotPasswordPopUpVC */ = {
+			isa = PBXGroup;
+			children = (
+				18EFE4FE222F8BFC00475383 /* ForgotPasswordPopUpVC.swift */,
+			);
+			path = ForgotPasswordPopUpVC;
+			sourceTree = "<group>";
+		};
 		18F086FD2211529C00DCBD9D /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1367,6 +1392,7 @@
 		962069BA2831140473657833 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18C2E3E5222E6CD5009A7018 /* UCZProgressView.framework */,
 				18C1703322254E06000D76F2 /* DYBadgeButton.framework */,
 				18FCD9B92223E53700062484 /* YKPhotoCircleCrop.framework */,
 				18AD2570221EEC7C0019B38E /* PureLayout.framework */,
@@ -1454,6 +1480,14 @@
 					18AAF2D7220954D000C4EED9 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1486,6 +1520,7 @@
 				18AD2568221E6CDE0019B38E /* Roboto_Light.ttf in Resources */,
 				18AAF2E6220954D100C4EED9 /* Assets.xcassets in Resources */,
 				18F0871D221299A100DCBD9D /* TestPopupViewController.xib in Resources */,
+				188C78772232934C00B9B789 /* Spin-1s-53pxYellow.gif in Resources */,
 				18F087012211529C00DCBD9D /* Slide.xib in Resources */,
 				18AD2578221FCC2E0019B38E /* ChoosePopupViewController.xib in Resources */,
 				18C1702B222508AC000D76F2 /* SendCardVC.xib in Resources */,
@@ -1494,6 +1529,7 @@
 				18AD2569221E6CDE0019B38E /* Roboto_Regular.ttf in Resources */,
 				189CD271221A84D200A391C9 /* FilterPopupViewController.xib in Resources */,
 				18FCD9C32223EFD900062484 /* AddProfilePicVC.xib in Resources */,
+				180EC1C32228367200DB3CBD /* videomerg_loader.gif in Resources */,
 				18E3FDEA220EA201009629C5 /* fa-brands-400.ttf in Resources */,
 				18334A4C2216ED2F00266338 /* SelectanoptionVC.xib in Resources */,
 				18F087292212E05B00DCBD9D /* PremiumAppVC.xib in Resources */,
@@ -1566,6 +1602,7 @@
 				"${BUILT_PRODUCTS_DIR}/TransitionButton/TransitionButton.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
+				"${BUILT_PRODUCTS_DIR}/UCZProgressView/UCZProgressView.framework",
 				"${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/YKPhotoCircleCrop/YKPhotoCircleCrop.framework",
 			);
@@ -1608,6 +1645,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UCZProgressView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YKPhotoCircleCrop.framework",
 			);
@@ -1691,6 +1729,7 @@
 				18AAF342220AADF700C4EED9 /* ArrangeVideosViewController.swift in Sources */,
 				18C1702E22251CC8000D76F2 /* FullImageViewCardVC.swift in Sources */,
 				18AD25BC222026160019B38E /* CTVideoView.m in Sources */,
+				18BB98F322362907000B87AA /* Counts.swift in Sources */,
 				189CD2672219C20D00A391C9 /* Greet_dataClass.swift in Sources */,
 				18474BB92215CED3009B3593 /* ReceivedTYCardsTableViewCell.swift in Sources */,
 				18AD25C4222026160019B38E /* CTVideoView+OperationButtons.m in Sources */,
@@ -1790,6 +1829,7 @@
 				189241BB221BC4B200DF3D49 /* RequestViewTableViewCell.swift in Sources */,
 				18AAF340220AADB600C4EED9 /* ReceivedVideosViewControllern.swift in Sources */,
 				18AD25CE222063880019B38E /* TKParallaxScrollView.m in Sources */,
+				18EFE500222F8BFC00475383 /* ForgotPasswordPopUpVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1937,8 +1977,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = GroupWiish/GroupWiish.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = W3SR2346D2;
+				DEVELOPMENT_TEAM = 52LNXJTC7F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GroupWiish/Utilities/KanvasCameraSDK",
@@ -1955,9 +1997,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appmasonstudios.groupwiish.GroupWiish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppMansoninc.GroupWish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = GroupWiishDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = GroupWishAppDevelopmentiOS;
 				SWIFT_OBJC_BRIDGING_HEADER = "GroupWiish/GroupWiish-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -1971,8 +2013,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = GroupWiish/GroupWiish.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = W3SR2346D2;
+				DEVELOPMENT_TEAM = 52LNXJTC7F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GroupWiish/Utilities/KanvasCameraSDK",
@@ -1989,9 +2033,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appmasonstudios.groupwiish.GroupWiish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppMansoninc.GroupWish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = GroupWiishDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = GroupWishAppDevelopmentiOS;
 				SWIFT_OBJC_BRIDGING_HEADER = "GroupWiish/GroupWiish-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;

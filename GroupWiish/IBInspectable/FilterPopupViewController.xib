@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPopupViewController" customModule="GroupWiish" customModuleProvider="target">
             <connections>
+                <outlet property="duetoday" destination="4Rx-4Y-aqx" id="1Qc-IP-cNy"/>
+                <outlet property="pastdue" destination="2Jh-9m-xDk" id="sho-BY-6OZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,7 +26,11 @@
                     <rect key="frame" x="37.5" y="3" width="300" height="200"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="owu-hv-CnF">
-                            <rect key="frame" x="77" y="40" width="146" height="24"/>
+                            <rect key="frame" x="77" y="40" width="146" height="23.5"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="23.5" id="gf2-Qh-Y3E"/>
+                                <constraint firstAttribute="width" constant="146" id="ygr-dC-a93"/>
+                            </constraints>
                             <attributedString key="attributedText">
                                 <fragment content="Select an option">
                                     <attributes>
@@ -37,40 +43,44 @@
                             </attributedString>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Jh-9m-xDk" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
-                            <rect key="frame" x="155" y="104" width="90" height="40"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Past Due">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="8"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="pastDueAction:" destination="-1" eventType="touchUpInside" id="UOy-Uh-sDg"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Rx-4Y-aqx" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
-                            <rect key="frame" x="50" y="104" width="90" height="40"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="dQo-yF-H60">
+                            <rect key="frame" x="16" y="83.5" width="268" height="45"/>
+                            <subviews>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Rx-4Y-aqx" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Due Today">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="20"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="dueTodayAction:" destination="-1" eventType="touchUpInside" id="exM-xP-2ox"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Jh-9m-xDk" customClass="ButtonDesign" customModule="GroupWiish" customModuleProvider="target">
+                                    <rect key="frame" x="141.5" y="0.0" width="126.5" height="45"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Past Due">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="20"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="pastDueAction:" destination="-1" eventType="touchUpInside" id="UOy-Uh-sDg"/>
+                                    </connections>
+                                </button>
+                            </subviews>
                             <constraints>
-                                <constraint firstAttribute="width" constant="90" id="5xI-fg-SqY"/>
-                                <constraint firstAttribute="height" constant="40" id="BtM-b7-eRf"/>
+                                <constraint firstAttribute="height" constant="45" id="fFT-TQ-ZP8"/>
                             </constraints>
-                            <state key="normal" title="Due Today">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="8"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="dueTodayAction:" destination="-1" eventType="touchUpInside" id="exM-xP-2ox"/>
-                            </connections>
-                        </button>
+                        </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bF7-lR-l0v">
                             <rect key="frame" x="265" y="10" width="25" height="25"/>
                             <constraints>
@@ -85,18 +95,15 @@
                     </subviews>
                     <color key="backgroundColor" red="0.97305089239999998" green="0.79022989649999997" blue="0.049385418760000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
-                        <constraint firstItem="2Jh-9m-xDk" firstAttribute="height" secondItem="4Rx-4Y-aqx" secondAttribute="height" id="0BE-UY-vhE"/>
+                        <constraint firstAttribute="trailing" secondItem="dQo-yF-H60" secondAttribute="trailing" constant="16" id="18M-c2-Y4f"/>
                         <constraint firstAttribute="trailing" secondItem="bF7-lR-l0v" secondAttribute="trailing" constant="10" id="1uO-Sw-8II"/>
-                        <constraint firstItem="2Jh-9m-xDk" firstAttribute="leading" secondItem="4Rx-4Y-aqx" secondAttribute="trailing" constant="15" id="Jx9-GX-TCT"/>
+                        <constraint firstItem="dQo-yF-H60" firstAttribute="top" secondItem="owu-hv-CnF" secondAttribute="bottom" constant="20" id="4hU-zf-MoV"/>
+                        <constraint firstItem="owu-hv-CnF" firstAttribute="top" secondItem="gji-Sv-uhg" secondAttribute="top" constant="40" id="J4o-Vp-nUw"/>
                         <constraint firstAttribute="width" constant="300" id="KZY-a5-Dvj"/>
-                        <constraint firstItem="owu-hv-CnF" firstAttribute="top" secondItem="gji-Sv-uhg" secondAttribute="top" constant="40" id="NnG-Ip-6z2"/>
-                        <constraint firstItem="4Rx-4Y-aqx" firstAttribute="top" secondItem="owu-hv-CnF" secondAttribute="bottom" constant="40" id="ROr-NP-Jcm"/>
-                        <constraint firstItem="4Rx-4Y-aqx" firstAttribute="leading" secondItem="gji-Sv-uhg" secondAttribute="leading" constant="50" id="YBY-yb-Tr4"/>
+                        <constraint firstItem="dQo-yF-H60" firstAttribute="leading" secondItem="gji-Sv-uhg" secondAttribute="leading" constant="16" id="b5c-1U-E14"/>
                         <constraint firstItem="bF7-lR-l0v" firstAttribute="top" secondItem="gji-Sv-uhg" secondAttribute="top" constant="10" id="ban-nn-MEZ"/>
                         <constraint firstAttribute="height" constant="200" id="eV4-wc-TMY"/>
-                        <constraint firstItem="owu-hv-CnF" firstAttribute="centerX" secondItem="gji-Sv-uhg" secondAttribute="centerX" id="hNG-pZ-d64"/>
-                        <constraint firstItem="2Jh-9m-xDk" firstAttribute="centerY" secondItem="4Rx-4Y-aqx" secondAttribute="centerY" id="pAb-b8-cA3"/>
-                        <constraint firstItem="2Jh-9m-xDk" firstAttribute="width" secondItem="4Rx-4Y-aqx" secondAttribute="width" id="tTn-vY-7Bu"/>
+                        <constraint firstItem="owu-hv-CnF" firstAttribute="centerX" secondItem="gji-Sv-uhg" secondAttribute="centerX" id="fWM-dK-XXw"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

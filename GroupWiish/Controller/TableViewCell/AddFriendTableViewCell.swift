@@ -10,6 +10,7 @@ import UIKit
 
 class AddFriendTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var locationlabel: UILabel!
     @IBOutlet weak var addfriendbutton: UIButton!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var grettingprofileimage: ImageViewDesign!

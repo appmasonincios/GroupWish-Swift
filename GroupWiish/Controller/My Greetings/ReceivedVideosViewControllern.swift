@@ -17,25 +17,25 @@ import PopItUp
 import MobileCoreServices
 import CoreFoundation
 class ReceivedVideosViewControllern: UIViewController {
-  private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
-    @IBOutlet weak var gv2: GradientView!
+ 
     @IBOutlet weak var gradientview: GradientView!
-    
-     var booleancheck:Bool = false
+    @IBOutlet weak var selectimage: UIImageView!
     @IBOutlet weak var searchView: GradientView!
     @IBOutlet var searchtextfield: UITextField!
-    
     @IBOutlet weak var videosTableView: UITableView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var arrangeBtn: UIButton!
-    var cell: ReceivedVideosTableViewCelln?
     @IBOutlet weak var videoBtn: UIButton!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var videosLbl: UILabel!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var selectAllBtn: UIButton!
     @IBOutlet weak var headerView: UIView!
+     private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
+      var booleancheck:Bool = false
+    var cell: ReceivedVideosTableViewCelln?
     var greeting_id = ""
+    var myGreetingsModel:MyGreetingsModelClass? = nil
     var Filter = false
     var SelectAll = false
     var greeting_VideosModelClass = [Greeting_VideosModelClass]()
@@ -44,6 +44,7 @@ class ReceivedVideosViewControllern: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+         self.selectimage.isHighlighted = true
         self.videosTableView.delegate = self
         self.videosTableView.dataSource = self
        
@@ -60,20 +61,23 @@ class ReceivedVideosViewControllern: UIViewController {
             selector: #selector(self.record),
             name:NSNotification.Name(rawValue: "record"),
             object: nil)
-        
-        
+    
         Filter                 = false
         SelectAll              = true
         gradientview.colors = topbarcolor()
-        gv2.colors = topbarcolor()
+       
         self.searchView.colors = topbarcolor()
             KanvasSDK.initialize(withClientID: "59acccd92257524f1e7b4bdf", signature: "MEUCIQD4VY+Wtnok/r+iV62815L2vcpE9Js9wSjxSObCYkCZ0AIgLNeu6FOQjtVwmfuyhkFoKwZWrpCYX0zuRnx91m+KZaw=")
         videosTableView.backgroundColor = UIColor(red: 235.0 / 255.0, green: 235.0 / 255.0, blue: 235.0 / 255.0, alpha: 1)
         self.videosTableView.estimatedRowHeight = 320;
         self.videosTableView.rowHeight          = UITableView.automaticDimension;
-        
+    
         getData()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+         savesharedprefrence(key:Constants.toasttype, value:"0")
     }
     
     @objc func searchRecordsAsPerText(_ textfield:UITextField)
@@ -190,7 +194,7 @@ class ReceivedVideosViewControllern: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+                //self.showToast(message:response["errors"].string ?? "")
             }
         }
         
@@ -277,7 +281,6 @@ class ReceivedVideosViewControllern: UIViewController {
     
     @objc func checkbuttonaction(sender:UIButton)
     {
-        
         let boolean = self.checkedArray.contains(where: { element in element.id == self.greeting_VideosModelClass[sender.tag].id
         })
         if boolean == true
@@ -402,6 +405,7 @@ class ReceivedVideosViewControllern: UIViewController {
                 vc?.videosArray = self.greeting_VideosModelClass
                 vc?.selectedArray = self.checkedArray
                 vc?.greeting_id = self.greeting_id
+                vc?.myGreetingsModel = self.myGreetingsModel
                 if let vc = vc {
                     navigationController?.pushViewController(vc, animated: true)
                 }
@@ -473,6 +477,8 @@ class ReceivedVideosViewControllern: UIViewController {
             }
              SelectAll = false
             selectAllBtn.setTitle("Unselect All", for: .normal)
+            selectAllBtn.isSelected = false
+            self.selectimage.isHighlighted = false
         }
         else
         {
@@ -480,7 +486,9 @@ class ReceivedVideosViewControllern: UIViewController {
             if let font = UIFont(name: "FontAwesome5FreeSolid", size: 15.0) {
                 selectAllBtn.titleLabel?.font = font
             }
-            selectAllBtn.setTitle("Select All", for: .normal)
+            self.selectAllBtn.setTitle("Select All", for: .normal)
+            self.selectAllBtn.isSelected = true
+            self.selectimage.isHighlighted = true
             
             SelectAll = true
             

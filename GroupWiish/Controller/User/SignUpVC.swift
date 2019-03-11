@@ -102,7 +102,7 @@ class SignUpVC: UIViewController {
         ]
         executePOSTLogin(view: self.view, path: Constants.LIVEURL + Constants.REGISTER, parameter: parameter){ response in
             let status = response["status"].int
-            if(status == 200)
+            if(status == Constants.SUCCESS_CODE)
             {
               
                 parameter["id"] = response["data"]["id"].stringValue
@@ -113,7 +113,7 @@ class SignUpVC: UIViewController {
             }
             else
             {
-                self.showToast(message:response["errors"].string ?? "")
+               self.showToast(message:response["errors"].string ?? "")
             }
         }
 
